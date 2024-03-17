@@ -135,6 +135,11 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
+    <Content Include="Images\m.jpg" />
+    <Content Include="Images\n.jpg" />
+    <Content Include="Images\o.jpg" />
+    <Content Include="Images\pesas.jpg" />
+    <Content Include="Images\pngtree-an-empty-gym-with-all-of-the-machines-picture-image_2611112.jpg" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
     <Content Include="Scripts\jquery-3.7.1.slim.js" />
@@ -147,9 +152,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Views\StylesFormularioR.css" />
-    <Content Include="Views\stylesindex.css" />
-    <Content Include="Views\stylesIniciarSesion.css" />
+    <Content Include="StylesFormularioR.css" />
+    <Content Include="stylesindex.css" />
+    <Content Include="stylesIniciarSesion.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
