@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace SPARTANFITApp.Controllers
+namespace SPARTANFIT_App.Controllers
 {
     public class HomeController : Controller
     {
@@ -13,16 +13,16 @@ namespace SPARTANFITApp.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Formulario_Registro()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "REGISTRO.";
 
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult IniciarSesion()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "INICIAR SESION.";
 
             return View();
         }

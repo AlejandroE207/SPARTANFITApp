@@ -1,33 +1,73 @@
-﻿@{
-    ViewBag.Title = "Home Page";
-}
+﻿<!DOCTYPE html>
+<html lang="en">
 
-<main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesindex.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap"
+          rel="stylesheet">
+    <link href="~/stylesindex.css" rel="stylesheet" />
+    <title>PAGINA PRINCIPAL</title>
+</head>
+
+<body>
+    <header>
+        <a href="#" class="logo"> SPARTANFIT</a>
+        <ul>
+            <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+            <li>@Html.ActionLink("Iniciar sesión", "IniciarSesion", "Home")</li>
+            <li>@Html.ActionLink("Registrarse", "Formulario_Registro", "Home")</li>
+        </ul>
+    </header>
+    <main>
+        <section class="sectionFrase">
+            <div>
+                <h1 class="titulo">
+                    <span>EL CUERPO LOGRA LO QUE LA MENTE CREE</span>
+
+                    <span>CONVIERTETE EN UN DIOS GRIEGO</span>
+                </h1>
+            </div>
+        </section>
+        <section class="sectionIma">
+            <div class="sectionIma_frase">
+                <h3>¿QUE ESPERAS PARA EMPEZAR?</h3>
+            </div>
+
+            <div class="sectionIma_imagenes">
+                <div class="sectionIma_imagenes-contenedor">
+                    <img class="sectionIma_img" src="m.jpg" alt="">
+                </div>
+                <div class="sectionIma_imagenes-contenedor">
+                    <img class="sectionIma_img" src="o.jpg" alt="">
+                </div>
+                <div class="sectionIma_imagenes-contenedor">
+                    <img class="sectionIma_img" src="n.jpg" alt="">
+                </div>
+                <div class="sectionIma_imagenes-contenedor">
+                    <img class="sectionIma_img" src="pngtree-an-empty-gym-with-all-of-the-machines-picture-image_2611112.jpg" alt="">
+                </div>
+
+            </div>
+            <div class="espaciecito">
+                <h3>LA FUERZA NO PROVIENE DEL CUERPO  PROVIENE DE LA VOLUNTAD</h3>
+            </div>
+            <div class="botoncito">
+
+                <a class="botoncilo_lindo"@Html.ActionLink("Registrarse", "Formulario_Registro", "Home")</a>
+
+            </div>
+    </main>
     </section>
 
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
-    </div>
-</main>
+
+
+
+</body>
+
+</html>

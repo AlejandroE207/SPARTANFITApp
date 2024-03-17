@@ -1,0 +1,165 @@
+﻿@keyframes cambioFondo {
+    0% { background-color: #ffffff; }
+    50% { background-color: #878787; }
+    50% { background-color: #5e5e5e; }
+    50% { background-color: #000000; }
+}
+
+body {
+    animation: cambioFondo 10s infinite;
+}
+
+header {
+    width: 100%;
+    height: 5rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0 1.25rem 0.125rem #dddddd; /* 20px 2px */
+    background-color: rgb(114, 5, 5);
+    padding: 0 1rem;
+}
+
+.logo {
+    font-size: 2rem;
+    margin-right: auto;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    font-family: "Rowdies", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+ul {
+    display: flex;
+    list-style: none;
+}
+
+ul a {
+    margin-left: 1rem;
+    transition: 0.5s;
+    text-decoration: none;
+    margin-right: 2rem;
+    color: white;
+    font-family: "Yatra One", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    display: inline-block;
+}
+
+ul a:hover {
+    font-size: 1rem;
+    color: rgb(235, 244, 0);
+    transform: scale(1.1);
+}
+
+form {
+    background-color: rgb(245, 204, 1);
+    border-radius: 2rem; /* 32px */
+    box-shadow: 0 0 0.625rem rgba(255, 250, 250, 0.1); /* 10px */
+    padding: 3.75rem; /* 60px */
+    max-width: 25rem; /* 400px */
+    margin: 0 auto;
+    animation: fadeIn 0.5s ease;
+    margin-top: 4cm; /* Converted from 4cm to rem */
+    align-items:center;
+}
+
+form h1 {
+    text-align: center;
+    margin-bottom: 1.25rem; /* 20px */
+    font-family: "Rowdies", sans-serif;
+    font-size: 2rem;
+}
+
+form div {
+    margin-bottom: 1.875rem; /* 30px */
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.3125rem; /* 5px */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+select {
+    width: 100%;
+    padding: 0.4375rem; 
+    border: 0.125rem solid #ee0505; 
+    border-radius: 0.3125rem; 
+    box-sizing: border-box;
+}
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-repeat: no-repeat;
+    background-position-x: calc(100% - 0.75rem); 
+    background-position-y: 50%;
+    padding-right: 1.875rem; 
+}
+
+.botCre {
+    background-color: #15b50c;
+    color: #fff;
+    border: none;
+    border-radius: 0.3125rem; 
+    padding: 0.75rem 1.25rem; 
+    font-size: 1rem; 
+    transition: background-color 0.3s ease;
+    width: 100%;
+    font-family: "Yatra One", system-ui;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.checkbox-link {
+    font-size: 0.875rem; 
+}
+
+.checkbox-link a {
+    margin-left: 0.3125rem; 
+}
+.botoncito {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5rem; 
+
+}
+
+.container {
+    text-align: center;
+    width:100%;
+}
+
+.botoncilo_lindo {
+    border-radius: 3%;
+    padding: 2rem;
+
+    background-color: red;
+ 
+    color: white;
+    text-decoration: none;
+}
+
+    .botoncilo_lindo:hover {
+        background-color: blueviolet;
+        color:black;
+    }
+ .botoncancelar{
+     background:red;
+
+ }

@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/StylesFormularioR.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap"
+          rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <a href="#" class="logo"> SPARTANFIT</a>
+        <ul>
+            <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+            <li>@Html.ActionLink("Iniciar sesión", "IniciarSesion", "Home")</li>
+            <li>@Html.ActionLink("Registrarse", "Formulario_Registro", "Home")</li>
+        </ul>
+    </header>
+    <form action="" method="post">
+        <h1>Registrarse</h1>
+        <div class="form-row">
+            <div>
+                <label for="nombres">Nombres:</label>
+                <input type="text" id="nombres" name="nombres" required>
+            </div>
+            <div>
+                <label for="apellidos">Apellidos:</label>
+                <input type="text" id="apellidos" name="apellidos" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div>
+                <label for="correo">Correo:</label>
+                <input type="email" id="correo" name="correo" required>
+            </div>
+            <div>
+                <label for="contraseña">Contraseña:</label>
+                <input type="password" id="contraseña" name="contraseña" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div>
+                <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+            </div>
+            <div>
+                <label for="estatura">Estatura:</label>
+                <input type="number" id="estatura" name="estatura" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div>
+                <label for="peso">Peso:</label>
+                <input type="text" id="peso" name="peso" required>
+            </div>
+            <div>
+                <label for="genero">Genero:</label>
+                <select id="genero" name="genero" required>
+                    <option value="">Seleccione</option>
+                    <option value="femenino">Femenino</option>
+                    <option value="masculino">Masculino</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div>
+                <label for="discapacidad">¿Esta en rehabilitacion fisica?</label>
+                <select id="discapacidad" name="discapacidad" required>
+                    <option value="">Seleccione</option>
+                    <option value="si">Sí</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+
+        </div>
+        <div class="form-row">
+            <div id="nivelEntrenamientoDiv" style="display: none;">
+                <label for="nivelEntre">Nivel de entrenamiento:</label>
+                <select id="nivelEntre" name="nivelEntre" required>
+                    <option value="">Seleccione</option>
+                    <option value="basico">Básico</option>
+                    <option value="medio">Medio</option>
+                    <option value="avanzado">Avanzado</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+
+            <button class="botCre" type="submit">Crear cuenta</button>
+        </div>
+        <div class="botoncito">
+            <div class="container">
+                @Html.ActionLink("Cancelar", "Index", "Home", null, new { @class = "botoncito botoncancelar" })
+            </div>
+        </div>
+
+
+
+    </form>
+
+
+    <script>
+        document.getElementById("discapacidad").addEventListener("change", function () {
+            var nivelEntrenamientoDiv = document.getElementById("nivelEntrenamientoDiv");
+            if (this.value === "no") {
+                nivelEntrenamientoDiv.style.display = "block";
+            } else {
+                nivelEntrenamientoDiv.style.display = "none";
+            }
+        });
+    </script>
+
+</body>
+
+</html>

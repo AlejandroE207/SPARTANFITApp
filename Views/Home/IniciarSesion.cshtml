@@ -1,0 +1,51 @@
+﻿
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href="~/stylesIniciarSesion.css" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap" rel="stylesheet">
+        <title>INICIAR SESION</title>
+    </head>
+    <body>
+        <header>
+            <a href="#" class="logo"> SPARTANFIT</a>
+            <ul>
+                <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                <li>@Html.ActionLink("Iniciar sesión", "IniciarSesion", "Home")</li>
+                <li>@Html.ActionLink("Registrarse", "Formulario_Registro", "Home")</li>
+            </ul>
+        </header>
+        <div>
+
+        </div>
+        <section>
+            <form class="form" action="">
+                <h1>Iniciar sesion</h1>
+                <div class="inputbox">
+                    <ion-icon name="mail-outlane"></ion-icon>
+                    <input type="email" required>
+                    <label for="">Usuario</label>
+                </div>
+                <div class="inputbox">
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                    <input type="password" required>
+                    <label for="">Contraseña</label>
+                </div>
+                <div class="forget">
+                    <label for=""> <input type="checkbox">Recordar</label>
+                    <a href="#">Olvide la contraseña</a>
+                </div>
+                <button>Iniciar</button>
+                <div class="register">
+                    <p>No tengo una cuenta @Html.ActionLink("Registrarse", "Formulario_Registro", "Home")</p>
+                </div>
+            </form>
+        </section>
+    </body>
+</html>
