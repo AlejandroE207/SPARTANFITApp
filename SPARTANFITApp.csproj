@@ -135,11 +135,11 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
-    <Content Include="Images\m.jpg" />
-    <Content Include="Images\n.jpg" />
-    <Content Include="Images\o.jpg" />
-    <Content Include="Images\pesas.jpg" />
-    <Content Include="Images\pngtree-an-empty-gym-with-all-of-the-machines-picture-image_2611112.jpg" />
+    <Content Include="ImagenIndex.jpg" />
+    <Content Include="ImagenIndex1.jpg" />
+    <Content Include="ImagenIndex2.jpg" />
+    <Content Include="imagenIndex3.jpg" />
+    <Content Include="ImagenLI.jpg" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
     <Content Include="Scripts\jquery-3.7.1.slim.js" />
@@ -172,7 +172,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\InicioSesion\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

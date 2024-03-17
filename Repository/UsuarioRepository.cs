@@ -28,16 +28,16 @@ namespace SPARTANFITApp.Repository
 
             using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
             {
-                command.Parameters.AddWithValue("@id_rol",usuario.id_rol);
-                command.Parameters.AddWithValue("@nombres",usuario.nombres);
-                command.Parameters.AddWithValue("@apellidos",usuario.apellidos);
-                command.Parameters.AddWithValue("@correo",usuario.correo );
+                command.Parameters.AddWithValue("@id_rol", usuario.id_rol);
+                command.Parameters.AddWithValue("@nombres", usuario.nombres);
+                command.Parameters.AddWithValue("@apellidos", usuario.apellidos);
+                command.Parameters.AddWithValue("@correo", usuario.correo);
                 command.Parameters.AddWithValue("@contrasena", usuario.contrasena);
                 command.Parameters.AddWithValue("@fecha_nacimiento", usuario.fecha_nacimiento);
-                command.Parameters.AddWithValue("@estatura", usuario.estatura );
-                command.Parameters.AddWithValue("@peso",usuario.peso );
-                command.Parameters.AddWithValue("@genero", usuario.genero );
-                command.Parameters.AddWithValue("@id_nivel_entrenamiento",usuario.id_nivel_entrenamiento );
+                command.Parameters.AddWithValue("@estatura", usuario.estatura);
+                command.Parameters.AddWithValue("@peso", usuario.peso);
+                command.Parameters.AddWithValue("@genero", usuario.genero);
+                command.Parameters.AddWithValue("@id_nivel_entrenamiento", usuario.id_nivel_entrenamiento);
                 command.Parameters.AddWithValue("@id_objetivo", usuario.id_objetivo);
                 command.Parameters.AddWithValue("@rehabilitacion", usuario.rehabilitacion);
                 command.ExecuteNonQuery();
@@ -75,15 +75,15 @@ namespace SPARTANFITApp.Repository
             UsuarioDto usuario = null;
             UsuarioDto usuarioResp = new UsuarioDto();
             conexion.Connect();
-            //if (VerificarCredenciales(correo, contrasena))
-            //{
+            if (VerificarCredenciales(correo, contrasena))
+            {
                 string SQL = "SELECT id_usuario, nombres, apellidos, correo FROM USUARIO WHERE (correo = @correo AND contrasena = @contrasena)";
                 using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
                 {
                     command.Parameters.AddWithValue("@correo", correo);
                     command.Parameters.AddWithValue("@contrasena", contrasena);
-                    
-                    using(SqlDataReader reader = command.ExecuteReader())
+
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
                         if (reader.Read())
                         {
@@ -115,26 +115,25 @@ namespace SPARTANFITApp.Repository
                             return usuarioResp;
                         }
                     }
-                    
                 }
+            }
 
-                
-            //}
             
+            return null;
         }
-        // private bool VerificarCredenciales(string correo, string contrasena)
-        //{
-        //    DBContextUtility conexion = new DBContextUtility();
-        //    conexion.Connect();
-        //    string SQL = "SELECT COUNT(*) FROM USUARIO WHERE (correo = @correo AND contrasena = @contrasena)";
-        //    using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
-        //    {
-        //        command.Parameters.AddWithValue("@correo", correo);
-        //        command.Parameters.AddWithValue("@contrasena", contrasena);
 
-        //        var count = (int)command.ExecuteScalar();
-        //        return count > 0;
-        //    }
-        //}
-    }
-}
+        private bool VerificarCredenciales(string correo, string contrasena)
+        {
+            DBContextUtility conexion = new DBContextUtility();
+            conexion.Connect();
+            string SQL = "SELECT COUNT(*) FROM USUARIO WHERE (correo = @correo AND contrasena = @contrasena)";
+            using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+            {
+                command.Parameters.AddWithValue("@correo", correo);
+                command.Parameters.AddWithValue("@contrasena", contrasena);
+
+                var count = (int)command.ExecuteScalar();
+                return count > 0;
+            }
+        }
+    } }

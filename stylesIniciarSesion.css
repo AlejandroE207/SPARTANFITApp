@@ -10,12 +10,12 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-image: url("pngtree-an-empty-gym-with-all-of-the-machines-picture-image_2611112.jpg");
+    background-image: url('fondo.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    background-image: url('imagenli.jpg');
 }
-
 h1 {
     font-family: "Yatra One", system-ui;
 }
