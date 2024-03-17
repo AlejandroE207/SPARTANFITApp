@@ -13,6 +13,8 @@ namespace SPARTANFITApp.Services
         {
             UsuarioDto usuarioResp = new UsuarioDto();
             UsuarioRepository usuarioRepository = new UsuarioRepository();
+
+          
             if (usuarioRepository.buscarUsuario(usuario.correo))
             {
                 usuarioResp.respuesta = 0;
@@ -20,8 +22,13 @@ namespace SPARTANFITApp.Services
             }
             else
             {
+             
                 usuario.id_rol = 1;
-                if (usuarioRepository.registroUsuario(usuario) != 0)
+
+                
+                int resultadoRegistro = usuarioRepository.registroUsuario(usuario);
+
+                if (resultadoRegistro != 0)
                 {
                     usuarioResp.respuesta = 1;
                     usuarioResp.mensaje = "Se ha registrado el usuario correctamente";
@@ -35,12 +42,23 @@ namespace SPARTANFITApp.Services
             return usuarioResp;
         }
 
+
         public UsuarioDto logueo(UsuarioDto usuario)
         {
             UsuarioRepository usuarioRepository = new UsuarioRepository();
-           UsuarioDto usuarioResp = new UsuarioDto();
-            usuarioResp=usuarioRepository.IniciarSesion(usuario.correo, usuario.contrasena);
+            UsuarioDto usuarioResp = usuarioRepository.IniciarSesion(usuario.correo, usuario.contrasena);
+
+            if (usuarioResp.respuesta == 1)
+            {
+                usuarioResp.mensaje = "Inicio de sesión correcto";
+            }
+            else
+            {
+                usuarioResp.mensaje = "Inicio de sesión incorrecto";
+            }
+
             return usuarioResp;
         }
+
     }
 }
