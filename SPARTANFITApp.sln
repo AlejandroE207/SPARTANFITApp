@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34701.34
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPARTANFITApp", "SPARTANFITApp.csproj", "{FAC6D696-A530-48C6-BA8D-403AA09FFA0B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FAC6D696-A530-48C6-BA8D-403AA09FFA0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAC6D696-A530-48C6-BA8D-403AA09FFA0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAC6D696-A530-48C6-BA8D-403AA09FFA0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAC6D696-A530-48C6-BA8D-403AA09FFA0B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D6664F1E-B4C0-43EE-821B-D35D92481BE6}
+	EndGlobalSection
+EndGlobal
