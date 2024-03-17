@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{
+    ViewBag.Title = "Formulario_Registro";
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -20,94 +23,113 @@
             <li>@Html.ActionLink("Registrarse", "Formulario_Registro", "Home")</li>
         </ul>
     </header>
-    <form action="" method="post">
-        <h1>Registrarse</h1>
-        <div class="form-row">
-            <div>
-                <label for="nombres">Nombres:</label>
-                <input type="text" id="nombres" name="nombres" required>
+    <div>
+        <h2>Registrarse</h2>
+        @using (Html.BeginForm("Formulario_Registro", "Home", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div>
+                    <label for="nombres">Nombres:</label>
+                    <input type="text" id="nombres" name="nombres" required>
+                </div>
+                <div>
+                    <label for="apellidos">Apellidos:</label>
+                    <input type="text" id="apellidos" name="apellidos" required>
+                </div>
             </div>
-            <div>
-                <label for="apellidos">Apellidos:</label>
-                <input type="text" id="apellidos" name="apellidos" required>
+            <div class="form-row">
+                <div>
+                    <label for="correo">Correo:</label>
+                    <input type="email" id="correo" name="correo" required>
+                </div>
+                <div>
+                    <label for="contrasena">Contraseña:</label>
+                    <input type="password" id="contrasena" name="contrasena" required>
+                </div>
             </div>
-        </div>
-        <div class="form-row">
-            <div>
-                <label for="correo">Correo:</label>
-                <input type="email" id="correo" name="correo" required>
+            <div class="form-row">
+                <div>
+                    <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                    <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+                </div>
+                <div>
+                    <label for="estatura">Estatura:</label>
+                    <input type="number" id="estatura" name="estatura" required>
+                </div>
             </div>
-            <div>
-                <label for="contraseña">Contraseña:</label>
-                <input type="password" id="contraseña" name="contraseña" required>
+            <div class="form-row">
+                <div>
+                    <label for="peso">Peso:</label>
+                    <input type="text" id="peso" name="peso" required>
+                </div>
+                <div>
+                    <label for="genero">Genero:</label>
+                    <select id="genero" name="genero" required>
+                        <option value="">Seleccione</option>
+                        <option value="femenino">Femenino</option>
+                        <option value="masculino">Masculino</option>
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="form-row">
-            <div>
-                <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
-                <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
-            </div>
-            <div>
-                <label for="estatura">Estatura:</label>
-                <input type="number" id="estatura" name="estatura" required>
-            </div>
-        </div>
-        <div class="form-row">
-            <div>
-                <label for="peso">Peso:</label>
-                <input type="text" id="peso" name="peso" required>
-            </div>
-            <div>
-                <label for="genero">Genero:</label>
-                <select id="genero" name="genero" required>
-                    <option value="">Seleccione</option>
-                    <option value="femenino">Femenino</option>
-                    <option value="masculino">Masculino</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-row">
-            <div>
-                <label for="discapacidad">¿Esta en rehabilitacion fisica?</label>
-                <select id="discapacidad" name="discapacidad" required>
-                    <option value="">Seleccione</option>
-                    <option value="si">Sí</option>
-                    <option value="no">No</option>
-                </select>
-            </div>
+            <div class="form-row">
+                <div>
+                    <label for="rehabilitacion">¿Esta en rehabilitacion fisica?</label>
+                    <select id="rehabilitacion" name="rehabilitacion">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-        </div>
-        <div class="form-row">
-            <div id="nivelEntrenamientoDiv" style="display: none;">
-                <label for="nivelEntre">Nivel de entrenamiento:</label>
-                <select id="nivelEntre" name="nivelEntre" required>
-                    <option value="">Seleccione</option>
-                    <option value="basico">Básico</option>
-                    <option value="medio">Medio</option>
-                    <option value="avanzado">Avanzado</option>
-                </select>
             </div>
-        </div>
-        <div class="form-row">
-
-            <button class="botCre" type="submit">Crear cuenta</button>
-        </div>
-        <div class="botoncito">
-            <div class="container">
-                @Html.ActionLink("Cancelar", "Index", "Home", null, new { @class = "botoncito botoncancelar" })
+            <div class="form-row">
+                <div id="nivelEntrenamientoDiv" style="display: none;">
+                    <label for="id_nivel_entrenamiento">Nivel de entrenamiento:</label>
+                    <select id="id_nivel_entrenamiento" name="id_nivel_entrenamiento">
+                        <option value="0">Seleccione</option>
+                        <option value="1">Básico</option>
+                        <option value="2">Medio</option>
+                        <option value="3">Avanzado</option>
+                    </select>
+                </div>
             </div>
-        </div>
+            <div class="form-row">
+                <div id="objetivo" style="display: none;">
+                    <label for="id_objetivo">Objetivo:</label>
+                    <select id="id_objetivo" name="id_objetivo">
+                        <option value="0">Seleccione</option>
+                        <option value="1">Definición</option>
+                        <option value="2">Mantenimiento</option>
+                        <option value="3">Hipertrofia</option>
+                        <option value="4">Fuerza</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
 
-
-
-    </form>
+                <button class="botCre" type="submit">Crear cuenta</button>
+            </div>
+            <div class="botoncito">
+                <div class="container">
+                    @Html.ActionLink("Cancelar", "Index", "Home", null, new { @class = "botoncito botoncancelar" })
+                </div>
+            </div>
+        }  @if (ViewData["Mensaje"] != null)
+        {
+            <p>@ViewData["Mensaje"]</p>
+        }
+    </div>
+   
 
 
     <script>
-        document.getElementById("discapacidad").addEventListener("change", function () {
+        document.getElementById("rehabilitacion").addEventListener("change", function () {
             var nivelEntrenamientoDiv = document.getElementById("nivelEntrenamientoDiv");
-            if (this.value === "no") {
+            var objetivo = document.getElementById("objetivo");
+            if (this.value === "0") {
                 nivelEntrenamientoDiv.style.display = "block";
+                objetivo.style.display = "block";
             } else {
                 nivelEntrenamientoDiv.style.display = "none";
             }

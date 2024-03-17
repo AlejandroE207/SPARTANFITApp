@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SPARTANFITApp.Dto;
+using SPARTANFITApp.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -20,11 +22,52 @@ namespace SPARTANFIT_App.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Formulario_Registro(UsuarioDto usuario)
+        {
+            UsuarioService usuarioServices = new UsuarioService();
+            UsuarioDto resultado = usuarioServices.registroUsuario(usuario);
+
+            if(resultado.respuesta != 0)
+            {
+                return View("Index",resultado);
+            }
+            else
+            {
+                return View(resultado);
+            }
+            
+
+        }
+
         public ActionResult IniciarSesion()
         {
             ViewBag.Message = "INICIAR SESION.";
 
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult IniciarSesion(UsuarioDto usuario)
+        {
+            UsuarioService usuarioService = new UsuarioService();
+            UsuarioDto usuarioLogeo = usuarioService.logueo(usuario);
+
+            if(usuarioLogeo.respuesta != 0)
+            {
+                Session["UserLogged"] = usuarioLogeo;
+                return View("Principal");
+            }
+            return View("Index");
+
+            
+
+        }
+
+        public ActionResult CerrarSesion()
+        {
+            Session["UserLogged"] = null;
+            return Redirect("Index");
         }
     }
 }
