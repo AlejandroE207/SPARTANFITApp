@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net.NetworkInformation;
 using System.Web;
 using System.Web.UI;
@@ -74,10 +75,13 @@ namespace SPARTANFITApp.Repository
             DBContextUtility conexion = new DBContextUtility();
             UsuarioDto usuario = null;
             UsuarioDto usuarioResp = new UsuarioDto();
-            conexion.Connect();
-            if (VerificarCredenciales(correo, contrasena))
+            
+            //if (VerificarCredenciales(correo, contrasena))
+            //{
+            try
             {
-                string SQL = "SELECT id_usuario, nombres, apellidos, correo FROM USUARIO WHERE (correo = @correo AND contrasena = @contrasena)";
+                conexion.Connect();
+                string SQL = "SELECT id_usuario,id_rol, nombres, apellidos, correo, contrasena, fecha_nacimiento, estatura, peso, genero, id_nivel_entrenamiento, id_objetivo, rehabilitacion FROM USUARIO WHERE (correo = @correo AND contrasena = @contrasena)";
                 using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
                 {
                     command.Parameters.AddWithValue("@correo", correo);
@@ -90,7 +94,7 @@ namespace SPARTANFITApp.Repository
                             usuario = new UsuarioDto
                             {
                                 id_rol = Convert.ToInt32(reader["id_rol"]),
-                                nombres = reader["nombre"].ToString(),
+                                nombres = reader["nombres"].ToString(),
                                 apellidos = reader["apellidos"].ToString(),
                                 correo = reader["correo"].ToString(),
                                 contrasena = reader["contrasena"].ToString(),
@@ -116,10 +120,22 @@ namespace SPARTANFITApp.Repository
                         }
                     }
                 }
+                
+                //}
+            }catch(Exception ex)
+            {
+                usuario = new UsuarioDto
+                {
+                    respuesta = -1,
+                    mensaje = "Error al inicio sesión: " + ex.Message
+                };
             }
+            finally
+            {
+                conexion.Disconnect();
+            }
+            return usuario;
 
-            
-            return null;
         }
 
         private bool VerificarCredenciales(string correo, string contrasena)

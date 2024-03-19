@@ -48,7 +48,7 @@ namespace SPARTANFITApp.Services
             UsuarioRepository usuarioRepository = new UsuarioRepository();
             UsuarioDto usuarioResp = usuarioRepository.IniciarSesion(usuario.correo, usuario.contrasena);
 
-            if (usuarioResp.respuesta == 1)
+            if (usuarioResp.respuesta  !=0)
             {
                 usuarioResp.mensaje = "Inicio de sesión correcto";
             }
