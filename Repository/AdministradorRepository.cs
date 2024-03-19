@@ -1,19 +1,16 @@
 ﻿using SPARTANFITApp.Dto;
 using SPARTANFITApp.Utilities;
-
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Net.NetworkInformation;
 using System.Web;
-using System.Web.UI;
 
 namespace SPARTANFITApp.Repository
 {
-    public class EntrenadorRepository
+    public class AdministradorRepository
     {
-        public int registrarEntrenador(EntrenadorDto entrenador)
+        public int registrarAdministrador(AdministradorDto administrador)
         {
             int comando = 0;
             DBContextUtility conexion = new DBContextUtility();
@@ -26,33 +23,33 @@ namespace SPARTANFITApp.Repository
 
             using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
             {
-                command.Parameters.AddWithValue("@id_rol", entrenador.id_rol);
-                command.Parameters.AddWithValue("@nombres", entrenador.nombres);
-                command.Parameters.AddWithValue("@apellidos", entrenador.apellidos);
-                command.Parameters.AddWithValue("@correo", entrenador.correo);
-                command.Parameters.AddWithValue("@contrasena", entrenador.contrasena);
-                command.Parameters.AddWithValue("@fecha_nacimiento", entrenador.fecha_nacimiento);
-                command.Parameters.AddWithValue("@genero", entrenador.genero);
+                command.Parameters.AddWithValue("@id_rol", administrador.id_rol);
+                command.Parameters.AddWithValue("@nombres", administrador.nombres);
+                command.Parameters.AddWithValue("@apellidos", administrador.apellidos);
+                command.Parameters.AddWithValue("@correo", administrador.correo);
+                command.Parameters.AddWithValue("@contrasena", administrador.contrasena);
+                command.Parameters.AddWithValue("@fecha_nacimiento", administrador.fecha_nacimiento);
+                command.Parameters.AddWithValue("@genero", administrador.genero);
 
                 command.ExecuteNonQuery();
             }
             conexion.Disconnect();
             return comando;
         }
-        public bool buscarEntrenador(string correo)
+        public bool buscarAdministrador(string correo)
         {
             DBContextUtility conexion = new DBContextUtility();
             conexion.Connect();
             string SQL = "SELECT COUNT(*) FROM USUARIO WHERE correo = @correo";
-            int entrenadorEncontrado = 0;
+            int administradorEncontrado = 0;
             using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
             {
                 command.Parameters.AddWithValue("@correo", correo);
 
-                entrenadorEncontrado = (int)command.ExecuteScalar();
+                administradorEncontrado = (int)command.ExecuteScalar();
             }
             conexion.Disconnect();
-            if (entrenadorEncontrado > 0)
+            if (administradorEncontrado > 0)
             {
                 return true;
             }
@@ -61,11 +58,11 @@ namespace SPARTANFITApp.Repository
                 return false;
             }
         }
-        public EntrenadorDto IniciarSesion(string correo, string contrasena)
+        public AdministradorDto IniciarSesion(string correo, string contrasena)
         {
             DBContextUtility conexion = new DBContextUtility();
-            EntrenadorDto entrenador = null;
-            EntrenadorDto usuarioResp = new EntrenadorDto();
+            AdministradorDto administrador = null;
+            AdministradorDto administradorResp = new AdministradorDto();
 
 
             try
@@ -81,7 +78,7 @@ namespace SPARTANFITApp.Repository
                     {
                         if (reader.Read())
                         {
-                            entrenador = new EntrenadorDto
+                            administrador = new AdministradorDto
                             {
                                 id_rol = Convert.ToInt32(reader["id_rol"]),
                                 nombres = reader["nombres"].ToString(),
@@ -95,15 +92,15 @@ namespace SPARTANFITApp.Repository
 
                             };
                             conexion.Disconnect();
-                            entrenador.respuesta = 1;
-                            entrenador.mensaje = "Inicio correcto";
-                            return entrenador;
+                            administrador.respuesta = 1;
+                            administrador.mensaje = "Inicio correcto";
+                            return administrador;
                         }
                         else
                         {
-                            usuarioResp.respuesta = 0;
-                            usuarioResp.mensaje = "Inicio Incorrecto";
-                            return usuarioResp;
+                            administradorResp.respuesta = 0;
+                            administradorResp.mensaje = "Inicio Incorrecto";
+                            return administradorResp;
                         }
                     }
                 }
@@ -112,7 +109,7 @@ namespace SPARTANFITApp.Repository
             }
             catch (Exception ex)
             {
-                entrenador = new EntrenadorDto
+                administrador = new AdministradorDto
                 {
                     respuesta = -1,
                     mensaje = "Error al inicio sesión: " + ex.Message
@@ -122,7 +119,7 @@ namespace SPARTANFITApp.Repository
             {
                 conexion.Disconnect();
             }
-            return entrenador;
+            return administrador;
 
         }
 
@@ -142,6 +139,3 @@ namespace SPARTANFITApp.Repository
         }
     }
 }
-
-
-    
