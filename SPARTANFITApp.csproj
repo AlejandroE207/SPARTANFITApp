@@ -175,6 +175,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\IniciarSesion.cshtml" />
     <Content Include="Views\Home\Principal.cshtml" />
+    <Content Include="Views\Home\PrincipalEntrenador.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

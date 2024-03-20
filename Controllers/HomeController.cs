@@ -57,14 +57,28 @@ namespace SPARTANFIT_App.Controllers
             {
                 Session["UserLogged"] = usuarioLogeo;
                 return View("Principal");
+        
             }
             return View("Index");
 
             
 
         }
+        [HttpPost]
+        public ActionResult IniciarSesionEntrenador(EntrenadorDto entrenador)
+        {
+            EntrenadorService entrenadorService = new EntrenadorService();
+            EntrenadorDto entrenadorLogeo = entrenadorService.logueo(entrenador);
 
-        public ActionResult CerrarSesion()
+            if (entrenadorLogeo.respuesta != 0)
+            {
+                Session["UserLogged"] = entrenadorLogeo;
+                return View("PrincipalEntrenador");
+
+            }
+            return View("Index");
+        }
+            public ActionResult CerrarSesion()
         {
             Session["UserLogged"] = null;
             return Redirect("Index");
