@@ -9,9 +9,9 @@ namespace SPARTANFITApp.Services
 {
     public class EntrenadorService
     {
-        public EntrenadorDto registrarEntrenador(EntrenadorDto entrenador)
+        public PersonaDto registrarEntrenador(PersonaDto entrenador)
         {
-            EntrenadorDto EntrenadorResp = new EntrenadorDto();
+            PersonaDto EntrenadorResp = new PersonaDto();
             EntrenadorRepository entrenadorRepository = new EntrenadorRepository();
 
 
@@ -43,21 +43,21 @@ namespace SPARTANFITApp.Services
         }
 
 
-        public EntrenadorDto logueo(EntrenadorDto entrenador)
-        {
-            EntrenadorRepository entrenadorRepository = new EntrenadorRepository();
-            EntrenadorDto entrenadorResp = entrenadorRepository.IniciarSesion(entrenador.correo, entrenador.contrasena);
+        //public PersonaDto logueo(PersonaDto entrenador)
+        //{
+        //    EntrenadorRepository entrenadorRepository = new EntrenadorRepository();
+        //    PersonaDto entrenadorResp = entrenadorRepository.IniciarSesion(entrenador.correo, entrenador.contrasena);
 
-            if (entrenadorResp.respuesta == 1)
-            {
-                entrenadorResp.mensaje = "Inicio de sesión correcto";
-            }
-            else
-            {
-                entrenadorResp.mensaje = "Inicio de sesión incorrecto";
-            }
+        //    if (entrenadorResp.respuesta == 1)
+        //    {
+        //        entrenadorResp.mensaje = "Inicio de sesión correcto";
+        //    }
+        //    else
+        //    {
+        //        entrenadorResp.mensaje = "Inicio de sesión incorrecto";
+        //    }
 
-            return entrenadorResp;
-        }
+        //    return entrenadorResp;
+        //}
     }
 }

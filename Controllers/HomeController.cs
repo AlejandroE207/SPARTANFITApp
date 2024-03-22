@@ -28,7 +28,7 @@ namespace SPARTANFIT_App.Controllers
             UsuarioService usuarioServices = new UsuarioService();
             UsuarioDto resultado = usuarioServices.registroUsuario(usuario);
 
-            if(resultado.respuesta != 0)
+            if(resultado.persona.respuesta != 0)
             {
                 return View("Index",resultado);
             }
@@ -36,8 +36,6 @@ namespace SPARTANFIT_App.Controllers
             {
                 return View(resultado);
             }
-            
-
         }
 
         public ActionResult IniciarSesion()
@@ -46,42 +44,43 @@ namespace SPARTANFIT_App.Controllers
 
             return View();
         }
-
         [HttpPost]
-        public ActionResult IniciarSesion(UsuarioDto usuario)
+        public ActionResult ControladorLogin(PersonaDto persona)
         {
-            UsuarioService usuarioService = new UsuarioService();
-            UsuarioDto usuarioLogeo = usuarioService.logueo(usuario);
-
-            if(usuarioLogeo.respuesta != 0)
+            PersonaService personaService = new PersonaService();
+            PersonaDto personaLogeo = personaService.logueo(persona);
+            if (personaLogeo.id_rol == 1)
             {
-                Session["UserLogged"] = usuarioLogeo;
-                return View("Principal");
-        
+                UsuarioDto usuario = personaService.mapeoPersona_Usuario(personaLogeo);
+                
+                if (usuario.persona.respuesta != 0)
+                {
+                    Session["UserLogged"] = usuario;
+                    return View("Principal",usuario);
+                }
+                else
+                {
+                    return View("Index");
+                }
             }
-            return View("Index");
-
-            
-
-        }
-        [HttpPost]
-        public ActionResult IniciarSesionEntrenador(EntrenadorDto entrenador)
-        {
-            EntrenadorService entrenadorService = new EntrenadorService();
-            EntrenadorDto entrenadorLogeo = entrenadorService.logueo(entrenador);
-
-            if (entrenadorLogeo.respuesta != 0)
+            else
             {
-                Session["UserLogged"] = entrenadorLogeo;
-                return View("PrincipalEntrenador");
+                if (personaLogeo.id_rol == 2)
+                {
+                    if (personaLogeo.respuesta != 0)
+                    {
+                        Session["UserLogged"] = personaLogeo;
+                        return View("PrincipalEntrenador");
+                    }
+                    else
+                    {
+                        return View("Index");
+                    }
 
+                }
             }
-            return View("Index");
+            return View();
         }
-            public ActionResult CerrarSesion()
-        {
-            Session["UserLogged"] = null;
-            return Redirect("Index");
-        }
+
     }
 }

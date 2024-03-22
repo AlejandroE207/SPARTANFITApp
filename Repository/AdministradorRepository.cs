@@ -10,7 +10,7 @@ namespace SPARTANFITApp.Repository
 {
     public class AdministradorRepository
     {
-        public int registrarAdministrador(AdministradorDto administrador)
+        public int registrarAdministrador(PersonaDto administrador)
         {
             int comando = 0;
             DBContextUtility conexion = new DBContextUtility();
@@ -58,11 +58,11 @@ namespace SPARTANFITApp.Repository
                 return false;
             }
         }
-        public AdministradorDto IniciarSesion(string correo, string contrasena)
+        public PersonaDto IniciarSesion(string correo, string contrasena)
         {
             DBContextUtility conexion = new DBContextUtility();
-            AdministradorDto administrador = null;
-            AdministradorDto administradorResp = new AdministradorDto();
+            PersonaDto administrador = null;
+            PersonaDto administradorResp = new PersonaDto();
 
 
             try
@@ -78,7 +78,7 @@ namespace SPARTANFITApp.Repository
                     {
                         if (reader.Read())
                         {
-                            administrador = new AdministradorDto
+                            administrador = new PersonaDto
                             {
                                 id_rol = Convert.ToInt32(reader["id_rol"]),
                                 nombres = reader["nombres"].ToString(),
@@ -109,7 +109,7 @@ namespace SPARTANFITApp.Repository
             }
             catch (Exception ex)
             {
-                administrador = new AdministradorDto
+                administrador = new PersonaDto
                 {
                     respuesta = -1,
                     mensaje = "Error al inicio sesión: " + ex.Message

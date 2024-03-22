@@ -13,7 +13,7 @@ namespace SPARTANFITApp.Repository
 {
     public class EntrenadorRepository
     {
-        public int registrarEntrenador(EntrenadorDto entrenador)
+        public int registrarEntrenador(PersonaDto entrenador)
         {
             int comando = 0;
             DBContextUtility conexion = new DBContextUtility();
@@ -61,11 +61,11 @@ namespace SPARTANFITApp.Repository
                 return false;
             }
         }
-        public EntrenadorDto IniciarSesion(string correo, string contrasena)
+        public PersonaDto IniciarSesion(string correo, string contrasena)
         {
             DBContextUtility conexion = new DBContextUtility();
-            EntrenadorDto entrenador = null;
-            EntrenadorDto usuarioResp = new EntrenadorDto();
+            PersonaDto entrenador = null;
+            PersonaDto usuarioResp = new PersonaDto();
 
 
             try
@@ -81,7 +81,7 @@ namespace SPARTANFITApp.Repository
                     {
                         if (reader.Read())
                         {
-                            entrenador = new EntrenadorDto
+                            entrenador = new PersonaDto
                             {
                                 id_rol = Convert.ToInt32(reader["id_rol"]),
                                 nombres = reader["nombres"].ToString(),
@@ -112,7 +112,7 @@ namespace SPARTANFITApp.Repository
             }
             catch (Exception ex)
             {
-                entrenador = new EntrenadorDto
+                entrenador = new PersonaDto
                 {
                     respuesta = -1,
                     mensaje = "Error al inicio sesión: " + ex.Message

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SPARTANFITApp.Dto
 {
-    public class AdministradorDto
+    public class PersonaDto
     {
         public int id_usuario { get; set; }
         public int id_rol { get; set; }

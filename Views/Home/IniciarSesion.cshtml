@@ -25,7 +25,7 @@
 
         </div>
         <section>
-            @using (Html.BeginForm("IniciarSesion", "Home", FormMethod.Post))
+            @using (Html.BeginForm("ControladorLogin", "Home", FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
                 <h1>Iniciar sesion</h1>
