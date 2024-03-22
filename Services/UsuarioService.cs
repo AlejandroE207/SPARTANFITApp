@@ -9,28 +9,56 @@ namespace SPARTANFITApp.Services
 {
     public class UsuarioService
     {
-        public void registroUsuario(UsuarioDto usuario)
+        public UsuarioDto registroUsuario(UsuarioDto usuario)
         {
+            UsuarioDto usuarioResp = new UsuarioDto();
             UsuarioRepository usuarioRepository = new UsuarioRepository();
-            if (usuarioRepository.buscarUsuario(usuario.correo))
+
+          
+            if (usuarioRepository.buscarUsuario(usuario.persona.correo))
             {
-                usuario.respuesta = 0;
-                usuario.mensaje = "Ya existe el usuario";
+                usuarioResp.persona.respuesta = 0;
+                usuarioResp.persona.mensaje = "Ya existe el usuario";
             }
             else
             {
-                usuario.id_rol = 1;
-                if (usuarioRepository.registroUsuario(usuario) != 0)
+             
+                usuario.persona.id_rol = 1;
+
+                
+                int resultadoRegistro = usuarioRepository.registroUsuario(usuario);
+
+                if (resultadoRegistro != 0)
                 {
-                    usuario.respuesta = 1;
-                    usuario.mensaje = "Se ha registrado el usuario correctamente";
+                    usuarioResp.persona.respuesta = 1;
+                    usuarioResp.persona.mensaje = "Se ha registrado el usuario correctamente";
                 }
                 else
                 {
-                    usuario.respuesta = 0;
-                    usuario.mensaje = "Error en el registro del usuario";
+                    usuarioResp.persona.respuesta = 0;
+                    usuarioResp.persona.mensaje = "Error en el registro del usuario";
                 }
             }
+            return usuarioResp;
         }
+
+
+        public UsuarioDto logueo(UsuarioDto usuario)
+        {
+            UsuarioRepository usuarioRepository = new UsuarioRepository();
+            UsuarioDto usuarioResp = usuarioRepository.IniciarSesion(usuario.persona.correo, usuario.persona.contrasena);
+
+            if (usuarioResp.persona.respuesta  !=0)
+            {
+                usuarioResp.persona.mensaje = "Inicio de sesión correcto";
+            }
+            else
+            {
+                usuarioResp.persona.mensaje = "Inicio de sesión incorrecto";
+            }
+
+            return usuarioResp;
+        }
+
     }
 }

@@ -1,10 +1,10 @@
 ﻿@keyframes cambioFondo {
-    0% { background-color: #ffffff; }
-    50% { background-color: #878787; }
-    50% { background-color: #5e5e5e; }
-    50% { background-color: #000000; }
+    0% { background-color: #fd6060; } 
+    25% { background-color: #fb8b24; } 
+    50% { background-color: #fd6060; } 
+    75% { background-color: #fb8b24; } 
+    100% { background-color: #fd6060; } 
 }
-
 body {
     animation: cambioFondo 10s infinite;
 }
@@ -19,7 +19,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 0 1.25rem 0.125rem #dddddd; /* 20px 2px */
+    box-shadow: 0 0 1.25rem 0.125rem #dddddd; 
     background-color: rgb(114, 5, 5);
     padding: 0 1rem;
 }
@@ -56,34 +56,34 @@ ul a:hover {
     color: rgb(235, 244, 0);
     transform: scale(1.1);
 }
-
 form {
-    background-color: rgb(245, 204, 1);
-    border-radius: 2rem; /* 32px */
-    box-shadow: 0 0 0.625rem rgba(255, 250, 250, 0.1); /* 10px */
-    padding: 3.75rem; /* 60px */
-    max-width: 25rem; /* 400px */
+    background: linear-gradient(135deg, #fd6060, #fb8b24);
+    border-radius: 2rem; 
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2); 
+    padding: 3.75rem; 
+    max-width: 25rem; 
     margin: 0 auto;
     animation: fadeIn 0.5s ease;
-    margin-top: 4cm; /* Converted from 4cm to rem */
-    align-items:center;
+    margin-top: 4cm; 
 }
 
 form h1 {
     text-align: center;
-    margin-bottom: 1.25rem; /* 20px */
+    margin-bottom: 1.25rem; 
     font-family: "Rowdies", sans-serif;
     font-size: 2rem;
+    color: #fff; 
 }
 
 form div {
-    margin-bottom: 1.875rem; /* 30px */
+    margin-bottom: 1.875rem; 
 }
 
 label {
     display: block;
     font-weight: bold;
-    margin-bottom: 0.3125rem; /* 5px */
+    margin-bottom: 0.3125rem; 
+    color: #fff; 
 }
 
 input[type="text"],
@@ -93,10 +93,15 @@ input[type="number"],
 input[type="date"],
 select {
     width: 100%;
-    padding: 0.4375rem; 
-    border: 0.125rem solid #ee0505; 
-    border-radius: 0.3125rem; 
+    padding: 0.75rem; 
+    border: none;
+    border-radius: 0.5rem; 
     box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.2); 
+    color: #030303; 
+    margin-top: 0.5rem; 
+    box-shadow: inset 0 0 0.25rem rgba(0, 0, 0, 0.1); 
+    background-color:  linear-gradient(135deg, #fd6060, #fb8b24);
 }
 
 select {
@@ -107,59 +112,68 @@ select {
     background-position-x: calc(100% - 0.75rem); 
     background-position-y: 50%;
     padding-right: 1.875rem; 
+ 
+   background-color:  linear-gradient(135deg, #fd6060, #fb8b24);
 }
 
 .botCre {
-    background-color: #15b50c;
-    color: #fff;
-    border: none;
-    border-radius: 0.3125rem; 
+    background-color:rgb(0, 127, 254);
+    color: white;
+    border: 2rem;
+    border-radius: 0.5rem; 
     padding: 0.75rem 1.25rem; 
     font-size: 1rem; 
+    cursor: pointer;
     transition: background-color 0.3s ease;
     width: 100%;
     font-family: "Yatra One", system-ui;
+    text-transform: uppercase;
+}
+
+.botCan {
+    background-color: transparent;
+    color: #000000;
+    border: 0.125rem solid #fff; 
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: mediumspringgreen;
+    color:black;
 }
 
 .checkbox-link {
     font-size: 0.875rem; 
+    color: #fff; 
 }
 
 .checkbox-link a {
     margin-left: 0.3125rem; 
+    color: #fff; 
 }
+
+
 .botoncito {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 5rem; 
-
-}
-
-.container {
     text-align: center;
-    width:100%;
-}
-
-.botoncilo_lindo {
-    border-radius: 3%;
-    padding: 2rem;
-
-    background-color: red;
- 
-    color: white;
-    text-decoration: none;
-}
-
-    .botoncilo_lindo:hover {
-        background-color: blueviolet;
-        color:black;
+    margin-top: 2rem; 
+} .botoncito .container {
+        display: inline-block;
+        background-color: #fd6060; 
+        border: 2px solid #fd6060; 
+        border-radius: 0.5rem; 
+        padding: 1rem 1.5rem; 
+        transition: background-color 0.3s ease; 
     }
- .botoncancelar{
-     background:red;
 
- }
+  .botoncito .container a {
+            text-decoration: none; 
+            color: #fff; 
+            font-weight: bold; 
+            font-size: 1rem; 
+            font-family: "Yatra One", system-ui; 
+        }
+
+  .botoncito .container a:hover {
+                background-color: #fb8b24; 
+                border-color: #fb8b24; 
+            }
+
