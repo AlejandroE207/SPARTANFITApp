@@ -15,28 +15,28 @@ namespace SPARTANFITApp.Services
             UsuarioRepository usuarioRepository = new UsuarioRepository();
 
           
-            if (usuarioRepository.buscarUsuario(usuario.correo))
+            if (usuarioRepository.buscarUsuario(usuario.persona.correo))
             {
-                usuarioResp.respuesta = 0;
-                usuarioResp.mensaje = "Ya existe el usuario";
+                usuarioResp.persona.respuesta = 0;
+                usuarioResp.persona.mensaje = "Ya existe el usuario";
             }
             else
             {
              
-                usuario.id_rol = 1;
+                usuario.persona.id_rol = 1;
 
                 
                 int resultadoRegistro = usuarioRepository.registroUsuario(usuario);
 
                 if (resultadoRegistro != 0)
                 {
-                    usuarioResp.respuesta = 1;
-                    usuarioResp.mensaje = "Se ha registrado el usuario correctamente";
+                    usuarioResp.persona.respuesta = 1;
+                    usuarioResp.persona.mensaje = "Se ha registrado el usuario correctamente";
                 }
                 else
                 {
-                    usuarioResp.respuesta = 0;
-                    usuarioResp.mensaje = "Error en el registro del usuario";
+                    usuarioResp.persona.respuesta = 0;
+                    usuarioResp.persona.mensaje = "Error en el registro del usuario";
                 }
             }
             return usuarioResp;
@@ -46,15 +46,15 @@ namespace SPARTANFITApp.Services
         public UsuarioDto logueo(UsuarioDto usuario)
         {
             UsuarioRepository usuarioRepository = new UsuarioRepository();
-            UsuarioDto usuarioResp = usuarioRepository.IniciarSesion(usuario.correo, usuario.contrasena);
+            UsuarioDto usuarioResp = usuarioRepository.IniciarSesion(usuario.persona.correo, usuario.persona.contrasena);
 
-            if (usuarioResp.respuesta  !=0)
+            if (usuarioResp.persona.respuesta  !=0)
             {
-                usuarioResp.mensaje = "Inicio de sesión correcto";
+                usuarioResp.persona.mensaje = "Inicio de sesión correcto";
             }
             else
             {
-                usuarioResp.mensaje = "Inicio de sesión incorrecto";
+                usuarioResp.persona.mensaje = "Inicio de sesión incorrecto";
             }
 
             return usuarioResp;

@@ -9,9 +9,9 @@ namespace SPARTANFITApp.Services
 {
     public class AdministradorService
     {
-        public AdministradorDto registrarAdministrador(AdministradorDto administrador)
+        public PersonaDto registrarAdministrador(PersonaDto administrador)
         {
-            AdministradorDto administradorResp = new AdministradorDto();
+            PersonaDto administradorResp = new PersonaDto();
             AdministradorRepository administradorRepository = new AdministradorRepository();
 
 
@@ -43,21 +43,21 @@ namespace SPARTANFITApp.Services
         }
 
 
-        public AdministradorDto logueo(AdministradorDto administrador)
-        {
-            AdministradorRepository administradorRepository = new AdministradorRepository();
-            AdministradorDto administradorResp = administradorRepository.IniciarSesion(administrador.correo, administrador.contrasena);
+        //public PersonaDto logueo(PersonaDto administrador)
+        //{
+        //    AdministradorRepository administradorRepository = new AdministradorRepository();
+        //    PersonaDto administradorResp = administradorRepository.IniciarSesion(administrador.correo, administrador.contrasena);
 
-            if (administradorResp.respuesta == 1)
-            {
-                administradorResp.mensaje = "Inicio de sesión correcto";
-            }
-            else
-            {
-                administradorResp.mensaje = "Inicio de sesión incorrecto";
-            }
+        //    if (administradorResp.respuesta == 1)
+        //    {
+        //        administradorResp.mensaje = "Inicio de sesión correcto";
+        //    }
+        //    else
+        //    {
+        //        administradorResp.mensaje = "Inicio de sesión incorrecto";
+        //    }
 
-            return administradorResp;
-        }
+        //    return administradorResp;
+        //}
     }
 }
