@@ -17,30 +17,39 @@ namespace SPARTANFITApp.Repository
         public int registroUsuario(UsuarioDto usuario)
         {
             int comando = 0;
-            DBContextUtility conexion = new DBContextUtility();
-            conexion.Connect();
-
-            string SQL = "INSERT INTO USUARIO (id_rol, nombres, apellidos, correo, contrasena, fecha_nacimiento, estatura, peso, genero, id_nivel_entrenamiento, id_objetivo, rehabilitacion)"
-                        + "VALUES (@id_rol, @nombres, @apellidos, @correo, @contrasena, @fecha_nacimiento, @estatura, @peso, @genero, @id_nivel_entrenamiento, @id_objetivo, @rehabilitacion)";
-
-
-            using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+            try
             {
-                command.Parameters.AddWithValue("@id_rol", usuario.persona.id_rol);
-                command.Parameters.AddWithValue("@nombres", usuario.persona.nombres);
-                command.Parameters.AddWithValue("@apellidos", usuario.persona.apellidos);
-                command.Parameters.AddWithValue("@correo", usuario.persona.correo);
-                command.Parameters.AddWithValue("@contrasena", usuario.persona.contrasena);
-                command.Parameters.AddWithValue("@fecha_nacimiento", usuario.persona.fecha_nacimiento);
-                command.Parameters.AddWithValue("@estatura", usuario.estatura);
-                command.Parameters.AddWithValue("@peso", usuario.peso);
-                command.Parameters.AddWithValue("@genero", usuario.persona.genero);
-                command.Parameters.AddWithValue("@id_nivel_entrenamiento", usuario.id_nivel_entrenamiento);
-                command.Parameters.AddWithValue("@id_objetivo", usuario.id_objetivo);
-                command.Parameters.AddWithValue("@rehabilitacion", usuario.rehabilitacion);
-                command.ExecuteNonQuery();
+                DBContextUtility conexion = new DBContextUtility();
+                conexion.Connect();
+
+                string SQL = "INSERT INTO USUARIO (id_rol, nombres, apellidos, correo, contrasena, fecha_nacimiento, estatura, peso, genero, id_nivel_entrenamiento, id_objetivo, rehabilitacion)"
+                            + "VALUES (@id_rol, @nombres, @apellidos, @correo, @contrasena, @fecha_nacimiento, @estatura, @peso, @genero, @id_nivel_entrenamiento, @id_objetivo, @rehabilitacion)";
+
+
+                using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+                {
+                    command.Parameters.AddWithValue("@id_rol", usuario.persona.id_rol);
+                    command.Parameters.AddWithValue("@nombres", usuario.persona.nombres);
+                    command.Parameters.AddWithValue("@apellidos", usuario.persona.apellidos);
+                    command.Parameters.AddWithValue("@correo", usuario.persona.correo);
+                    command.Parameters.AddWithValue("@contrasena", usuario.persona.contrasena);
+                    command.Parameters.AddWithValue("@fecha_nacimiento", usuario.persona.fecha_nacimiento);
+                    command.Parameters.AddWithValue("@estatura", usuario.estatura);
+                    command.Parameters.AddWithValue("@peso", usuario.peso);
+                    command.Parameters.AddWithValue("@genero", usuario.persona.genero);
+                    command.Parameters.AddWithValue("@id_nivel_entrenamiento", usuario.id_nivel_entrenamiento);
+                    command.Parameters.AddWithValue("@id_objetivo", usuario.id_objetivo);
+                    command.Parameters.AddWithValue("@rehabilitacion", usuario.rehabilitacion);
+                    command.ExecuteNonQuery();
+                }
+                conexion.Disconnect();
+                comando = 1;
             }
-            conexion.Disconnect();
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            
             return comando;
         }
 

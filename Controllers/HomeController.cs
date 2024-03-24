@@ -23,8 +23,9 @@ namespace SPARTANFIT_App.Controllers
         }
 
         [HttpPost]
-        public ActionResult Formulario_Registro(UsuarioDto usuario)
+        public ActionResult Formulario_Registro(UsuarioDto usuario, string nombre)
         {
+            string nombreUsuario = nombre;
             UsuarioService usuarioServices = new UsuarioService();
             UsuarioDto resultado = usuarioServices.registroUsuario(usuario);
 

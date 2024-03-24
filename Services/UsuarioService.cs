@@ -12,6 +12,7 @@ namespace SPARTANFITApp.Services
         public UsuarioDto registroUsuario(UsuarioDto usuario)
         {
             UsuarioDto usuarioResp = new UsuarioDto();
+            usuarioResp.persona = new PersonaDto();
             UsuarioRepository usuarioRepository = new UsuarioRepository();
 
           
