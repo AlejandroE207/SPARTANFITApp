@@ -56,7 +56,7 @@ namespace SPARTANFIT_App.Controllers
                 if (usuario.persona.respuesta != 0)
                 {
                     Session["UserLogged"] = usuario;
-                    return View("Principal",usuario);
+                    return View("Principal");
                 }
                 else
                 {
@@ -82,5 +82,6 @@ namespace SPARTANFIT_App.Controllers
             return View();
         }
 
+        public ActionResult PerfilUsuario() { return View("PerfilUsuario"); }
     }
 }

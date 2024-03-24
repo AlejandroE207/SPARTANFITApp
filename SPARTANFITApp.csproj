@@ -179,6 +179,7 @@
     <Content Include="Views\Home\IniciarSesion.cshtml" />
     <Content Include="Views\Home\Principal.cshtml" />
     <Content Include="Views\Home\PrincipalEntrenador.cshtml" />
+    <Content Include="Views\Home\PerfilUsuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
