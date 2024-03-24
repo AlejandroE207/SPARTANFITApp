@@ -6,7 +6,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="~/StylesFormularioR.css" rel="stylesheet" />
+    <link href="~/Scripts/css/StyleRegistro.css" rel="stylesheet" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap">
@@ -106,21 +107,24 @@
                     </select>
                 </div>
             </div>
-            <div class="form-row">
-
-                <button class="botCre" type="submit">Crear cuenta</button>
-            </div>
-            <div class="botoncito">
-                <div class="container">
-                    @Html.ActionLink("Cancelar", "Index", "Home", null, new { @class = "botoncito botoncancelar" })
+            <div class="centrado">
+                <div class="form-row">
+                    <button class="boton-crear" onclick="crearCuenta()">Crear cuenta</button>
+                </div>
+                <div class="botoncito">
+                    <div class="container">
+                        <button class="boton-cancelar" onclick="confirmarCancelar()">Cancelar</button>
+                    </div>
                 </div>
             </div>
+
+
         }  @if (ViewData["Mensaje"] != null)
         {
             <p>@ViewData["Mensaje"]</p>
         }
     </div>
-   
+
 
 
     <script>
@@ -136,7 +140,23 @@
             }
         });
     </script>
+    <script>
+  function crearCuenta() {
 
+      document.getElementById("mensaje-exito").style.display = "block";
+        window.location.href = '@Url.Action("IniciarSesion", "Home")';
+      }
+
+    </script>
+
+
+    <script>
+    function confirmarCancelar() {
+        if (confirm("¿Estás seguro de que quieres cancelar?")) {
+            window.location.href = '@Url.Action("Index", "Home")';
+        } }
+
+    </script>
 </body>
 
 </html>
