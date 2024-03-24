@@ -135,18 +135,21 @@
     <Compile Include="Services\EntrenadorService.cs" />
     <Compile Include="Services\PersonaService.cs" />
     <Compile Include="Services\UsuarioService.cs" />
+    <Compile Include="Utilities\CorreoUtility.cs" />
     <Compile Include="Utilities\DBContextUtility.cs" />
+    <Compile Include="Utilities\FechaUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
-    <Content Include="ImagenIndex.jpg" />
-    <Content Include="ImagenIndex1.jpg" />
-    <Content Include="ImagenIndex2.jpg" />
-    <Content Include="imagenIndex3.jpg" />
-    <Content Include="ImagenLI.jpg" />
+    <Content Include="Scripts\css\StyleRegistro.css" />
+    <Content Include="Scripts\img\ImagenIndex.jpg" />
+    <Content Include="Scripts\img\ImagenIndex1.jpg" />
+    <Content Include="Scripts\img\ImagenIndex2.jpg" />
+    <Content Include="Scripts\img\imagenIndex3.jpg" />
+    <Content Include="Scripts\img\ImagenLI.jpg" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
     <Content Include="Scripts\jquery-3.7.1.slim.js" />
@@ -159,9 +162,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="StylesFormularioR.css" />
-    <Content Include="stylesindex.css" />
-    <Content Include="stylesIniciarSesion.css" />
+    <Content Include="Scripts\css\stylesindex.css" />
+    <Content Include="Scripts\css\stylesIniciarSesion.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -180,7 +182,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\" />
     <Folder Include="Models\" />
     <Folder Include="Views\InicioSesion\" />
   </ItemGroup>
