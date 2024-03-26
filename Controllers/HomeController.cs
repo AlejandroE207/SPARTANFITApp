@@ -83,6 +83,6 @@ namespace SPARTANFIT_App.Controllers
             return View();
         }
 
-        public ActionResult PerfilUsuario() { return View("PerfilUsuario"); }
+        public ActionResult Perfil() { return View("Perfil"); }
     }
 }
