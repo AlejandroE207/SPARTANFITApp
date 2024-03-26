@@ -1,6 +1,5 @@
-﻿
-@{
-    Layout = null;
+﻿@{
+    ViewBag.Title = "Perfil";
 }
 
 <!DOCTYPE html>
@@ -8,10 +7,117 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Perfil</title>
+    <title>Principal</title>
 </head>
 <body>
-    <div> 
+    <header>
+        <a href="#" class="logo"> SPARTANFIT</a>
+        <ul>
+            <li>@Html.ActionLink("Rutina", "Rutina", "Home")</li>
+            <li>@Html.ActionLink("Plan Alimenticio", "PlanAlimenticio", "Home")</li>
+            <li>@Html.ActionLink("Perfil", "Perfil", "Home")</li>
+            <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
+        </ul>
+    </header>
+    <div class="mostrarT">
+        <div>
+            <p>
+                Nombres:
+            </p>
+            <div class="campos-container">
+                @Model.persona.nombres
+            </div>
+        </div>
+        <div>
+            <p>
+                Apellidos:
+            </p>
+            <div class="campos-container">
+                @Model.persona.Apellidos
+            </div>
+        </div>
+        <div>
+            <p>
+                Fecha de Nacimiento:
+            </p>
+            <div class="campos-container">
+                @Model.persona.fecha_nacimiento
+            </div>
+        </div>
+        <div>
+            <p>
+                Correo:
+            </p>
+            <div class="campos-container">
+                @Model.persona.correo
+            </div>
+        </div>
+        <div>
+            <p>
+                Genero:
+            </p>
+            <div class="campos-container">
+                @Model.persona.genero
+            </div>
+        </div>
+        <div>
+            <p>
+                Estatura:
+            </p>
+            <div class="campos-container">
+                @Model.usuario.estatura
+            </div>
+        </div>
+        <div>
+            <p>
+                Peso:
+            </p>
+            <div class="campos-container">
+                @Model.usuario.peso
+            </div>
+        </div>
+        <div>
+            <p>
+                Rehabilitacion:
+            </p>
+            <div class="campos-container">
+                @Model.usuario.rehabilitacion
+            </div>
+        </div>
+        <div>
+            <p>
+                Nivel de Entrenamiento:
+            </p>
+            <div class="campos-container">
+                @Model.usuario.id_nivel_entrenamiento
+            </div>
+        </div>
+        <div>
+            <p>
+                Objetivo:
+            </p>
+            <div class="campos-container">
+                @Model.usuario.id_objetivo
+            </div>
+
+        </div>
     </div>
+    <div class="centrarB">
+        <div class="boton">
+            <button class="botCre" type="button" onclick="verProgreso()">Ver Progreso</button>
+        </div>
+        <div class="boton">
+            <button class="botCan" type="button" onclick="actualizarDatos()">Actualizar Datos</button>
+        </div>
+    </div>
+
+    <script>
+        function verProgreso() {
+            window.location.href = '@Url.Action("Progreso", "Home")';
+        }
+    function actualizarDatos() {
+        window.location.href ='@Url.Action("ActualizarObjetivo", "Home")';
+    }
+    </script>
 </body>
 </html>

@@ -153,4 +153,40 @@ namespace SPARTANFITApp.Repository
                 return count > 0;
             }
         }
-    } }
+
+        public int ActualizarObjetivoUsuario(UsuarioDto usuario)
+        {
+            int comando = 1;
+            DBContextUtility conexion = new DBContextUtility();
+            conexion.Connect();
+
+            string SQL = "UPDATE USUARIO SET id_nivel_entrenamiento = @id_nivel_entrenamiento, id_objetivo = @id_objetivo, rehabilitacion = @rehabilitacion " + "WHERE correo = @correo";
+            using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+            {
+                command.Parameters.AddWithValue("@id_nivel_entrenamiento", usuario.id_nivel_entrenamiento);
+                command.Parameters.AddWithValue("@id_objetivo", usuario.id_objetivo);
+                command.Parameters.AddWithValue("@rehabilitacion", usuario.rehabilitacion);
+                command.ExecuteNonQuery();
+            }
+            conexion.Disconnect();
+            return comando;
+        }
+        public int EliminarUsuario(UsuarioDto usuario)
+        {
+            int filasAfectadas = 0;
+            DBContextUtility conexion = new DBContextUtility();
+            conexion.Connect();
+            string SQL = "DELETE FROM USUARIO WHERE correo = @correo";
+            using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+
+            {
+                command.Parameters.AddWithValue("@id_usuario", usuario.persona.correo);
+                filasAfectadas = command.ExecuteNonQuery();
+            }
+            conexion.Disconnect();
+            return filasAfectadas;
+        }
+
+    }
+} 
+    
