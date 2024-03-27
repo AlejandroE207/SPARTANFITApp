@@ -56,8 +56,10 @@ namespace SPARTANFIT_App.Controllers
                 
                 if (usuario.persona.respuesta != 0)
                 {
+                    UsuarioService usuarioService = new UsuarioService();
+                    usuario = usuarioService.logueo(usuario);
                     Session["UserLogged"] = usuario;
-                    return View("Principal");
+                    return View("Perfil");
                 }
                 else
                 {
@@ -84,5 +86,60 @@ namespace SPARTANFIT_App.Controllers
         }
 
         public ActionResult Perfil() { return View("Perfil"); }
+
+        public ActionResult ActualizarObjetivo() { return View("ActualizarObjetivo"); }
+
+        [HttpPost]
+        public ActionResult ActualizarObjetivo(UsuarioDto usuObjetivo)
+        {
+            UsuarioDto usuario = new UsuarioDto();
+            usuario.persona = new PersonaDto();
+            UsuarioService usuarioService = new UsuarioService();
+            usuario = (UsuarioDto) Session["UserLogged"];
+
+            usuario.rehabilitacion = usuObjetivo.rehabilitacion;
+
+            if(usuario.rehabilitacion == 1)
+            {
+                usuario.id_objetivo = 0;
+                usuario.id_nivel_entrenamiento = 0;
+            }
+            else
+            {
+                usuario.id_objetivo = usuObjetivo.id_objetivo;
+                usuario.id_nivel_entrenamiento = usuObjetivo.id_nivel_entrenamiento;
+            }
+
+            usuario = usuarioService.actualizarObjetivo(usuario);
+
+            if(usuario.persona.respuesta != 0)
+            {
+                return View("Perfil");
+            }
+            else
+            {
+                return View("ActualizarObjetivo");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EliminarCuenta()
+        {
+            UsuarioDto usuario = new UsuarioDto();
+            usuario.persona = new PersonaDto();
+            UsuarioService usuarioService = new UsuarioService();
+            usuario = (UsuarioDto)Session["UserLogged"];
+
+            usuario = usuarioService.eliminarUsuario(usuario);
+
+            if (usuario.persona.respuesta != 0)
+            {
+                return View("Index");
+            }
+            else
+            {
+                return View("ActualizarObjetivo");
+            }
+        }
     }
 }

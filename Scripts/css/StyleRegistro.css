@@ -181,3 +181,17 @@ select {
         color:black;
 
     }
+
+.boton-eliminar {
+    width: 200px;
+    background-color: red;
+    color: #ffff;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: "Yatra One", system-ui;
+    text-transform: uppercase;
+}

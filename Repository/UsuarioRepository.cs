@@ -76,35 +76,26 @@ namespace SPARTANFITApp.Repository
             }
         }
 
-        public UsuarioDto IniciarSesion(string correo, string contrasena)
+        public UsuarioDto IniciarSesion(UsuarioDto usuario)
         {
             DBContextUtility conexion = new DBContextUtility();
-            UsuarioDto usuario = new UsuarioDto();
             UsuarioDto usuarioResp = new UsuarioDto();
-            usuario.persona = new PersonaDto();
             
             try
             {
                 conexion.Connect();
-                string SQL = "SELECT id_usuario,id_rol, nombres, apellidos, correo, contrasena, fecha_nacimiento, estatura, peso, genero, id_nivel_entrenamiento, id_objetivo, rehabilitacion FROM USUARIO WHERE (correo = @correo AND contrasena = @contrasena)";
+                string SQL = "SELECT estatura, peso, id_nivel_entrenamiento, id_objetivo, rehabilitacion FROM USUARIO WHERE (correo = @correo AND contrasena = @contrasena)";
                 using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
                 {
-                    command.Parameters.AddWithValue("@correo", correo);
-                    command.Parameters.AddWithValue("@contrasena", contrasena);
+                    command.Parameters.AddWithValue("@correo", usuario.persona.correo);
+                    command.Parameters.AddWithValue("@contrasena", usuario.persona.contrasena);
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-
-                            usuario.persona.id_rol = Convert.ToInt32(reader["id_rol"]);
-                            usuario.persona.nombres = reader["nombres"].ToString();
-                            usuario.persona.apellidos = reader["apellidos"].ToString();
-                            usuario.persona.correo = reader["correo"].ToString();
-                            usuario.persona.fecha_nacimiento = reader["fecha_nacimiento"].ToString();
                             usuario.estatura = Convert.ToInt32(reader["estatura"]);
                             usuario.peso = Convert.ToDouble(reader["peso"]);
-                            usuario.persona.genero = reader["genero"].ToString();
                             usuario.id_nivel_entrenamiento = Convert.ToInt32(reader["id_nivel_entrenamiento"]);
                             usuario.id_objetivo = Convert.ToInt32(reader["id_objetivo"]);
                             usuario.rehabilitacion = Convert.ToInt32(reader["rehabilitacion"]);
@@ -139,51 +130,65 @@ namespace SPARTANFITApp.Repository
 
         }
 
-        private bool VerificarCredenciales(string correo, string contrasena)
-        {
-            DBContextUtility conexion = new DBContextUtility();
-            conexion.Connect();
-            string SQL = "SELECT COUNT(*) FROM USUARIO WHERE (correo = @correo AND contrasena = @contrasena)";
-            using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
-            {
-                command.Parameters.AddWithValue("@correo", correo);
-                command.Parameters.AddWithValue("@contrasena", contrasena);
-
-                var count = (int)command.ExecuteScalar();
-                return count > 0;
-            }
-        }
 
         public int ActualizarObjetivoUsuario(UsuarioDto usuario)
         {
-            int comando = 1;
-            DBContextUtility conexion = new DBContextUtility();
-            conexion.Connect();
 
-            string SQL = "UPDATE USUARIO SET id_nivel_entrenamiento = @id_nivel_entrenamiento, id_objetivo = @id_objetivo, rehabilitacion = @rehabilitacion " + "WHERE correo = @correo";
-            using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+            int id = usuario.persona.id_usuario;
+            int comando = 0;
+            DBContextUtility conexion = new DBContextUtility();
+            try
             {
-                command.Parameters.AddWithValue("@id_nivel_entrenamiento", usuario.id_nivel_entrenamiento);
-                command.Parameters.AddWithValue("@id_objetivo", usuario.id_objetivo);
-                command.Parameters.AddWithValue("@rehabilitacion", usuario.rehabilitacion);
-                command.ExecuteNonQuery();
+
+                conexion.Connect();
+                string SQL = "UPDATE USUARIO SET id_nivel_entrenamiento = @id_nivel_entrenamiento, id_objetivo = @id_objetivo, rehabilitacion = @rehabilitacion " + "WHERE correo = @correo";
+                using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+                {
+                    command.Parameters.AddWithValue("@id_nivel_entrenamiento", usuario.id_nivel_entrenamiento);
+                    command.Parameters.AddWithValue("@id_objetivo", usuario.id_objetivo);
+                    command.Parameters.AddWithValue("@rehabilitacion", usuario.rehabilitacion);
+                    command.Parameters.AddWithValue("@correo", usuario.persona.correo);
+                    command.ExecuteNonQuery();
+                }
+                comando = 1;
             }
-            conexion.Disconnect();
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                conexion.Disconnect();
+            }
+            
+
+            
             return comando;
         }
         public int EliminarUsuario(UsuarioDto usuario)
         {
             int filasAfectadas = 0;
             DBContextUtility conexion = new DBContextUtility();
-            conexion.Connect();
-            string SQL = "DELETE FROM USUARIO WHERE correo = @correo";
-            using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
-
+            try
             {
-                command.Parameters.AddWithValue("@id_usuario", usuario.persona.correo);
-                filasAfectadas = command.ExecuteNonQuery();
+                conexion.Connect();
+                string SQL = "DELETE FROM USUARIO WHERE correo = @correo";
+                using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+
+                {
+                    command.Parameters.AddWithValue("@correo", usuario.persona.correo);
+                    command.ExecuteNonQuery();
+                }
+                filasAfectadas = 1;
+            }catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
             }
-            conexion.Disconnect();
+            finally
+            {
+                conexion.Disconnect();
+            }
+
             return filasAfectadas;
         }
 
