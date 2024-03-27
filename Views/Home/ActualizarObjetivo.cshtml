@@ -5,12 +5,18 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <link href="~/Scripts/css/StyleRegistro.css" rel="stylesheet" />
-        <meta name="viewport" content="width=device-width" />
-        <title>ActualizarObjetivo</title>
+<head>
+    <link href="~/Scripts/css/StyleRegistro.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap"
+          rel="stylesheet">
+    <meta name="viewport" content="width=device-width" />
+    <title>ActualizarObjetivo</title>
 
-    </head>
+</head>
     
     <body>
         <header>
@@ -81,7 +87,7 @@
                     <p>@ViewData["Mensaje"]</p>
                 }
             </div>
-            @using (Html.BeginForm("EliminarCuenta", "Home", FormMethod.Post))
+            @using (Html.BeginForm("EliminarCuenta", "Home", FormMethod.Post, new { @class = "formEli" }))
             {
                 @Html.AntiForgeryToken()
                 <div class="botoncitoE">
@@ -89,6 +95,8 @@
                         <button class="boton-eliminar" onclick="confirmarEliminar()">Eliminar Cuenta</button>
                     </div>
                 </div>
+            }
+
             }  @if (ViewData["Mensaje"] != null)
             {
                 <p>@ViewData["Mensaje"]</p>

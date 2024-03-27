@@ -61,7 +61,7 @@ ul {
         transition: 0.5s;
         text-decoration: none;
         margin-right: 2rem;
-        color: rgb(255, 255, 255); /* Cambiado a blanco para mayor contraste */
+        color: rgb(255, 255, 255);
         font-family: "Yatra One", system-ui;
         font-weight: 400;
         font-style: normal;
@@ -70,14 +70,14 @@ ul {
 
         ul a:hover {
             font-size: 1rem;
-            color: #ffd700; /* Cambiado a amarillo dorado relacionado con la cultura espartana */
+            color: #ffd700;
             transform: scale(1.1);
         }
 
 form {
-    background: linear-gradient(135deg, #ab0404, #630808);
+    background: linear-gradient(135deg, #bc0707, #cc0303);
     border-radius: 2rem;
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 1rem rgba(222, 10, 10, 0.2);
     padding: 3.75rem;
     max-width: 25rem;
     margin: 0 auto;
@@ -139,59 +139,70 @@ select {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 12rem; 
+    height: 12rem;
 }
 
 .boton-crear {
-    width: 200px; 
-    margin-bottom: 0.5rem; 
-    background-color: gold; 
-    color: black; 
-    border: none; 
-    border-radius: 0.5rem; 
-    padding: 0.75rem 1.25rem; 
+    width: 12rem;
+    margin-bottom: 0.5rem;
+    background-color: gold;
+    color: black;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 1rem 3rem;
     font-size: 1rem;
+    margin-top: 10rem;
     cursor: pointer;
-    transition: background-color 0.3s ease; 
+    transition: background-color 0.3s ease;
     font-family: "Yatra One", system-ui;
-    text-transform: uppercase; 
+    text-transform: uppercase;
 }
 
     .boton-crear:hover {
         background-color: limegreen;
-        color:black;
+        color: black;
     }
 
 .boton-cancelar {
-    width: 200px; 
-    background-color: red; 
-    color: #ffff; 
-    border: none; 
-    border-radius: 0.5rem; 
-    padding: 0.75rem 1.25rem; 
-    font-size: 1rem; 
-    cursor: pointer; 
-    transition: background-color 0.3s ease; 
-    font-family: "Yatra One", system-ui; 
-    text-transform: uppercase; 
-}
-
-    .boton-cancelar:hover {
-        background-color:palevioletred; 
-        color:black;
-
-    }
-
-.boton-eliminar {
-    width: 200px;
-    background-color: red;
-    color: #ffff;
+    width: 12rem;
+    background-color: gold;
+    color: black;
     border: none;
     border-radius: 0.5rem;
-    padding: 0.75rem 1.25rem;
+    padding: 1rem 3rem;
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
     font-family: "Yatra One", system-ui;
     text-transform: uppercase;
+}
+
+    .boton-cancelar:hover {
+        background-color: rgb(14, 108, 232);
+        color: black;
+    }
+
+.boton-eliminar {
+    width: 12rem;
+    background-color: gold;
+    color: #171717;
+    border-radius: 1rem;
+    border-color: #ee0000fe;
+    padding: 1rem 3rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: "Yatra One", system-ui;
+    text-transform: uppercase;
+}
+
+    .boton-eliminar:hover {
+        background-color: rgba(222, 0, 0, 0.708);
+        color: white;
+    }
+
+.formEli {
+    margin-top: -6rem;
+    background-color: rgb(246, 0, 0);
+    text-align: center;
 }

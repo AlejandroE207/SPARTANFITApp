@@ -6,182 +6,117 @@ header {
     left: 0;
     right: 0;
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
     align-items: center;
     box-shadow: 0 0 20px 2px #ffffff;
     background-color: rgb(114, 5, 5);
-    padding: 0 1rem; 
+    padding: 0 1rem;
     z-index: 100;
 }
 
 .logo {
     font-size: 2rem;
-    margin-right: auto; 
-    text-decoration: none; 
+    margin-right: auto;
+    text-decoration: none;
     color: rgb(255, 255, 255);
     font-family: "Rowdies", sans-serif;
     font-weight: 700;
     font-style: normal;
-  }
+}
 
 
-  ul {
+ul {
     display: flex;
     list-style: none;
 }
 
-ul a {
-    margin-left: 1rem;
-    transition: 0.5s; 
-    text-decoration: none;
-    margin-right: 2rem;
-    color: white;
-    font-family: "Yatra One", system-ui;
-    font-weight: 400;
-    font-style: normal;
-    display: inline-block; 
-}
+    ul a {
+        margin-left: 1rem;
+        transition: 0.5s;
+        text-decoration: none;
+        margin-right: 2rem;
+        color: white;
+        font-family: "Yatra One", system-ui;
+        font-weight: 400;
+        font-style: normal;
+        display: inline-block;
+    }
 
-ul a:hover {
-    font-size: 1rem;
-    color: rgb(235, 244, 0);
-    transform: scale(1.1); 
-}
+        ul a:hover {
+            font-size: 1rem;
+            color: rgb(235, 244, 0);
+            transform: scale(1.1);
+        }
+
+
 .mostrarT {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr)); 
-    grid-gap: 20px; 
-    margin-top: 9rem; 
-    margin-left: 16rem;
-   
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-gap: 1.5rem;
+    margin-top: 9rem;
+    margin-left: 6rem;
+    margin-right: 6rem;
+    text-align: center;
 }
 
-.mostrarT > div {
-    background:#7e7e7e67; 
-    padding: 1.5rem; 
-    margin-bottom: 2rem; 
-    border-radius: 1rem;
-    color: #ffffff;
-    max-width: 30rem; 
-}
+    .mostrarT > div {
+        background: #7e7e7e67;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        border-radius: 1rem;
+        color: #ffffff;
+        max-width: 30rem;
+    }
 
-.mostrarT > div > p {
-    margin: 0;
-    font-weight: bold;
-}
+        .mostrarT > div > p {
+            margin: 0;
+            font-weight: bold;
+        }
 
-
-.mostrarT > div:nth-child(odd) {
-    background-color: #7e7e7e67; 
-}
-
-.mostrarT > div:nth-child(1) {
-    grid-column: 1 / span 1;
-    grid-row: 1 / span 1;
-}
-
-.mostrarT > div:nth-child(2) {
-    grid-column: 2 / span 1;
-    grid-row: 1 / span 1;
-}
-
-.mostrarT > div:nth-child(3) {
-    grid-column: 1 / span 1;
-    grid-row: 2 / span 1;
-}
-
-.mostrarT > div:nth-child(4) {
-    grid-column: 2 / span 1;
-    grid-row: 2 / span 1;
-}
-
-.mostrarT > div:nth-child(5) {
-    grid-column: 1 / span 1;
-    grid-row: 3 / span 1;
-}
-
-.mostrarT > div:nth-child(6) {
-    grid-column: 2 / span 1;
-    grid-row: 3 / span 1;
-}
-
-.mostrarT > div:nth-child(7) {
-    grid-column: 1 / span 1;
-    grid-row: 4 / span 1;
-}
-
-.mostrarT > div:nth-child(8) {
-    grid-column: 2 / span 1;
-    grid-row: 4 / span 1;
-}
-
-.mostrarT > div:nth-child(9) {
-    grid-column: 1 / span 1;
-    grid-row: 5 / span 1;
-}
-
-.mostrarT > div:nth-child(10) {
-    grid-column: 2 / span 1;
-    grid-row: 5 / span 1;
-}
-.campos-container{
-    
+.campos-container {
     color: rgb(0, 0, 0);
     background-color: #ffffff88;
-    padding: 0.5rem; /* Increase padding */
-
-}
-body{
-    background-image: url("https://wallpapers.com/images/featured/barbell-am7v48yepmncv6c6.jpg");
-}
-.botCre {
-    background-color: #14d51a; 
-    border: none;
-    color: black;
-    padding: 10px 20px; 
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 5px; 
+    padding: 0.5rem; 
 }
 
 
-.botCre:hover {
-    background-color: #5314dc; 
-    color: white;
-}
-
-
+.botCre,
 .botCan {
-    background-color: #f3e70a; 
+    background-color: #14d51a;
     border: none;
     color: black;
-    padding: 10px 20px; 
+    padding: 1rem 2rem;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
-   
-    margin: 4px 2px;
+    font-size: 1rem;
+    margin: 0.25rem 0.5rem;
     cursor: pointer;
-    border-radius: 5px; 
+    border-radius: 0.3125rem;
 }
 
+    .botCre:hover {
+        background-color: #5314dc;
+        color: white;
+    }
 
-.botCan:hover {
-    background-color: #d32f2f; 
-    color: white;
-}
+    .botCan:hover {
+        background-color: #d32f2f;
+        color: white;
+    }
+
 .centrarB {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-gap: 20px;
+    display: flex;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
     margin-top: 0.5rem;
-    margin-left: 30rem;
+    margin-left: 5rem;
+    margin-right: 5rem;
 }
 
+body {
+    background-image: url("https://wallpapers.com/images/featured/barbell-am7v48yepmncv6c6.jpg");
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+}
