@@ -47,7 +47,7 @@ namespace SPARTANFITApp.Services
         public UsuarioDto logueo(UsuarioDto usuario)
         {
             UsuarioRepository usuarioRepository = new UsuarioRepository();
-            UsuarioDto usuarioResp = usuarioRepository.IniciarSesion(usuario.persona.correo, usuario.persona.contrasena);
+            UsuarioDto usuarioResp = usuarioRepository.IniciarSesion(usuario);
 
             if (usuarioResp.persona.respuesta  !=0)
             {
@@ -56,6 +56,49 @@ namespace SPARTANFITApp.Services
             else
             {
                 usuarioResp.persona.mensaje = "Inicio de sesión incorrecto";
+            }
+
+            return usuarioResp;
+        }
+
+        public UsuarioDto actualizarObjetivo(UsuarioDto usuario)
+        {
+            UsuarioRepository usuarioRepository = new UsuarioRepository();
+            UsuarioDto usuarioResp = new UsuarioDto();
+            usuarioResp.persona = new PersonaDto();
+            int resultado = usuarioRepository.ActualizarObjetivoUsuario(usuario);
+
+            if(resultado != 0)
+            {
+                usuarioResp.persona.respuesta = 1;
+                usuarioResp.persona.mensaje = "Actualización Exitosa";
+            }
+            else
+            {
+                usuarioResp.persona.respuesta = 0;
+                usuarioResp.persona.mensaje = "Error de Actualizacion";
+            }
+
+            return usuarioResp;
+
+        }
+
+        public UsuarioDto eliminarUsuario(UsuarioDto usuario)
+        {
+            UsuarioRepository usuarioRepository = new UsuarioRepository();
+            UsuarioDto usuarioResp = new UsuarioDto();
+            usuarioResp.persona = new PersonaDto();
+            int resultado = usuarioRepository.EliminarUsuario(usuario);
+
+            if (resultado != 0)
+            {
+                usuarioResp.persona.respuesta = 1;
+                usuarioResp.persona.mensaje = "Actualización Exitosa";
+            }
+            else
+            {
+                usuarioResp.persona.respuesta = 0;
+                usuarioResp.persona.mensaje = "Error de Actualizacion";
             }
 
             return usuarioResp;

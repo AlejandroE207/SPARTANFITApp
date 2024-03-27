@@ -38,7 +38,6 @@ namespace SPARTANFITApp.Repository
                                 correo = reader["correo"].ToString(),
                                 contrasena = reader["contrasena"].ToString(),
                                 fecha_nacimiento = reader["fecha_nacimiento"].ToString(),
-
                                 genero = reader["genero"].ToString(),
 
 

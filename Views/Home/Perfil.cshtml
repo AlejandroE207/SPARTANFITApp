@@ -1,13 +1,18 @@
 ﻿@{
     ViewBag.Title = "Perfil";
 }
+@{
+    // Recuperar el valor de la variable de sesión
+    SPARTANFITApp.Dto.UsuarioDto usuario = Session["UserLogged"] as SPARTANFITApp.Dto.UsuarioDto;
+}
 
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Principal</title>
+    <title>Perfil</title>
+    <link href="~/Scripts/css/stylesPerfil.css" rel="stylesheet" />
 </head>
 <body>
     <header>
@@ -25,7 +30,7 @@
                 Nombres:
             </p>
             <div class="campos-container">
-                @Model.persona.nombres
+                @usuario.persona.nombres
             </div>
         </div>
         <div>
@@ -33,7 +38,7 @@
                 Apellidos:
             </p>
             <div class="campos-container">
-                @Model.persona.Apellidos
+                @usuario.persona.apellidos
             </div>
         </div>
         <div>
@@ -41,7 +46,7 @@
                 Fecha de Nacimiento:
             </p>
             <div class="campos-container">
-                @Model.persona.fecha_nacimiento
+                @usuario.persona.fecha_nacimiento
             </div>
         </div>
         <div>
@@ -49,7 +54,7 @@
                 Correo:
             </p>
             <div class="campos-container">
-                @Model.persona.correo
+                @usuario.persona.correo
             </div>
         </div>
         <div>
@@ -57,7 +62,7 @@
                 Genero:
             </p>
             <div class="campos-container">
-                @Model.persona.genero
+                @usuario.persona.genero
             </div>
         </div>
         <div>
@@ -65,7 +70,7 @@
                 Estatura:
             </p>
             <div class="campos-container">
-                @Model.usuario.estatura
+                @usuario.estatura
             </div>
         </div>
         <div>
@@ -73,7 +78,7 @@
                 Peso:
             </p>
             <div class="campos-container">
-                @Model.usuario.peso
+                @usuario.peso
             </div>
         </div>
         <div>
@@ -81,7 +86,7 @@
                 Rehabilitacion:
             </p>
             <div class="campos-container">
-                @Model.usuario.rehabilitacion
+                @usuario.rehabilitacion
             </div>
         </div>
         <div>
@@ -89,7 +94,7 @@
                 Nivel de Entrenamiento:
             </p>
             <div class="campos-container">
-                @Model.usuario.id_nivel_entrenamiento
+                @usuario.id_nivel_entrenamiento
             </div>
         </div>
         <div>
@@ -97,7 +102,7 @@
                 Objetivo:
             </p>
             <div class="campos-container">
-                @Model.usuario.id_objetivo
+                @usuario.id_objetivo
             </div>
 
         </div>
