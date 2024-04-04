@@ -137,6 +137,7 @@
     <Compile Include="Services\UsuarioService.cs" />
     <Compile Include="Utilities\CorreoUtility.cs" />
     <Compile Include="Utilities\DBContextUtility.cs" />
+    <Compile Include="Utilities\EncriptarContrasenaUtility.cs" />
     <Compile Include="Utilities\FechaUtility.cs" />
   </ItemGroup>
   <ItemGroup>
