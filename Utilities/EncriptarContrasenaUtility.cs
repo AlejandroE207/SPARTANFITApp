@@ -10,7 +10,7 @@ namespace SPARTANFITApp.Utilities
 {
     public class EncriptarContrasenaUtility
     {
-        public static string EncriptarContrasena(PersonaDto persona)
+        public string EncriptarContrasena(PersonaDto persona)
         {
             using (MD5 md5 = MD5.Create())
             {
@@ -29,7 +29,15 @@ namespace SPARTANFITApp.Utilities
                 return sb.ToString();
             }
         }
-       
+
+        public bool ValidarContrasena(string contraNormal, string contrasenaEncriptadaAlmacenada)
+        {
+
+            string contrasenaEncriptadaIngresada = EncriptarContrasena(new PersonaDto { contrasena = contraNormal });
+
+
+            return contrasenaEncriptadaIngresada == contrasenaEncriptadaAlmacenada;
+        }
 
     }
 }

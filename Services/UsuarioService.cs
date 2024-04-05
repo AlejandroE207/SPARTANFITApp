@@ -1,5 +1,6 @@
 ﻿using SPARTANFITApp.Dto;
 using SPARTANFITApp.Repository;
+using SPARTANFITApp.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,8 @@ namespace SPARTANFITApp.Services
             {
              
                 usuario.persona.id_rol = 1;
-
+                EncriptarContrasenaUtility encrip = new EncriptarContrasenaUtility();
+                usuario.persona.contrasena = encrip.EncriptarContrasena(usuario.persona);
                 
                 int resultadoRegistro = usuarioRepository.registroUsuario(usuario);
 
@@ -44,10 +46,10 @@ namespace SPARTANFITApp.Services
         }
 
 
-        public UsuarioDto logueo(UsuarioDto usuario)
+        public UsuarioDto logueo(UsuarioDto usuario,string contraNormal)
         {
             UsuarioRepository usuarioRepository = new UsuarioRepository();
-            UsuarioDto usuarioResp = usuarioRepository.IniciarSesion(usuario);
+            UsuarioDto usuarioResp = usuarioRepository.IniciarSesion(usuario,contraNormal);
 
             if (usuarioResp.persona.respuesta  !=0)
             {

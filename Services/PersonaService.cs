@@ -29,8 +29,9 @@ namespace SPARTANFITApp.Services
         }
         public PersonaDto logueo(PersonaDto persona)
         {
-            EntrenadorRepository PersonaRepository = new EntrenadorRepository();
-            PersonaDto personaResp = PersonaRepository.IniciarSesion(persona.correo, persona.contrasena);
+            //EntrenadorRepository PersonaRepository = new EntrenadorRepository();
+            PersonaRepository personaRepository = new PersonaRepository();
+            PersonaDto personaResp = personaRepository.IniciarSesion(persona.correo, persona.contrasena);
 
             if (personaResp.respuesta == 1)
             {

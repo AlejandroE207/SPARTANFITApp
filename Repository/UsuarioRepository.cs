@@ -49,7 +49,7 @@ namespace SPARTANFITApp.Repository
             {
                 Console.WriteLine(ex.ToString());
             }
-            
+
             return comando;
         }
 
@@ -76,34 +76,39 @@ namespace SPARTANFITApp.Repository
             }
         }
 
-        public UsuarioDto IniciarSesion(UsuarioDto usuario)
+        public UsuarioDto IniciarSesion(UsuarioDto usuario,string contraNormal)
         {
             DBContextUtility conexion = new DBContextUtility();
             UsuarioDto usuarioResp = new UsuarioDto();
+            EncriptarContrasenaUtility encr = new EncriptarContrasenaUtility();
             
             try
             {
                 conexion.Connect();
-                string SQL = "SELECT estatura, peso, id_nivel_entrenamiento, id_objetivo, rehabilitacion FROM USUARIO WHERE (correo = @correo AND contrasena = @contrasena)";
+                string SQL = "SELECT  estatura, peso, id_nivel_entrenamiento, id_objetivo, rehabilitacion FROM USUARIO WHERE (correo = @correo)";
                 using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
                 {
                     command.Parameters.AddWithValue("@correo", usuario.persona.correo);
-                    command.Parameters.AddWithValue("@contrasena", usuario.persona.contrasena);
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-                            usuario.estatura = Convert.ToInt32(reader["estatura"]);
-                            usuario.peso = Convert.ToDouble(reader["peso"]);
-                            usuario.id_nivel_entrenamiento = Convert.ToInt32(reader["id_nivel_entrenamiento"]);
-                            usuario.id_objetivo = Convert.ToInt32(reader["id_objetivo"]);
-                            usuario.rehabilitacion = Convert.ToInt32(reader["rehabilitacion"]);
+                            string contrasenaAlmacenada = usuario.persona.contrasena;
+                            if (encr.ValidarContrasena(contraNormal, contrasenaAlmacenada))
+                            {
+                                usuario.estatura = Convert.ToInt32(reader["estatura"]);
+                                usuario.peso = Convert.ToDouble(reader["peso"]);
+                                usuario.id_nivel_entrenamiento = Convert.ToInt32(reader["id_nivel_entrenamiento"]);
+                                usuario.id_objetivo = Convert.ToInt32(reader["id_objetivo"]);
+                                usuario.rehabilitacion = Convert.ToInt32(reader["rehabilitacion"]);
 
-                            conexion.Disconnect();
-                            usuario.persona.respuesta = 1;
-                            usuario.persona.mensaje = "Inicio correcto";
-                            return usuario;
+                                conexion.Disconnect();
+                                usuario.persona.respuesta = 1;
+                                usuario.persona.mensaje = "Inicio correcto";
+                                return usuario;
+                            }
+
                         }
                         else
                         {

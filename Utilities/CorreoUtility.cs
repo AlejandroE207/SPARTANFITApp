@@ -54,7 +54,6 @@ namespace SPARTANFITApp.Utilities
 
                 EnviarCorreo(usuario.persona.correo, "Actualizacion Datos", mensajeCorreo, true);
             }
-
         }
         public void enviarCorreoContrasena()
         {
