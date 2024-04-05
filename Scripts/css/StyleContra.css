@@ -104,11 +104,8 @@ label {
     color: #fff;
 }
 
-input[type="text"],
 input[type="email"],
 input[type="password"],
-input[type="number"],
-input[type="date"],
 select {
     width: 100%;
     padding: 0.75rem;
@@ -142,64 +139,6 @@ select {
     height: 12rem;
 }
 
-.boton-crear {
-    width: 12rem;
-    margin-bottom: 0.5rem;
-    background-color: gold;
-    color: black;
-    border: none;
-    border-radius: 0.5rem;
-    padding: 1rem 3rem;
-    font-size: 1rem;
-    margin-top: 10rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-family: "Yatra One", system-ui;
-    text-transform: uppercase;
-}
-
-    .boton-crear:hover {
-        background-color: limegreen;
-        color: black;
-    }
-
-.boton-cancelar {
-    width: 12rem;
-    background-color: gold;
-    color: black;
-    border: none;
-    border-radius: 0.5rem;
-    padding: 1rem 3rem;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-family: "Yatra One", system-ui;
-    text-transform: uppercase;
-}
-
-    .boton-cancelar:hover {
-        background-color: rgb(14, 108, 232);
-        color: black;
-    }
-
-.boton-eliminar {
-    width: 12rem;
-    background-color: gold;
-    color: #171717;
-    border-radius: 1rem;
-    border-color: #ee0000fe;
-    padding: 1rem 3rem;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-family: "Yatra One", system-ui;
-    text-transform: uppercase;
-}
-
-    .boton-eliminar:hover {
-        background-color: rgba(222, 0, 0, 0.708);
-        color: white;
-    }
 
 
 .formEli {
@@ -207,13 +146,14 @@ select {
     background-color: rgb(246, 0, 0);
     text-align: center;
 }
+
 .contenedor {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
 }
+
 .boton-enviar {
     width: 12rem;
     margin-bottom: 0.5rem;
@@ -228,8 +168,8 @@ select {
     font-family: "Yatra One", system-ui;
     text-transform: uppercase;
 }
-.boton-crear:hover {
-        background-color: limegreen;
-        color: black;
-    }
 
+.boton-crear:hover {
+    background-color: limegreen;
+    color: black;
+}
