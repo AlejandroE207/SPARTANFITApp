@@ -149,6 +149,7 @@
     <Content Include="Scripts\css\StyleContra.css" />
     <Content Include="Scripts\css\StyleRegistro.css" />
     <Content Include="Scripts\css\stylesPerfil.css" />
+    <Content Include="Scripts\img\imagen4.jpg" />
     <Content Include="Scripts\img\ImagenIndex.jpg" />
     <Content Include="Scripts\img\ImagenIndex1.jpg" />
     <Content Include="Scripts\img\ImagenIndex2.jpg" />
