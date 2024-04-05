@@ -121,6 +121,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ValidadorMes.cs" />
     <Compile Include="Dto\PersonaDto.cs" />
     <Compile Include="Dto\UsuarioDto.cs" />
     <Compile Include="Global.asax.cs">
@@ -187,6 +188,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Views\InicioSesion\" />
+    <Folder Include="Views\ValidadorMes\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

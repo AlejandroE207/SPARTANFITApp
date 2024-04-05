@@ -15,37 +15,38 @@ namespace SPARTANFITApp.Repository
             DBContextUtility conexion = new DBContextUtility();
             PersonaDto persona = null;
             PersonaDto personaResp = new PersonaDto();
-
+            EncriptarContrasenaUtility encr = new EncriptarContrasenaUtility();
 
             try
             {
                 conexion.Connect();
-                string SQL = "SELECT id_usuario,id_rol, nombres, apellidos, correo, contrasena, fecha_nacimiento, estatura, peso, genero, id_nivel_entrenamiento, id_objetivo, rehabilitacion FROM USUARIO WHERE (correo = @correo AND contrasena = @contrasena)";
+                string SQL = "SELECT id_usuario,id_rol, nombres, apellidos, correo, contrasena, fecha_nacimiento, estatura, peso, genero, id_nivel_entrenamiento, id_objetivo, rehabilitacion FROM USUARIO WHERE (correo = @correo)";
                 using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
                 {
                     command.Parameters.AddWithValue("@correo", correo);
-                    command.Parameters.AddWithValue("@contrasena", contrasena);
+                    
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-                            persona = new PersonaDto
-                            {
-                                id_rol = Convert.ToInt32(reader["id_rol"]),
-                                nombres = reader["nombres"].ToString(),
-                                apellidos = reader["apellidos"].ToString(),
-                                correo = reader["correo"].ToString(),
-                                contrasena = reader["contrasena"].ToString(),
-                                fecha_nacimiento = reader["fecha_nacimiento"].ToString(),
-                                genero = reader["genero"].ToString(),
-
-
-                            };
-                            conexion.Disconnect();
-                            persona.respuesta = 1;
-                            persona.mensaje = "Inicio correcto";
-                            return persona;
+                            string contrasenaAlmacenada = reader["contrasena"].ToString();
+                            if (encr.ValidarContrasena(contrasena, contrasenaAlmacenada)){
+                                persona = new PersonaDto
+                                {
+                                    id_rol = Convert.ToInt32(reader["id_rol"]),
+                                    nombres = reader["nombres"].ToString(),
+                                    apellidos = reader["apellidos"].ToString(),
+                                    correo = reader["correo"].ToString(),
+                                    contrasena = reader["contrasena"].ToString(),
+                                    fecha_nacimiento = reader["fecha_nacimiento"].ToString(),
+                                    genero = reader["genero"].ToString(),
+                                };
+                                conexion.Disconnect();
+                                persona.respuesta = 1;
+                                persona.mensaje = "Inicio correcto";
+                                return persona;
+                            }
                         }
                         else
                         {
@@ -70,7 +71,6 @@ namespace SPARTANFITApp.Repository
                 conexion.Disconnect();
             }
             return persona;
-
         }
     }
 }

@@ -42,9 +42,16 @@ namespace SPARTANFIT_App.Controllers
         public ActionResult IniciarSesion()
         {
             ViewBag.Message = "INICIAR SESION.";
-
             return View();
         }
+
+        public ActionResult CerrarSesion()
+        {
+            Session["UserLogged"] = null;
+            return View("Index");
+        }
+
+
         [HttpPost]
         public ActionResult ControladorLogin(PersonaDto persona)
         {
@@ -53,11 +60,12 @@ namespace SPARTANFIT_App.Controllers
             if (personaLogeo.id_rol == 1)
             {
                 UsuarioDto usuario = personaService.mapeoPersona_Usuario(personaLogeo);
-                
+                string contraNormal = persona.contrasena;
+
                 if (usuario.persona.respuesta != 0)
                 {
                     UsuarioService usuarioService = new UsuarioService();
-                    usuario = usuarioService.logueo(usuario);
+                    usuario = usuarioService.logueo(usuario,contraNormal);
                     Session["UserLogged"] = usuario;
                     return View("Perfil");
                 }
@@ -134,6 +142,7 @@ namespace SPARTANFIT_App.Controllers
 
             if (usuario.persona.respuesta != 0)
             {
+                Session["UserLogged"] = null;
                 return View("Index");
             }
             else

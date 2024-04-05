@@ -19,10 +19,8 @@ namespace SPARTANFITApp.Repository
             DBContextUtility conexion = new DBContextUtility();
             conexion.Connect();
 
-
             string SQL = "INSERT INTO USUARIO (id_rol, nombres, apellidos, correo, contrasena, fecha_nacimiento, genero)"
                         + "VALUES (@id_rol, @nombres, @apellidos, @correo, @contrasena, @fecha_nacimiento, @genero)";
-
 
             using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
             {
@@ -48,7 +46,6 @@ namespace SPARTANFITApp.Repository
             using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
             {
                 command.Parameters.AddWithValue("@correo", correo);
-
                 entrenadorEncontrado = (int)command.ExecuteScalar();
             }
             conexion.Disconnect();
@@ -66,38 +63,38 @@ namespace SPARTANFITApp.Repository
             DBContextUtility conexion = new DBContextUtility();
             PersonaDto entrenador = null;
             PersonaDto usuarioResp = new PersonaDto();
-
+            EncriptarContrasenaUtility encr = new EncriptarContrasenaUtility();
 
             try
             {
                 conexion.Connect();
-                string SQL = "SELECT id_usuario,id_rol, nombres, apellidos, correo, contrasena, fecha_nacimiento, estatura, peso, genero, id_nivel_entrenamiento, id_objetivo, rehabilitacion FROM USUARIO WHERE (correo = @correo AND contrasena = @contrasena)";
+                string SQL = "SELECT id_usuario,id_rol, nombres, apellidos, correo, contrasena, fecha_nacimiento, estatura, peso, genero, id_nivel_entrenamiento, id_objetivo, rehabilitacion FROM USUARIO WHERE (correo = @correo)";
                 using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
                 {
                     command.Parameters.AddWithValue("@correo", correo);
-                    command.Parameters.AddWithValue("@contrasena", contrasena);
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-                            entrenador = new PersonaDto
+                            string contrasenaAlmacenada = reader["contrasena"].ToString();
+                            if (encr.ValidarContrasena(contrasena, contrasenaAlmacenada))
                             {
-                                id_rol = Convert.ToInt32(reader["id_rol"]),
-                                nombres = reader["nombres"].ToString(),
-                                apellidos = reader["apellidos"].ToString(),
-                                correo = reader["correo"].ToString(),
-                                contrasena = reader["contrasena"].ToString(),
-                                fecha_nacimiento = reader["fecha_nacimiento"].ToString(),
-
-                                genero = reader["genero"].ToString(),
-
-
-                            };
-                            conexion.Disconnect();
-                            entrenador.respuesta = 1;
-                            entrenador.mensaje = "Inicio correcto";
-                            return entrenador;
+                                entrenador = new PersonaDto
+                                {
+                                    id_rol = Convert.ToInt32(reader["id_rol"]),
+                                    nombres = reader["nombres"].ToString(),
+                                    apellidos = reader["apellidos"].ToString(),
+                                    correo = reader["correo"].ToString(),
+                                    contrasena = reader["contrasena"].ToString(),
+                                    fecha_nacimiento = reader["fecha_nacimiento"].ToString(),
+                                    genero = reader["genero"].ToString(),
+                                };
+                                conexion.Disconnect();
+                                entrenador.respuesta = 1;
+                                entrenador.mensaje = "Inicio correcto";
+                                return entrenador;
+                            }                            
                         }
                         else
                         {
@@ -107,8 +104,6 @@ namespace SPARTANFITApp.Repository
                         }
                     }
                 }
-
-                //}
             }
             catch (Exception ex)
             {
@@ -124,21 +119,6 @@ namespace SPARTANFITApp.Repository
             }
             return entrenador;
 
-        }
-
-        private bool VerificarCredenciales(string correo, string contrasena)
-        {
-            DBContextUtility conexion = new DBContextUtility();
-            conexion.Connect();
-            string SQL = "SELECT COUNT(*) FROM USUARIO WHERE (correo = @correo AND contrasena = @contrasena)";
-            using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
-            {
-                command.Parameters.AddWithValue("@correo", correo);
-                command.Parameters.AddWithValue("@contrasena", contrasena);
-
-                var count = (int)command.ExecuteScalar();
-                return count > 0;
-            }
         }
     }
 }
