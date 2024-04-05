@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "BuscarCorreo";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Scripts/css/StyleContra.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap"
+          rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <a href="#" class="logo"> SPARTANFIT</a>
+        <ul>
+            <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+            <li>@Html.ActionLink("Iniciar sesión", "IniciarSesion", "Home")</li>
+            <li>@Html.ActionLink("Registrarse", "Formulario_Registro", "Home")</li>
+        </ul>
+    </header>
+    <div>
+        <h2>Registrarse</h2>
+        @using (Html.BeginForm("CambiarContrasena", "Home", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div>
+                    <label for="contrasena">Contraseña:</label>
+                    <input type="password" id="contrasena" name="contrasena" required>
+                </div>
+                <div>
+                    <label for="conContra">Confirmar Contraseña:</label>
+                    <input type="password" id="conContra" name="conContra" required>
+                </div>
+            </div>
+
+
+            <div class="contenedor">
+                <div class="form-row">
+                    <button class="boton-enviar" onclick="validarContrasena()">Cambiar Contraseña</button>
+                </div>
+            </div>
+        }  @if (ViewData["Mensaje"] != null)
+        {
+            <p>@ViewData["Mensaje"]</p>
+        }
+    </div>
+
+    <script>
+    const contrasena = document.getElementById('contrasena');
+    const conContra = document.getElementById('conContra');
+    const mensajeError = document.getElementById('mensajeError');
+
+    function validarContrasena() {
+        if (contrasena.value !== conContra.value) {
+           window.alert( 'Las contraseñas no coinciden')
+        }
+          else if (contrasena.value == "" && conContra.value == "") {
+            window.alert('Digite su nueva contraseña')
+        }
+           else{
+          window.location.href = '@Url.Action("IniciarSesion", "Home")';
+        }
+
+    }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "BuscarCorreo";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Scripts/css/StyleContra.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap"
+          rel="stylesheet">
+    <title>BuscarCorreo</title>
+</head>
+<body>
+    <header>
+        <a href="#" class="logo"> SPARTANFIT</a>
+        <ul>
+            <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+            <li>@Html.ActionLink("Iniciar sesión", "IniciarSesion", "Home")</li>
+            <li>@Html.ActionLink("Registrarse", "Formulario_Registro", "Home")</li>
+        </ul>
+    </header>
+    <div>
+        <h2>Registrarse</h2>
+        @using (Html.BeginForm("BuscarCorreo", "Home", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <h1>Buscar Correo</h1>
+            <div class="form-row">
+                <div>
+                    <label for="correo">Correo:</label>
+                    <input type="email" id="correo" name="correo" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="contenedor">
+                    <button class="boton-enviar" onclick="enviarCorreo()">Enviar Correo</button>
+                </div>
+            </div>
+            <div>
+            </div>
+                }  @if (ViewData["Mensaje"] != null)
+                {
+                    <p>@ViewData["Mensaje"]</p>
+                }
+            </div>
+       
+    <script>
+const correo = document.getElementById('correo');
+  function enviarCorreo() {
+            if (correo.value == "") {
+                window.alert('Digite el correo')
+            }
+        }
+    </script>     
+</body>
+</html>

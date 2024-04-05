@@ -92,7 +92,8 @@ namespace SPARTANFIT_App.Controllers
             }
             return View();
         }
-
+        public ActionResult BuscarCorreo() { return View("BuscarCorreo"); }
+        public ActionResult CambiarContrasena() { return View("CambiarContrasena"); }
         public ActionResult Perfil() { return View("Perfil"); }
 
         public ActionResult ActualizarObjetivo() { return View("ActualizarObjetivo"); }
