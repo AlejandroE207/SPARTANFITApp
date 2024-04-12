@@ -33,6 +33,13 @@ namespace SPARTANFITApp.Services
             PersonaRepository personaRepository = new PersonaRepository();
             PersonaDto personaResp = personaRepository.IniciarSesion(persona.correo, persona.contrasena);
 
+            //PRUEBA DE SOLUCION
+            if(personaResp == null)
+            {
+                personaResp.mensaje = "Inicio de sesión incorrecto";
+            }
+            //FIN PRUEBA
+
             if (personaResp.respuesta == 1)
             {
                 personaResp.mensaje = "Inicio de sesión correcto";
@@ -41,6 +48,7 @@ namespace SPARTANFITApp.Services
             {
                 personaResp.mensaje = "Inicio de sesión incorrecto";
             }
+
             return personaResp;
         }
     }
