@@ -9,7 +9,7 @@ namespace SPARTANFITApp.Services
 {
     public class AdministradorService
     {
-        public PersonaDto registrarAdministrador(PersonaDto administrador)
+        public PersonaDto registroAdministrador(PersonaDto administrador)
         {
             PersonaDto administradorResp = new PersonaDto();
             AdministradorRepository administradorRepository = new AdministradorRepository();
@@ -41,7 +41,89 @@ namespace SPARTANFITApp.Services
             }
             return administradorResp;
         }
+        public PersonaDto registrarEntrenador(PersonaDto entrenador)
+        {
+            PersonaDto entrenadorResp = new PersonaDto();
+            EntrenadorRepository entrenadorRepository = new EntrenadorRepository();
 
+
+            if (entrenadorRepository.buscarEntrenador(entrenador.correo))
+            {
+                entrenadorResp.respuesta = 0;
+                entrenadorResp.mensaje = "Ya existe el entrenador";
+            }
+            else
+            {
+
+                entrenador.id_rol = 2;
+
+
+                int resultadoRegistro = entrenadorRepository.registroEntrenador(entrenador);
+
+                if (resultadoRegistro != 0)
+                {
+                    entrenadorResp.respuesta = 1;
+                    entrenadorResp.mensaje = "Se ha registrado el entrenador correctamente";
+                }
+                else
+                {
+                    entrenadorResp.respuesta = 0;
+                    entrenadorResp.mensaje = "Error en el registro del usuario";
+                }
+            }
+            return entrenadorResp;
+        }
+        public List<PersonaDto> Mostrar_Entrenadores(PersonaDto entrenador)
+        {
+            EntrenadorRepository entrenadorRepository = new EntrenadorRepository();
+            var Lista_entrenadores = entrenadorRepository.MostrarEntrenadores();
+            return Lista_entrenadores;
+        }
+        public List<UsuarioDto> Mostrar_Usuarios(UsuarioDto usuario)
+        {
+           UsuarioRepository usuarioRepository = new UsuarioRepository();
+            var lista_Usuarios = usuarioRepository.MostrarUsuarios();
+            return lista_Usuarios;
+        }
+
+        public int EliminarEntrenador(String correo)
+        {
+            int filasAfectadas = 0;
+            EntrenadorRepository entrenadorRepository = new EntrenadorRepository();
+
+            try
+            {
+                filasAfectadas = entrenadorRepository.EliminarEntrenador(correo);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            return filasAfectadas;
+        }
+        
+         public int ActualizarEntrenador(string nombres, string apellidos, string correo, string contrasena, string fecha_nacimiento, string genero)
+            {
+                int filasAfectadas = 0;
+                EntrenadorRepository entrenadorRepository = new EntrenadorRepository();
+
+                try
+                {
+                    filasAfectadas = entrenadorRepository.ActualizarEntrenador(nombres, apellidos, correo, contrasena, fecha_nacimiento, genero);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+
+                return filasAfectadas;
+            }
+        }
+
+
+    }
+}
 
         //public PersonaDto logueo(PersonaDto administrador)
         //{

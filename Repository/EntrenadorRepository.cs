@@ -13,30 +13,71 @@ namespace SPARTANFITApp.Repository
 {
     public class EntrenadorRepository
     {
-        public int registrarEntrenador(PersonaDto entrenador)
+        public int registroEntrenador(PersonaDto entrenador)
         {
             int comando = 0;
+            try
+            {
+                DBContextUtility conexion = new DBContextUtility();
+                conexion.Connect();
+
+                string SQL = "INSERT INTO USUARIO ( nombres, apellidos, correo, contrasena, fecha_nacimiento, genero)"
+                            + "VALUES ( @nombres, @apellidos, @correo, @contrasena, @fecha_nacimiento,@genero)";
+
+
+                using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+                { 
+                    command.Parameters.AddWithValue("@nombres", entrenador.nombres);
+                    command.Parameters.AddWithValue("@apellidos", entrenador.apellidos);
+                    command.Parameters.AddWithValue("@correo", entrenador.correo);
+                    command.Parameters.AddWithValue("@contrasena", entrenador.contrasena);
+                    command.Parameters.AddWithValue("@fecha_nacimiento", entrenador.fecha_nacimiento);
+                    command.Parameters.AddWithValue("@genero", entrenador.genero);
+                    command.ExecuteNonQuery();
+                }
+                conexion.Disconnect();
+                comando = 1;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            return comando;
+        }
+        public List<PersonaDto> MostrarEntrenadores()
+        {
+            List<PersonaDto> entrenadores = new List<PersonaDto>();
             DBContextUtility conexion = new DBContextUtility();
             conexion.Connect();
 
-            string SQL = "INSERT INTO USUARIO (id_rol, nombres, apellidos, correo, contrasena, fecha_nacimiento, genero)"
-                        + "VALUES (@id_rol, @nombres, @apellidos, @correo, @contrasena, @fecha_nacimiento, @genero)";
+            string SQL = "SELECT  nombres, apellidos, correo, contrasena, fecha_nacimiento, genero FROM USUARIO WHERE id_rol=2";
 
             using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
             {
-                command.Parameters.AddWithValue("@id_rol", entrenador.id_rol);
-                command.Parameters.AddWithValue("@nombres", entrenador.nombres);
-                command.Parameters.AddWithValue("@apellidos", entrenador.apellidos);
-                command.Parameters.AddWithValue("@correo", entrenador.correo);
-                command.Parameters.AddWithValue("@contrasena", entrenador.contrasena);
-                command.Parameters.AddWithValue("@fecha_nacimiento", entrenador.fecha_nacimiento);
-                command.Parameters.AddWithValue("@genero", entrenador.genero);
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        PersonaDto entrenador = new PersonaDto
+                        {
+                            
+                            nombres = reader["nombres"].ToString(),
+                            apellidos = reader["apellidos"].ToString(),
+                            correo = reader["correo"].ToString(),
+                            contrasena = reader["contrasena"].ToString(),
+                            fecha_nacimiento = reader["fecha_nacimiento"].ToString(),
+                            genero = reader["genero"].ToString()
+                        };
 
-                command.ExecuteNonQuery();
+                        entrenadores.Add(entrenador);
+                    }
+                }
             }
             conexion.Disconnect();
-            return comando;
+            return entrenadores;
         }
+
         public bool buscarEntrenador(string correo)
         {
             DBContextUtility conexion = new DBContextUtility();
@@ -119,6 +160,69 @@ namespace SPARTANFITApp.Repository
             }
             return entrenador;
 
+        }
+        public int EliminarEntrenador(string correo)
+        {
+            int filasAfectadas = 0;
+            DBContextUtility conexion = new DBContextUtility();
+            try
+            {
+                conexion.Connect();
+                string SQL = "DELETE FROM USUARIO WHERE correo = @correo";
+                using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+
+                {
+                    command.Parameters.AddWithValue("@correo",correo);
+                    command.ExecuteNonQuery();
+                }
+                filasAfectadas = 1;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                conexion.Disconnect();
+            }
+
+            return filasAfectadas;
+        }
+        public int ActualizarEntrenador(String nombres,String apellidos, String correo, String contrasena, String fecha_nacimiento,String genero)
+        {
+            PersonaDto entrenador=new PersonaDto();
+         
+            int comando = 0;
+            DBContextUtility conexion = new DBContextUtility();
+            try
+            {
+
+                conexion.Connect();
+                string SQL = "UPDATE USUARIO SET nombres = @nombres, apellidos = @apellidos, correo = @correo, contrasena=@contrasena, fecha_nacimiento=@fecha_nacimiento, genero=@genero " + "WHERE correo = @correo";
+                using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+                {
+                    command.Parameters.AddWithValue("@nombres", entrenador.nombres);
+                    command.Parameters.AddWithValue("@apellidos", entrenador.apellidos);
+                    command.Parameters.AddWithValue("@correo", entrenador.correo);
+                    command.Parameters.AddWithValue("@contrasena", entrenador.contrasena);
+                    command.Parameters.AddWithValue("@fecha_nacimiento", entrenador.fecha_nacimiento);
+                    command.Parameters.AddWithValue("@genero", entrenador.genero);
+                    command.ExecuteNonQuery();
+                }
+                comando = 1;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                conexion.Disconnect();
+            }
+
+
+
+            return comando;
         }
     }
 }

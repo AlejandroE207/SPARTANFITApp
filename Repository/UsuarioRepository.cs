@@ -52,6 +52,47 @@ namespace SPARTANFITApp.Repository
 
             return comando;
         }
+        public List<UsuarioDto> MostrarUsuarios()
+        {
+            List<UsuarioDto> usuarios = new List<UsuarioDto>();
+            DBContextUtility conexion = new DBContextUtility();
+            conexion.Connect();
+
+            string SQL = "SELECT  nombres, apellidos, correo, contrasena, fecha_nacimiento, estatura, peso, genero, id_nivel_entrenamiento, id_objetivo, rehabilitacion FROM USUARIO";
+
+            using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+            {
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        UsuarioDto usuario = new UsuarioDto
+                        {
+                            persona = new PersonaDto
+                            {
+                                id_rol = Convert.ToInt32(reader["id_rol"]),
+                                nombres = reader["nombres"].ToString(),
+                                apellidos = reader["apellidos"].ToString(),
+                                correo = reader["correo"].ToString(),
+                                contrasena = reader["contrasena"].ToString(),
+                                fecha_nacimiento = reader["fecha_nacimiento"].ToString(),
+                                genero = reader["genero"].ToString()
+                            },
+                            estatura = Convert.ToDouble(reader["estatura"]),
+                            peso = Convert.ToDouble(reader["peso"]),
+                            id_nivel_entrenamiento = Convert.ToInt32(reader["id_nivel_entrenamiento"]),
+                            id_objetivo = Convert.ToInt32(reader["id_objetivo"]),
+                            rehabilitacion = Convert.ToInt32(reader["rehabilitacion"])
+                        };
+
+                        usuarios.Add(usuario);
+                    }
+                }
+            }
+            conexion.Disconnect();
+            return usuarios;
+        }
+
 
         public bool buscarUsuario(string correo)
         {

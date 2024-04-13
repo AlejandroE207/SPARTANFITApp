@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "MostrarEntrenadores";
+}
+@model List<SPARTANFITApp.Dto.PersonaDto>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="~/Scripts/css/Styletablas.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>PrincipalAdministrador</title>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo"> SPARTANFIT</a>
+        <ul>
+            <li>@Html.ActionLink("Usuarios", "PrincipalAdministrador", "Home")</li>
+            <li>@Html.ActionLink("Entrenadores", "MostrarEntrenadores", "Home")</li>
+            <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
+        </ul>
+    </header>
+    <div class="centrarT">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Correo</th>
+                    <th>Fecha de Nacimiento</th>
+                    <th>Genero</th>
+                    <th> </th>
+                    <th> </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var entrenador in Model)
+                {
+                    <tr>
+                        <td>@entrenador.nombres</td>
+                        <td>@entrenador.apellidos</td>
+                        <td>@entrenador.correo</td>
+                        <td>@entrenador.fecha_nacimiento</td>
+                        <td>@entrenador.genero</td>
+                        <td>
+                            <img src="~/Scripts/img/usuario (1).png" class="icono">
+                        </td>
+                        <td>
+                            @using (Html.BeginForm("EliminarEntrenador", "Home", FormMethod.Post))
+                            {
+                                <input type="hidden" name="correo" value="@entrenador.correo}">
+                                <button type="button" onclick="confirmarEliminacion()" class="boton-icono"><img src="~/Scripts/img/usuario (1).png" class="icono" alt="Eliminar Entrenador"></button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <button class="boton-crear" onclick="crearEntrenador()">Agregar Entrenador</button>
+    </div>
+    <script>
+    function crearEntrenador() {
+        window.location.href = '@Url.Action("CrearEntrenador", "Home")';
+    }
+    </script>
+    <script>
+  function confirmarEliminacion() {
+      if (confirm("¿Estás seguro de que quieres eliminar el Entrenador?")) {
+          window.location.href = '@Url.Action("MostrarEntrenadores", "Home")';
+      } }
+
+    </script>
+</body>
+</html>
