@@ -130,6 +130,32 @@ namespace SPARTANFIT_App.Controllers
                 return View("ActualizarObjetivo");
             }
         }
+        public ActionResult MostrarEntrenadores(PersonaDto entrenador)
+        {
+            AdministradorService servicio=new AdministradorService();
+            List<PersonaDto>entrenadores=servicio.Mostrar_Entrenadores(entrenador);
+            return View();
+        }
+        public ActionResult MostrarUsuarios(UsuarioDto usuario)
+        {
+            AdministradorService servicio= new AdministradorService();
+            List<UsuarioDto>usuarios=servicio.Mostrar_Usuarios(usuario);
+            return View();
+        }
+        [HttpPost]
+        public ActionResult EliminarEntrenador(String correo)
+        {
+            AdministradorService servicio= new AdministradorService();
+            servicio.EliminarEntrenador(correo);
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AgregarEntrenador(PersonaDto entrenador)
+        {
+            AdministradorService servicio = new AdministradorService();
+            servicio.registrarEntrenador(entrenador);
+            return View();
+        }
 
         [HttpPost]
         public ActionResult EliminarCuenta()

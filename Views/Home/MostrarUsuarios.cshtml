@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "MostrarUsuarios";
+}
+@model List<SPARTANFITApp.Dto.UsuarioDto>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Scripts/css/Styletablas.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>PrincipalAdministrador</title>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo"> SPARTANFIT</a>
+        <ul>
+            <li>@Html.ActionLink("Usuarios", "PrincipalAdministrador", "Home")</li>
+            <li>@Html.ActionLink("Entrenadores", "MostrarEntrenadores", "Home")</li>
+            <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
+        </ul>
+    </header>
+    <div class="centrarT">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Correo</th>
+                    <th>Fecha de Nacimiento</th>
+                    <th>Genero</th>
+                    <th>Peso</th>
+                    <th>Estatura</th>
+                    <th>Rehabilitacion</th>
+                    <th>Nivel Entrenamiento</th>
+                    <th>Objetivo</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var usuario in Model)
+                {
+                    <tr>
+                        <td>@usuario.persona.nombres</td>
+                        <td>@usuario.persona.apellidos</td>
+                        <td>@usuario.persona.correo</td>
+                        <td>@usuario.persona.fecha_nacimiento</td>
+                        <td>@usuario.persona.genero</td>
+                        <td>@usuario.peso</td>
+                        <td>@usuario.estatura</td>
+                        <td>@usuario.rehabilitacion</td>
+                        <td>@usuario.id_nivel_entrenamiento</td>
+                        <td>@usuario.id_objetivo</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    
+   
+</body>
+</html>

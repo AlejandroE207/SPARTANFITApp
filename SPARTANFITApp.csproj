@@ -149,12 +149,15 @@
     <Content Include="Scripts\css\StyleContra.css" />
     <Content Include="Scripts\css\StyleRegistro.css" />
     <Content Include="Scripts\css\stylesPerfil.css" />
+    <Content Include="Scripts\css\Styletablas.css" />
     <Content Include="Scripts\img\imagen4.jpg" />
     <Content Include="Scripts\img\ImagenIndex.jpg" />
     <Content Include="Scripts\img\ImagenIndex1.jpg" />
     <Content Include="Scripts\img\ImagenIndex2.jpg" />
     <Content Include="Scripts\img\imagenIndex3.jpg" />
     <Content Include="Scripts\img\ImagenLI.jpg" />
+    <Content Include="Scripts\img\usuario %281%29.png" />
+    <Content Include="Scripts\img\usuario.png" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
     <Content Include="Scripts\jquery-3.7.1.slim.js" />
@@ -187,6 +190,9 @@
     <Content Include="Views\Home\ActualizarObjetivo.cshtml" />
     <Content Include="Views\Home\BuscarCorreo.cshtml" />
     <Content Include="Views\Home\CambiarContrasena.cshtml" />
+    <Content Include="Views\Home\MostrarEntrenadores.cshtml" />
+    <Content Include="Views\Home\MostrarUsuarios.cshtml" />
+    <Content Include="Views\Home\AgregarEntrenador.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
