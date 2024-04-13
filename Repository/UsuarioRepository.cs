@@ -58,7 +58,7 @@ namespace SPARTANFITApp.Repository
             DBContextUtility conexion = new DBContextUtility();
             conexion.Connect();
 
-            string SQL = "SELECT  nombres, apellidos, correo, contrasena, fecha_nacimiento, estatura, peso, genero, id_nivel_entrenamiento, id_objetivo, rehabilitacion FROM USUARIO";
+            string SQL = "SELECT  nombres, apellidos, correo, contrasena, fecha_nacimiento, estatura, peso, genero, id_nivel_entrenamiento, id_objetivo, rehabilitacion FROM USUARIO WHERE id_rol = 1";
 
             using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
             {
@@ -66,18 +66,20 @@ namespace SPARTANFITApp.Repository
                 {
                     while (reader.Read())
                     {
+                        PersonaDto persona;
+
+                        persona = new PersonaDto
+                        {
+                            nombres = reader["nombres"].ToString(),
+                            apellidos = reader["apellidos"].ToString(),
+                            correo = reader["correo"].ToString(),
+                            contrasena = reader["contrasena"].ToString(),
+                            fecha_nacimiento = reader["fecha_nacimiento"].ToString(),
+                            genero = reader["genero"].ToString()
+                        };
                         UsuarioDto usuario = new UsuarioDto
                         {
-                            persona = new PersonaDto
-                            {
-                                id_rol = Convert.ToInt32(reader["id_rol"]),
-                                nombres = reader["nombres"].ToString(),
-                                apellidos = reader["apellidos"].ToString(),
-                                correo = reader["correo"].ToString(),
-                                contrasena = reader["contrasena"].ToString(),
-                                fecha_nacimiento = reader["fecha_nacimiento"].ToString(),
-                                genero = reader["genero"].ToString()
-                            },
+                            
                             estatura = Convert.ToDouble(reader["estatura"]),
                             peso = Convert.ToDouble(reader["peso"]),
                             id_nivel_entrenamiento = Convert.ToInt32(reader["id_nivel_entrenamiento"]),
@@ -85,6 +87,7 @@ namespace SPARTANFITApp.Repository
                             rehabilitacion = Convert.ToInt32(reader["rehabilitacion"])
                         };
 
+                        usuario.persona = persona;
                         usuarios.Add(usuario);
                     }
                 }

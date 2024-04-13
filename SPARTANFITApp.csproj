@@ -193,6 +193,7 @@
     <Content Include="Views\Home\MostrarEntrenadores.cshtml" />
     <Content Include="Views\Home\MostrarUsuarios.cshtml" />
     <Content Include="Views\Home\AgregarEntrenador.cshtml" />
+    <Content Include="Views\Home\FormActualizarEntrenador.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -26,7 +26,7 @@ namespace SPARTANFITApp.Services
                 entrenador.id_rol = 2;
 
 
-                int resultadoRegistro = entrenadorRepository.registrarEntrenador(entrenador);
+                int resultadoRegistro = entrenadorRepository.registroEntrenador(entrenador);
 
                 if (resultadoRegistro != 0)
                 {

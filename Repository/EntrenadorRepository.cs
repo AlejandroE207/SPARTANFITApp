@@ -21,12 +21,13 @@ namespace SPARTANFITApp.Repository
                 DBContextUtility conexion = new DBContextUtility();
                 conexion.Connect();
 
-                string SQL = "INSERT INTO USUARIO ( nombres, apellidos, correo, contrasena, fecha_nacimiento, genero)"
-                            + "VALUES ( @nombres, @apellidos, @correo, @contrasena, @fecha_nacimiento,@genero)";
+                string SQL = "INSERT INTO USUARIO ( id_rol,nombres, apellidos, correo, contrasena, fecha_nacimiento, genero)"
+                            + "VALUES ( @id_rol,@nombres, @apellidos, @correo, @contrasena, @fecha_nacimiento,@genero)";
 
 
                 using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
-                { 
+                {
+                    command.Parameters.AddWithValue("@id_rol", 2);
                     command.Parameters.AddWithValue("@nombres", entrenador.nombres);
                     command.Parameters.AddWithValue("@apellidos", entrenador.apellidos);
                     command.Parameters.AddWithValue("@correo", entrenador.correo);
@@ -51,7 +52,7 @@ namespace SPARTANFITApp.Repository
             DBContextUtility conexion = new DBContextUtility();
             conexion.Connect();
 
-            string SQL = "SELECT  nombres, apellidos, correo, contrasena, fecha_nacimiento, genero FROM USUARIO WHERE id_rol=2";
+            string SQL = "SELECT  id_usuario, id_rol,nombres, apellidos, correo, contrasena, fecha_nacimiento, genero FROM USUARIO WHERE id_rol=2";
 
             using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
             {
@@ -61,7 +62,8 @@ namespace SPARTANFITApp.Repository
                     {
                         PersonaDto entrenador = new PersonaDto
                         {
-                            
+                            id_usuario = Convert.ToInt32(reader["id_usuario"]),
+                            id_rol = Convert.ToInt32(reader["id_rol"]),
                             nombres = reader["nombres"].ToString(),
                             apellidos = reader["apellidos"].ToString(),
                             correo = reader["correo"].ToString(),
@@ -188,24 +190,21 @@ namespace SPARTANFITApp.Repository
 
             return filasAfectadas;
         }
-        public int ActualizarEntrenador(String nombres,String apellidos, String correo, String contrasena, String fecha_nacimiento,String genero)
+        public int ActualizarEntrenador(PersonaDto entrenador)
         {
-            PersonaDto entrenador=new PersonaDto();
-         
             int comando = 0;
             DBContextUtility conexion = new DBContextUtility();
             try
             {
 
                 conexion.Connect();
-                string SQL = "UPDATE USUARIO SET nombres = @nombres, apellidos = @apellidos, correo = @correo, contrasena=@contrasena, fecha_nacimiento=@fecha_nacimiento, genero=@genero " + "WHERE correo = @correo";
+                string SQL = "UPDATE USUARIO SET nombres = @nombres, apellidos = @apellidos, correo = @correo, contrasena=@contrasena, genero=@genero " + "WHERE correo = @correo";
                 using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
                 {
                     command.Parameters.AddWithValue("@nombres", entrenador.nombres);
                     command.Parameters.AddWithValue("@apellidos", entrenador.apellidos);
                     command.Parameters.AddWithValue("@correo", entrenador.correo);
                     command.Parameters.AddWithValue("@contrasena", entrenador.contrasena);
-                    command.Parameters.AddWithValue("@fecha_nacimiento", entrenador.fecha_nacimiento);
                     command.Parameters.AddWithValue("@genero", entrenador.genero);
                     command.ExecuteNonQuery();
                 }

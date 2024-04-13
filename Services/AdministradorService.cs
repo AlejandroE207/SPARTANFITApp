@@ -1,5 +1,6 @@
 ﻿using SPARTANFITApp.Dto;
 using SPARTANFITApp.Repository;
+using SPARTANFITApp.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,7 +58,8 @@ namespace SPARTANFITApp.Services
 
                 entrenador.id_rol = 2;
 
-
+                EncriptarContrasenaUtility encrip = new EncriptarContrasenaUtility();
+                entrenador.contrasena = encrip.EncriptarContrasena(entrenador);
                 int resultadoRegistro = entrenadorRepository.registroEntrenador(entrenador);
 
                 if (resultadoRegistro != 0)
@@ -73,7 +75,7 @@ namespace SPARTANFITApp.Services
             }
             return entrenadorResp;
         }
-        public List<PersonaDto> Mostrar_Entrenadores(PersonaDto entrenador)
+        public List<PersonaDto> Mostrar_Entrenadores()
         {
             EntrenadorRepository entrenadorRepository = new EntrenadorRepository();
             var Lista_entrenadores = entrenadorRepository.MostrarEntrenadores();
@@ -103,14 +105,18 @@ namespace SPARTANFITApp.Services
             return filasAfectadas;
         }
         
-         public int ActualizarEntrenador(string nombres, string apellidos, string correo, string contrasena, string fecha_nacimiento, string genero)
+         public int ActualizarEntrenador(PersonaDto entrenador)
             {
                 int filasAfectadas = 0;
                 EntrenadorRepository entrenadorRepository = new EntrenadorRepository();
 
                 try
                 {
-                    filasAfectadas = entrenadorRepository.ActualizarEntrenador(nombres, apellidos, correo, contrasena, fecha_nacimiento, genero);
+                EncriptarContrasenaUtility encrip = new EncriptarContrasenaUtility();
+                entrenador.contrasena = encrip.EncriptarContrasena(entrenador);
+
+                filasAfectadas = entrenadorRepository.ActualizarEntrenador(entrenador);
+                    
                 }
                 catch (Exception ex)
                 {
@@ -123,7 +129,7 @@ namespace SPARTANFITApp.Services
 
 
     }
-}
+
 
         //public PersonaDto logueo(PersonaDto administrador)
         //{
@@ -141,5 +147,5 @@ namespace SPARTANFITApp.Services
 
         //    return administradorResp;
         //}
-    }
-}
+    
+
