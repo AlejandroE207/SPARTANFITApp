@@ -1,6 +1,9 @@
-﻿@{
-    ViewBag.Title = "AgregarEntrenador";
+﻿@model SPARTANFITApp.Dto.PersonaDto
+
+@{
+    ViewBag.Title = "FormActualizarEntrenador";
 }
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap"
           rel="stylesheet">
-    <title>Agregar Entrenador</title>
+    <title>ActualizarEntrenador</title>
 </head>
 <body>
     <header>
@@ -24,48 +27,42 @@
         </ul>
     </header>
     <div>
-        @using (Html.BeginForm("AgregarEntrenador", "Home", FormMethod.Post))
+        @using (Html.BeginForm("FormActualizarEntrenador", "Home", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
-            <h1>Registrar Entrenador</h1>
+            <h1>Actualizar Entrenador</h1>
             <div class="form-row">
                 <div>
                     <label for="nombres">Nombres:</label>
-                    <input type="text" id="nombres" name="nombres" required>
+                    <input type="text" id="nombres" name="nombres" value="@Model.nombres" required>
                 </div>
                 <div>
                     <label for="apellidos">Apellidos:</label>
-                    <input type="text" id="apellidos" name="apellidos" required>
+                    <input type="text" id="apellidos" name="apellidos" value="@Model.apellidos" required>
                 </div>
             </div>
             <div class="form-row">
                 <div>
                     <label for="correo">Correo:</label>
-                    <input type="email" id="correo" name="correo" required>
+                    <input type="email" id="correo" name="correo" value="@Model.correo" required>
                 </div>
                 <div>
                     <label for="contrasena">Contraseña:</label>
-                    <input type="password" id="contrasena" name="contrasena" required>
+                    <input type="password" id="contrasena" name="contrasena" placeholder="Digite su contraseña actual o la nueva." required>
                 </div>
             </div>
-            <div class="form-row">
-                <div>
-                    <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
-                    <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
-                </div>
 
-            </div>
             <div>
-                <label for="genero">Genero:</label>
+                <label for="genero">Género:</label>
                 <select id="genero" name="genero" required>
                     <option value="">Seleccione</option>
-                    <option value="femenino">Femenino</option>
-                    <option value="masculino">Masculino</option>
+                    <option value="femenino" @(Model.genero == "femenino" ? "selected" : "")>Femenino</option>
+                    <option value="masculino" @(Model.genero == "masculino" ? "selected" : "")>Masculino</option>
                 </select>
             </div>
             <div class="centrado">
                 <div class="form-row">
-                    <button class="boton-crear" onclick="crearCuenta()">Crear Entrenador</button>
+                    <button type="submit" class="boton-crear" onclick="return crearCuenta()">Actualizar</button>
                 </div>
                 <div class="botoncito">
                     <div class="container">
@@ -73,23 +70,20 @@
                     </div>
                 </div>
             </div>
-        }  @if (ViewData["Mensaje"] != null)
+        }
+
+        @if (ViewData["Mensaje"] != null)
         {
             <p>@ViewData["Mensaje"]</p>
         }
+    </div>
 
- <script>
- function confirmarCancelar() {
-     if (confirm("¿Estás seguro de que quieres cancelar?")) {
-         window.location.href = '@Url.Action("MostrarEntrenadores", "Home")';
-     } }
-        </script>
-<script>
-    
-        </script>
+    <script>
+       
 
-
-
+        function confirmarCancelar() {
+            return confirm("¿Estás seguro de que quieres cancelar?");
+        }
+    </script>
 </body>
-
 </html>

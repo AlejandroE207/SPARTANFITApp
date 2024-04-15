@@ -1,7 +1,9 @@
 ﻿@{
     ViewBag.Title = "MostrarEntrenadores";
 }
-@model List<SPARTANFITApp.Dto.PersonaDto>
+@{
+    var entrenadores = ViewData["entrenadores"] as List<SPARTANFITApp.Dto.PersonaDto>;
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +25,7 @@
     <header>
         <a href="#" class="logo"> SPARTANFIT</a>
         <ul>
-            <li>@Html.ActionLink("Usuarios", "PrincipalAdministrador", "Home")</li>
+            <li>@Html.ActionLink("Usuarios", "MostrarUsuarios", "Home")</li>
             <li>@Html.ActionLink("Entrenadores", "MostrarEntrenadores", "Home")</li>
             <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
         </ul>
@@ -42,7 +44,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var entrenador in Model)
+                @foreach (var entrenador in entrenadores)
                 {
                     <tr>
                         <td>@entrenador.nombres</td>
@@ -50,15 +52,39 @@
                         <td>@entrenador.correo</td>
                         <td>@entrenador.fecha_nacimiento</td>
                         <td>@entrenador.genero</td>
+
                         <td>
-                            <img src="~/Scripts/img/usuario (1).png" class="icono">
+                            @using (Html.BeginForm("ActualizarEntrenador", "Home", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id_usuario" value=@entrenador.id_usuario>
+                                <input type="hidden" name="id_rol" value=@entrenador.id_rol>
+                                <input type="hidden" name="nombres" value=@entrenador.nombres>
+                                <input type="hidden" name="apellidos" value=@entrenador.apellidos>
+                                <input type="hidden" name="correo" value=@entrenador.correo>
+                                <input type="hidden" name="contrasena" value=@entrenador.contrasena>
+                                <input type="hidden" name="fecha_nacimiento" value=@entrenador.fecha_nacimiento>
+                                <input type="hidden" name="genero" value=@entrenador.genero>
+                                <button type="submit" onclick="return " class="boton-icono"><img src="~/Scripts/img/usuario (1).png" class="icono" alt="Editar"></button>
+
+                            }  @if (ViewData["Mensaje"] != null)
+                            {
+                                <p>@ViewData["Mensaje"]</p>
+                            }
+
                         </td>
                         <td>
                             @using (Html.BeginForm("EliminarEntrenador", "Home", FormMethod.Post))
                             {
-                                <input type="hidden" name="correo" value="@entrenador.correo}">
-                                <button type="button" onclick="confirmarEliminacion()" class="boton-icono"><img src="~/Scripts/img/usuario (1).png" class="icono" alt="Eliminar Entrenador"></button>
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="correo" value=@entrenador.correo>
+                                <button type="submit" onclick="return confirmarEliminacion()" class="boton-icono"><img src="~/Scripts/img/usuario.png" class="icono" alt="Eliminar Entrenador"></button>
+
+                            }  @if (ViewData["Mensaje"] != null)
+                            {
+                                <p>@ViewData["Mensaje"]</p>
                             }
+
                         </td>
                     </tr>
                 }
@@ -70,15 +96,13 @@
     </div>
     <script>
     function crearEntrenador() {
-        window.location.href = '@Url.Action("CrearEntrenador", "Home")';
+        window.location.href = '@Url.Action("AgregarEntrenador", "Home")';
     }
     </script>
     <script>
-  function confirmarEliminacion() {
-      if (confirm("¿Estás seguro de que quieres eliminar el Entrenador?")) {
-          window.location.href = '@Url.Action("MostrarEntrenadores", "Home")';
-      } }
-
+        function confirmarEliminacion() {
+            return confirm("¿Estás seguro de que quieres eliminar el Entrenador?");
+        }
     </script>
 </body>
 </html>

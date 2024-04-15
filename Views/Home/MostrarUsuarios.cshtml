@@ -1,7 +1,11 @@
 ﻿@{
     ViewBag.Title = "MostrarUsuarios";
 }
-@model List<SPARTANFITApp.Dto.UsuarioDto>
+
+@{ 
+    var usuarios = ViewData["usuarios"] as List<SPARTANFITApp.Dto.UsuarioDto>;
+}
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +27,7 @@
     <header>
         <a href="#" class="logo"> SPARTANFIT</a>
         <ul>
-            <li>@Html.ActionLink("Usuarios", "PrincipalAdministrador", "Home")</li>
+            <li>@Html.ActionLink("Usuarios", "MostrarUsuarios", "Home")</li>
             <li>@Html.ActionLink("Entrenadores", "MostrarEntrenadores", "Home")</li>
             <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
         </ul>
@@ -45,7 +49,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var usuario in Model)
+                @foreach (var usuario in usuarios)
                 {
                     <tr>
                         <td>@usuario.persona.nombres</td>
@@ -63,7 +67,7 @@
             </tbody>
         </table>
     </div>
-    
-   
+
+
 </body>
 </html>

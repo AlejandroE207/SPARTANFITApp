@@ -1,10 +1,12 @@
-﻿using SPARTANFITApp.Dto;
+﻿using Microsoft.Ajax.Utilities;
+using SPARTANFITApp.Dto;
 using SPARTANFITApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml.Linq;
 
 namespace SPARTANFIT_App.Controllers
 {
@@ -89,6 +91,18 @@ namespace SPARTANFIT_App.Controllers
                     }
 
                 }
+                else if(personaLogeo.id_rol == 3)
+                {
+                    if (personaLogeo.respuesta != 0)
+                    {
+                        Session["UserLogged"] = personaLogeo;
+                        return View("MostrarUsuarios");
+                    }
+                    else
+                    {
+                        return View("Index");
+                    }
+                }
             }
             return View();
         }
@@ -130,31 +144,48 @@ namespace SPARTANFIT_App.Controllers
                 return View("ActualizarObjetivo");
             }
         }
-        public ActionResult MostrarEntrenadores(PersonaDto entrenador)
+        public ActionResult MostrarEntrenadores()
         {
             AdministradorService servicio=new AdministradorService();
-            List<PersonaDto>entrenadores=servicio.Mostrar_Entrenadores(entrenador);
-            return View();
+            List<PersonaDto>entrenadores=servicio.Mostrar_Entrenadores();
+            ViewData["entrenadores"] = entrenadores;
+            return View("MostrarEntrenadores");
         }
         public ActionResult MostrarUsuarios(UsuarioDto usuario)
         {
             AdministradorService servicio= new AdministradorService();
             List<UsuarioDto>usuarios=servicio.Mostrar_Usuarios(usuario);
-            return View();
+            ViewData["usuarios"] = usuarios;
+            return View("MostrarUsuarios",usuarios);
         }
         [HttpPost]
         public ActionResult EliminarEntrenador(String correo)
         {
             AdministradorService servicio= new AdministradorService();
             servicio.EliminarEntrenador(correo);
+            return MostrarEntrenadores();
+        }
+
+        public ActionResult AgregarEntrenador()
+        {
             return View();
         }
+
         [HttpPost]
         public ActionResult AgregarEntrenador(PersonaDto entrenador)
         {
             AdministradorService servicio = new AdministradorService();
-            servicio.registrarEntrenador(entrenador);
-            return View();
+            PersonaDto resultado = new PersonaDto();
+
+            resultado=servicio.registrarEntrenador(entrenador);
+            if (resultado.respuesta != 0)
+            {
+                return MostrarEntrenadores();
+            }
+            else
+            {
+                return View(resultado);
+            }
         }
 
         [HttpPost]
@@ -175,6 +206,26 @@ namespace SPARTANFIT_App.Controllers
             else
             {
                 return View("ActualizarObjetivo");
+            }
+        }
+        [HttpPost]
+        public ActionResult ActualizarEntrenador(PersonaDto entrenador)
+        {
+            return View("FormActualizarEntrenador",entrenador);
+        }
+
+        [HttpPost]
+        public ActionResult FormActualizarEntrenador(PersonaDto entrenador) 
+        {
+            AdministradorService administradorService = new AdministradorService();
+            int resultado = administradorService.ActualizarEntrenador(entrenador);
+            if (resultado != 0)
+            {
+                return MostrarEntrenadores();
+            }
+            else
+            {
+                return View();
             }
         }
     }
