@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Security.Cryptography;
-using System.Linq;
-using System.Web;
 
 namespace SPARTANFITApp.Utilities
 {

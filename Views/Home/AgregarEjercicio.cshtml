@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap" rel="stylesheet">
+    <title>Agregar ejercicio</title>
+    <link rel="stylesheet" href="~/StylesFormularioR.css">
+</head>
+<body>
+    <header>
+        <a href="#" class="logo">SPARTANFIT</a>
+        <ul>
+            <li>@Html.ActionLink("Inicio", "PrincipalEntrenador", "Home")</li>
+            
+        </ul>
+    </header>
+    <section>
+        @using (Html.BeginForm("AgregarEjercicio", "Home", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return validateForm();" }))
+        {
+
+            <h1>Agregar ejercicio</h1>
+            <div class="inputbox">
+                <label for="grupo_muscular">Grupo muscular</label>
+                <input type="text" id="grupo_muscular" name="grupo_muscular" required>
+            </div>
+            <div class="inputbox">
+                <label for="nombre_ejercicio">Nombre ejercicio</label>
+                <input type="text" id="nombre_ejercicio" name="nombre_ejercicio" required>
+            </div>
+            <div>
+                <label for="imagen_ejercicio">Imagen del Ejercicio:</label>
+                <input type="file" id="imagen_ejercicio" name="imagen_ejercicio" accept="image/*" required>
+            </div>
+            <div class="botoncito">
+                <button class="botCre" type="submit">Crear ejercicio</button>
+            </div>
+            <div class="botoncito">
+                <div class="container">
+                    <!-- este me mandara a la prinicpal entrenador -->
+                    @Html.ActionLink("Cancelar", "PrincipalEntrenador", "Home", null, new { @class = "botoncito botoncancelar" })
+                </div>
+            </div>
+
+        }
+    </section>
+
+    <script>
+        function validateForm() {
+            const grupoMuscular = document.getElementById('grupo_muscular').value;
+            const nombreEjercicio = document.getElementById('nombre_ejercicio').value;
+            const imagenEjercicio = document.getElementById('imagen_ejercicio').files[0];
+
+            if (grupoMuscular.trim() === '' || nombreEjercicio.trim() === '') {
+                alert('Por favor, complete todos los campos.');
+                return false;
+            }
+
+            if (!imagenEjercicio) {
+                alert('Debe seleccionar una imagen.');
+                return false;
+            }
+
+            const extension = imagenEjercicio.name.split('.').pop().toLowerCase();
+            if (extension !== 'jpeg' && extension !== 'png' && extension !== 'jpg') {
+                alert('Por favor, seleccione una imagen de tipo JPG,JPEG O PNG.');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</body>
+</html>

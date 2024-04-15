@@ -1,0 +1,96 @@
+@model SPARTANFITApp.Dto.AlimentoDto
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Alimento</title>
+    <link rel="stylesheet" href="stilo.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/StylesFormularioR.css">
+</head>
+<body>
+    <header>
+        <a href="#" class="logo">SPARTANFIT</a>
+        <ul>
+            <li>@Html.ActionLink("Inicio", "PrincipalEntrenador", "Home")</li>
+        </ul>
+    </header>
+    <section>
+
+        <h1>Agregar alimento</h1>
+        @using (Html.BeginForm("AgregarAlimento", "home", FormMethod.Post, new { onsubmit = "return validateForm()" }))
+        {
+            <div class="inputbox">
+                <label for="nombre_alimento">Nombre Alimento:</label>
+                <input type="text" id="nombre_alimento" name="nombre_alimento" required>
+            </div>
+            <div class="form-row">
+                <div id="categoriaAlimentoDiv">
+                    <label for="categoria_alimento">Categoria del alimento:</label>
+                    <select id="categoria_alimento" name="categoria_alimento">
+                        <option value="0">Seleccione</option>
+                        <option value="1">proteina</option>
+                        <option value="2">fibras</option>
+                        <option value="3">grasas</option>
+                        <option value="4">carbohidratos</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="inputbox">
+                <label for="calorias_por_gramo">Calorias por gramo:</label>
+                <input type="text" id="calorias_por_gramo" name="calorias_por_gramo" required>
+            </div>
+            <div class="inputbox">
+                <label for="grasa">Grasa:</label>
+                <input type="text" id="grasa" name="grasa" required>
+            </div>
+            <div class="inputbox">
+                <label for="carbohidrato">Carbohidrato:</label>
+                <input type="text" id="carbohidrato" name="carbohidrato" required>
+            </div>
+            <div class="inputbox">
+                <label for="proteina">Proteina:</label>
+                <input type="text" id="proteina" name="proteina" required>
+            </div>
+            <div class="inputbox">
+                <label for="fibra">Fibra:</label>
+                <input type="text" id="fibra" name="fibra" required>
+            </div>
+            <div class="botoncito">
+                <button class="botCre" type="submit">Agregar Alimento</button>
+            </div>
+            <div class="botoncito">
+                <div class="container">
+        
+                    @Html.ActionLink("Cancelar", "PrincipalEntrenador", "Home", null, new { @class = "botoncito botoncancelar" })
+                </div>
+            </div>
+        }
+     </section>
+        
+
+    <script>
+        function validateForm() {
+            var nombreAlimento = document.getElementById("nombre_alimento").value;
+            var categoriaAlimento = document.getElementById("categoria_alimento").value;
+            var caloriasPorGramo = document.getElementById("calorias_por_gramo").value;
+            var grasa = document.getElementById("grasa").value;
+            var carbohidrato = document.getElementById("carbohidrato").value;
+            var proteina = document.getElementById("proteina").value;
+            var fibra = document.getElementById("fibra").value;
+
+            if (nombreAlimento === "" || categoriaAlimento === "0" || caloriasPorGramo === "" || grasa === "" || carbohidrato === "" || proteina === "" || fibra === "") {
+                alert("Por favor completa todos los campos.");
+                return false; // Evita que se envíe el formulario si algún campo está vacío
+            }
+            return true;
+        }
+    </script>
+
+</body>
+</html>

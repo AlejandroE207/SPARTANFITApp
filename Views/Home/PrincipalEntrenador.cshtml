@@ -9,14 +9,16 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>IniciarSesionEntrenador</title>
+    <link href="~/stylesIniciarSesion.css" rel="stylesheet" />
 </head>
 <body>
     <header>
         <a href="#" class="logo"> SPARTANFIT</a>
         <ul>
-            <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-            
+            <li>@Html.ActionLink("inico", "PrincipalEntrenador", "Home")</li> 
             <li>@Html.ActionLink("Registrarse", "Formulario_Registro", "Home")</li>
+            <li>@Html.ActionLink("AgregarEjercicios","AgregarEjercicio", "home")</li>
+            <li>@Html.ActionLink("AgregarAlimentos","AgregarAlimento", "home")</li>
         </ul>
     </header>
     <div>

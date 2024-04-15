@@ -21,7 +21,7 @@
         <ul>
             <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
             <li>@Html.ActionLink("Iniciar sesión", "IniciarSesion", "Home")</li>
-            <li>@Html.ActionLink("Registrarse", "Formulario_Registro", "Home")</li>
+            <li>@Html.ActionLink("Registrarse", "Formulario_Registro", "Home")</li>   
         </ul>
     </header>
     <main>
@@ -42,7 +42,7 @@
             <div class="sectionIma_imagenes">
                 <div class="sectionIma_imagenes-contenedor">
                     <img class="sectionIma_img" src="~/ImagenIndex.jpg" alt="">
-                  
+
                 </div>
                 <div class="sectionIma_imagenes-contenedor">
                     <img class="sectionIma_img" src="~/ImagenIndex1.jpg" alt="">
@@ -59,15 +59,13 @@
                 <h3>LA FUERZA NO PROVIENE DEL CUERPO  PROVIENE DE LA VOLUNTAD</h3>
             </div>
             <div class="botoncito">
+                <!-- verificar que me dormi y quede encima del teclado -->
+                @Html.ActionLink("Registrarse", "Formulario_Registro", "Home", null, new { @class = "botoncilo_lindo" })
 
-                <a class="botoncilo_lindo"@Html.ActionLink("Registrarse", "Formulario_Registro", "Home")</a>
             </div>
+
+        </section>
     </main>
-    </section>
-
-
-
-
 </body>
 
 </html>
