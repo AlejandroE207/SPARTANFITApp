@@ -70,7 +70,7 @@
                             @using (Html.BeginForm("EliminarEjercicio", "Home", FormMethod.Post))
                             {
                                 @Html.AntiForgeryToken()
-                                <input type="hidden" name="nombre_ejercicio" value=@ejercicio.nombre_ejercicio>
+                                <input type="hidden" name="id_ejercicio" value=@ejercicio.id_ejercicio>
                                 <button type="submit" onclick="return confirmarEliminacion()" class="boton-icono"><img src="~/Scripts/img/eliminar.png" class="icono" alt="Eliminar"></button>
 
                             }  @if (ViewData["Mensaje"] != null)

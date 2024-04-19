@@ -49,14 +49,14 @@ namespace SPARTANFITApp.Services
             return lista_Ejercicios;
         }
 
-        public int EliminarEjercicio(String nombre_ejercicio)
+        public int EliminarEjercicio(int id_ejercicio)
         {
             int filasAfectadas = 0;
             EjercicioRepository ejercicioRepository = new EjercicioRepository();
 
             try
             {
-                filasAfectadas = ejercicioRepository.EliminarEjercicio(nombre_ejercicio);
+                filasAfectadas = ejercicioRepository.EliminarEjercicio(id_ejercicio);
             }
             catch (Exception ex)
             {
@@ -71,12 +71,9 @@ namespace SPARTANFITApp.Services
             int filasAfectadas = 0;
             EjercicioRepository ejercicioRepository = new EjercicioRepository();
 
-            try
-            {
-               
-
+            try { 
+            
                 filasAfectadas = ejercicioRepository.ActualizarEjercicio(ejercicio);
-
             }
             catch (Exception ex)
             {
@@ -111,14 +108,14 @@ namespace SPARTANFITApp.Services
             return lista_Alimentos;
         }
 
-        public int EliminarAlimento(String nombre)
+        public int EliminarAlimento(int id_alimento)
         {
             int filasAfectadas = 0;
             AlimentoRepository alimentoRepository = new AlimentoRepository();
 
             try
             {
-                filasAfectadas = alimentoRepository.EliminarAlimento(nombre);
+                filasAfectadas = alimentoRepository.EliminarAlimento(id_alimento);
             }
             catch (Exception ex)
             {
@@ -182,5 +179,4 @@ namespace SPARTANFITApp.Services
 
     //    return entrenadorResp;
     //}
-}
 }

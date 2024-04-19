@@ -236,10 +236,10 @@ namespace SPARTANFIT_App.Controllers
             return View("MostrarEjercicios", Ejercicios);
         }
         [HttpPost]
-        public ActionResult EliminarEjercicio(String nombre_ejercicio)
+        public ActionResult EliminarEjercicio(int id_ejercicio)
         {
-            EntrenadorService servicio = new EntrenadorService();
-            servicio.EliminarEjercicio(nombre_ejercicio);
+            EntrenadorService entrenadorService = new EntrenadorService();
+            entrenadorService.EliminarEjercicio(id_ejercicio);
             return MostrarEjercicios();
         }
             
@@ -265,8 +265,6 @@ namespace SPARTANFIT_App.Controllers
             }
         }
 
-        
-     
         [HttpPost]
         public ActionResult ActualizarEjercicio(EjercicioDto ejercicio)
         {
@@ -295,10 +293,10 @@ namespace SPARTANFIT_App.Controllers
             return View("MostrarAlimentos", Alimentos);
         }
         [HttpPost]
-        public ActionResult EliminarAlimentos(String nombre)
+        public ActionResult EliminarAlimento(int id_alimento)
         {
             EntrenadorService servicio = new EntrenadorService();
-            servicio.EliminarAlimento(nombre);
+            servicio.EliminarAlimento(id_alimento);
             return MostrarAlimentos();
         }
 
@@ -310,10 +308,10 @@ namespace SPARTANFIT_App.Controllers
         [HttpPost]
         public ActionResult AgregarAlimento(AlimentoDto alimento)
         {
-            EntrenadorService servicio = new EntrenadorService();
+            EntrenadorService entrenadorServicio = new EntrenadorService();
             AlimentoDto resultado = new AlimentoDto();
 
-            resultado = servicio.registrarAlimento(alimento);
+            resultado = entrenadorServicio.registrarAlimento(alimento);
             if (resultado.respuesta != 0)
             {
                 return MostrarAlimentos();

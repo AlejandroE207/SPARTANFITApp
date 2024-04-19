@@ -61,6 +61,7 @@
                             @using (Html.BeginForm("ActualizarAlimento", "Home", FormMethod.Post))
                             {
                                 @Html.AntiForgeryToken()
+                                <input type="hidden" name="id_alimento" value=@alimento.id_alimento>
                                 <input type="hidden" name="id_categoria_alimento" value=@alimento.id_categoria_alimento>
                                 <input type="hidden" name="nombre" value=@alimento.nombre>
                                 <input type="hidden" name="calorias_x_gramo" value=@alimento.calorias_x_gramo>
@@ -80,7 +81,7 @@
                             @using (Html.BeginForm("EliminarAlimento", "Home", FormMethod.Post))
                             {
                                 @Html.AntiForgeryToken()
-                                <input type="hidden" name="nombre" value=@alimento.nombre>
+                                <input type="hidden" name="id_alimento" value=@alimento.id_alimento>
                                 <button type="submit" onclick="return confirmarEliminacion()" class="boton-icono"><img src="~/Scripts/img/eliminar.png" class="icono" alt="Eliminar"></button>
 
                             }  @if (ViewData["Mensaje"] != null)
@@ -99,7 +100,7 @@
     </div>
     <script>
     function crearAlimento() {
-        window.location.href = '@Url.Action("AgregarEjercicio", "Home")';
+        window.location.href = '@Url.Action("AgregarAlimento", "Home")';
     }
     </script>
     <script>
