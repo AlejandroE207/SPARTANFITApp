@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = "AgregarEjercicio";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Scripts/css/StyleRegistro.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap"
+          rel="stylesheet">
+    <title>AgregarEjercicio</title>
+</head>
+<body>
+    <header>
+        <a href="#" class="logo"> SPARTANFIT</a>
+        <ul>
+            <li>@Html.ActionLink("Ejercicios", "MostrarEjercicios", "Home")</li>
+            <li>@Html.ActionLink("Rutinas", "", "Home")</li>
+            <li>@Html.ActionLink("Plan Alimenticio", "MostrarAlimentos", "Home")</li>
+            <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
+        </ul>
+    </header>
+    <div>
+        @using (Html.BeginForm("AgregarEjercicio", "Home", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <h1>Agregar Ejercicio</h1>
+            <div class="form-row">
+                <div>
+                    <label for="nombre_ejercicio">Nombres</label>
+                    <input type="text" id="nombre_ejercicio" name="nombre_ejercicio" required>
+                </div>
+                <label for="grupo_muscular">Grupo Muscular:</label>
+                <select id="grupo_muscular" name="grupo_muscular" required>
+                    <option value="">Seleccione</option>
+                    <option value="1">Hombro</option>
+                    <option value="2">Espalda</option>
+                    <option value="3">Pectoral</option>
+                    <option value="4">Triceps</option>
+                    <option value="5">Pierna</option>
+                    <option value="6">Biceps</option>
+                    <option value="7">Pantorrillas</option>
+                    <option value="8">Abdomen</option>
+
+                </select>
+            </div>
+        </div>
+        <div>
+            <label for="apoyo_visual">Url Imagen</label>
+            <input type="text" id="apoyo_visual" name="apoyo_visual" required>
+        </div>
+        
+        <div class="centrado">
+            <div class="form-row">
+                <button class="boton-crear" onclick="crearCuenta()">Agregar Ejercicio</button>
+            </div>
+            <div class="botoncito">
+                <div class="container">
+                    <button class="boton-cancelar" onclick="confirmarCancelar()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    }  @if (ViewData["Mensaje"] != null)
+        {
+            <p>@ViewData["Mensaje"]</p>
+        }
+
+    <script>
+ function confirmarCancelar() {
+     if (confirm("¿Estás seguro de que quieres cancelar?")) {
+         window.location.href = '@Url.Action("MostrarEjercicios", "Home")';
+     } }
+    </script>
+    <script>
+
+    </script>
+
+
+
+</body>
+
+</html>

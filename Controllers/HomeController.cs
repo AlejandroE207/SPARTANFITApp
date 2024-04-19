@@ -228,5 +228,123 @@ namespace SPARTANFIT_App.Controllers
                 return View();
             }
         }
+        public ActionResult MostrarEjercicios()
+        {
+            EntrenadorService servicio = new EntrenadorService();
+            List<EjercicioDto> Ejercicios = servicio.Mostrar_Ejercicio();
+            ViewData["Ejercicios"] = Ejercicios;
+            return View("MostrarEjercicios", Ejercicios);
+        }
+        [HttpPost]
+        public ActionResult EliminarEjercicio(String nombre_ejercicio)
+        {
+            EntrenadorService servicio = new EntrenadorService();
+            servicio.EliminarEjercicio(nombre_ejercicio);
+            return MostrarEjercicios();
+        }
+            
+        public ActionResult AgregarEjercicio()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AgregarEjercicio(EjercicioDto ejercicio)
+        {
+            EntrenadorService servicio = new EntrenadorService();
+            EjercicioDto resultado = new EjercicioDto();
+
+            resultado = servicio.registrarEjercicio(ejercicio);
+            if (resultado.respuesta != 0)
+            {
+                return MostrarEjercicios();
+            }
+            else
+            {
+                return View(resultado);
+            }
+        }
+
+        
+     
+        [HttpPost]
+        public ActionResult ActualizarEjercicio(EjercicioDto ejercicio)
+        {
+            return View("FormActualizarEjercicio", ejercicio);
+        }
+
+        [HttpPost]
+        public ActionResult FormActualizarEjercicio(EjercicioDto ejercicio)
+        {
+            EntrenadorService entrenadorService = new EntrenadorService();
+            int resultado = entrenadorService.ActualizarEjercicio(ejercicio);
+            if (resultado != 0)
+            {
+                return MostrarEjercicios();
+            }
+            else
+            {
+                return View();
+            }
+        }
+        public ActionResult MostrarAlimentos()
+        {
+            EntrenadorService servicio = new EntrenadorService();
+            List<AlimentoDto> Alimentos = servicio.Mostrar_Alimento();
+            ViewData["Alimentos"] = Alimentos;
+            return View("MostrarAlimentos", Alimentos);
+        }
+        [HttpPost]
+        public ActionResult EliminarAlimentos(String nombre)
+        {
+            EntrenadorService servicio = new EntrenadorService();
+            servicio.EliminarAlimento(nombre);
+            return MostrarAlimentos();
+        }
+
+        public ActionResult AgregarAlimento()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AgregarAlimento(AlimentoDto alimento)
+        {
+            EntrenadorService servicio = new EntrenadorService();
+            AlimentoDto resultado = new AlimentoDto();
+
+            resultado = servicio.registrarAlimento(alimento);
+            if (resultado.respuesta != 0)
+            {
+                return MostrarAlimentos();
+            }
+            else
+            {
+                return View(resultado);
+            }
+        }
+
+
+
+        [HttpPost]
+        public ActionResult ActualizarAlimento(AlimentoDto alimento)
+        {
+            return View("FormActualizarAlimento", alimento);
+        }
+
+        [HttpPost]
+        public ActionResult FormActualizarAlimento(AlimentoDto alimento)
+        {
+            EntrenadorService entrenadorService = new EntrenadorService();
+            int resultado = entrenadorService.ActualizarAlimento(alimento);
+            if (resultado != 0)
+            {
+                return MostrarAlimentos();
+            }
+            else
+            {
+                return View();
+            }
+        }
     }
 }

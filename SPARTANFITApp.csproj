@@ -122,6 +122,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValidadorMes.cs" />
+    <Compile Include="Dto\AlimentoDto.cs" />
+    <Compile Include="Dto\EjercicioDto.cs" />
     <Compile Include="Dto\PersonaDto.cs" />
     <Compile Include="Dto\UsuarioDto.cs" />
     <Compile Include="Global.asax.cs">
@@ -129,6 +131,8 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\AdministradorRepository.cs" />
+    <Compile Include="Repository\AlimentoRepository.cs" />
+    <Compile Include="Repository\EjercicioRepository.cs" />
     <Compile Include="Repository\EntrenadorRepository.cs" />
     <Compile Include="Repository\PersonaRepository.cs" />
     <Compile Include="Repository\UsuarioRepository.cs" />
@@ -150,6 +154,8 @@
     <Content Include="Scripts\css\StyleRegistro.css" />
     <Content Include="Scripts\css\stylesPerfil.css" />
     <Content Include="Scripts\css\Styletablas.css" />
+    <Content Include="Scripts\img\editar.png" />
+    <Content Include="Scripts\img\eliminar.png" />
     <Content Include="Scripts\img\imagen4.jpg" />
     <Content Include="Scripts\img\ImagenIndex.jpg" />
     <Content Include="Scripts\img\ImagenIndex1.jpg" />
@@ -194,6 +200,12 @@
     <Content Include="Views\Home\MostrarUsuarios.cshtml" />
     <Content Include="Views\Home\AgregarEntrenador.cshtml" />
     <Content Include="Views\Home\FormActualizarEntrenador.cshtml" />
+    <Content Include="Views\Home\MostrarEjercicios.cshtml" />
+    <Content Include="Views\Home\AgregarEjercicio.cshtml" />
+    <Content Include="Views\Home\FormActualizarEjercicio.cshtml" />
+    <Content Include="Views\Home\MostrarAlimentos.cshtml" />
+    <Content Include="Views\Home\FormActualizarAlimento.cshtml" />
+    <Content Include="Views\Home\AgregarAlimento.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

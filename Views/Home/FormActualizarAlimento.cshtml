@@ -1,0 +1,88 @@
+﻿
+    @model SPARTANFITApp.Dto.AlimentoDto
+
+@{
+    ViewBag.Title = "FormActualizarAlimento";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Scripts/css/StyleRegistro.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap"
+          rel="stylesheet">
+    <title>ActualizarAlimento</title>
+</head>
+<body>
+    <header>
+        <a href="#" class="logo"> SPARTANFIT</a>
+        <ul>
+            <li>@Html.ActionLink("Ejercicios", "MostrarEjercicios", "Home")</li>
+            <li>@Html.ActionLink("Rutinas", "", "Home")</li>
+            <li>@Html.ActionLink("Plan Alimenticio", "MostrarAlimentos", "Home")</li>
+            <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
+        </ul>
+    </header>
+    <div>
+        @using (Html.BeginForm("FormActualizarAlimento", "Home", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <h1>Actualizar Alimento</h1>
+            <div class="form-row">
+                <div>
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" value="@Model.nombre" required>
+                </div>
+                <div>
+                    <label for="caloria_x_gramo">Calorias x Gramo:</label>
+                    <input type="number" id="caloria_x_gramo" name="caloria_x_gramo" value="@Model.calorias_x_gramo" required>
+                </div>
+                <div>
+                    <label for="grasa">Grasa:</label>
+                    <input type="number" id="grasa" name="grasa" value="@Model.grasa" required>
+                </div>
+                <div>
+                    <label for="carbohidrato">Carbohidratos:</label>
+                    <input type="number" id="carbohidrato" name="carbohidrato" value="@Model.carbohidrato" required>
+                </div>
+                <div>
+                    <label for="proteina">Proteina:</label>
+                    <input type="number" id="proteina" name="proteina" value="@Model.proteina" required>
+                </div>
+                <div>
+                    <label for="fibra">Fibra:</label>
+                    <input type="number" id="fibra" name="fibra" value="@Model.fibra" required>
+                </div>
+            </div>
+            <div class="centrado">
+                <div class="form-row">
+                    <button type="submit" class="boton-crear" onclick="return crearCuenta()">Actualizar</button>
+                </div>
+                <div class="botoncito">
+                    <div class="container">
+                        <button class="boton-cancelar" onclick="confirmarCancelar()">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (ViewData["Mensaje"] != null)
+        {
+            <p>@ViewData["Mensaje"]</p>
+        }
+    </div>
+
+    <script>
+
+
+        function confirmarCancelar() {
+            return confirm("¿Estás seguro de que quieres cancelar?");
+        }
+    </script>
+</body>
+</html>

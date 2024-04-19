@@ -1,0 +1,101 @@
+﻿@{
+    ViewBag.Title = "MostrarEjercicios";
+}
+@{
+    var Ejercicios = ViewData["Ejercicios"] as List<SPARTANFITApp.Dto.EjercicioDto>;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="~/Scripts/css/Styletablas.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>MostrarEjercicios</title>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo"> SPARTANFIT</a>
+        <ul>
+            <li>@Html.ActionLink("Ejercicios", "MostrarEjercicios", "Home")</li>
+            <li>@Html.ActionLink("Rutinas", "", "Home")</li>
+            <li>@Html.ActionLink("Plan Alimenticio", "MostrarAlimentos", "Home")</li>
+            <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
+        </ul>
+    </header>
+    <div class="centrarT">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombres</th>
+                    <th>Grupo Muscular</th>
+                    <th>Apoyo Visual</th>
+                    <th> </th>
+                    <th> </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var ejercicio in Ejercicios)
+                {
+                    <tr>
+                        <td>@ejercicio.nombre_ejercicio</td>
+                        <td>@ejercicio.id_grupo_muscular</td>
+                        <td>@ejercicio.apoyo_visual</td>
+                        
+                        <td>
+                            @using (Html.BeginForm("ActualizarEjercicio", "Home", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id_ejercicio" value=@ejercicio.id_ejercicio>
+                                <input type="hidden" name="nombre_ejercicio" value=@ejercicio.nombre_ejercicio>
+                                <input type="hidden" name="id_grupo_muscular" value=@ejercicio.id_grupo_muscular>
+                                <input type="hidden" name="apoyo_visual" value=@ejercicio.apoyo_visual>
+                                <button type="submit" onclick="return " class="boton-icono"><img src="~/Scripts/img/editar.png" class="icono" alt="Editar"></button>
+
+                            }  @if (ViewData["Mensaje"] != null)
+                            {
+                                <p>@ViewData["Mensaje"]</p>
+                            }
+
+                        </td>
+                        <td>
+                            @using (Html.BeginForm("EliminarEjercicio", "Home", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="nombre_ejercicio" value=@ejercicio.nombre_ejercicio>
+                                <button type="submit" onclick="return confirmarEliminacion()" class="boton-icono"><img src="~/Scripts/img/eliminar.png" class="icono" alt="Eliminar"></button>
+
+                            }  @if (ViewData["Mensaje"] != null)
+                            {
+                                <p>@ViewData["Mensaje"]</p>
+                            }
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <button class="boton-crear" onclick="crearEjercicio()">Agregar Ejercicio</button>
+    </div>
+    <script>
+    function crearEjercicio() {
+        window.location.href = '@Url.Action("AgregarEjercicio", "Home")';
+    }
+    </script>
+    <script>
+        function confirmarEliminacion() {
+            return confirm("¿Estás seguro de que quieres eliminar el Ejercicio?");
+        }
+    </script>
+</body>
+</html>

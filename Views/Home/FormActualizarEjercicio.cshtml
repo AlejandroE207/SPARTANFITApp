@@ -1,0 +1,70 @@
+﻿@model SPARTANFITApp.Dto.EjercicioDto
+
+@{
+    ViewBag.Title = "FormActualizarEjercicio";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Scripts/css/StyleRegistro.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap"
+          rel="stylesheet">
+    <title>ActualizarEjercicio</title>
+</head>
+<body>
+    <header>
+        <a href="#" class="logo"> SPARTANFIT</a>
+        <ul>
+            <li>@Html.ActionLink("Usuarios", "PrincipalAdministrador", "Home")</li>
+            <li>@Html.ActionLink("Entrenadores", "MostrarEntrenadores", "Home")</li>
+            <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
+        </ul>
+    </header>
+    <div>
+        @using (Html.BeginForm("FormActualizarEjercicio", "Home", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <h1>Actualizar Ejercicio</h1>
+            <div class="form-row">
+                <div>
+                    <label for="nombre_ejercicio">Nombres:</label>
+                    <input type="text" id="nombre_ejercicio" name="nombre_ejercicio" value="@Model.nombre_ejercicio" required>
+                </div>
+                <div>
+                    <label for="apoyo_visual">Apoyo Visual:</label>
+                    <input type="text" id="apoyo_visual" name="apoyo_visual" value="@Model.apoyo_visual" required>
+                </div>
+            </div>
+            <div class="centrado">
+                <div class="form-row">
+                    <button type="submit" class="boton-crear" onclick="return crearCuenta()">Actualizar</button>
+                </div>
+                <div class="botoncito">
+                    <div class="container">
+                        <button class="boton-cancelar" onclick="confirmarCancelar()">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (ViewData["Mensaje"] != null)
+        {
+            <p>@ViewData["Mensaje"]</p>
+        }
+    </div>
+
+    <script>
+
+
+        function confirmarCancelar() {
+            return confirm("¿Estás seguro de que quieres cancelar?");
+        }
+    </script>
+</body>
+</html>
