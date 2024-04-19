@@ -50,7 +50,7 @@ namespace SPARTANFITApp.Repository
             DBContextUtility conexion = new DBContextUtility();
             conexion.Connect();
 
-            string SQL = "SELECT id_categoria_alimento,nombre,calorias_x_gramo,grasa,carbohidrato,proteina,fibra FROM ALIMENTO";
+            string SQL = "SELECT id_alimento,id_categoria_alimento,nombre,calorias_x_gramo,grasa,carbohidrato,proteina,fibra FROM ALIMENTO";
 
             using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
             {
@@ -58,8 +58,10 @@ namespace SPARTANFITApp.Repository
                 {
                     while (reader.Read())
                     {
+
                         AlimentoDto alimento = new AlimentoDto();   
                         {
+                            alimento.id_alimento = Convert.ToInt32(reader["id_alimento"]);
                             alimento.id_categoria_alimento = Convert.ToInt32(reader["id_categoria_alimento"]);
                             alimento.nombre = reader["nombre"].ToString();
                             alimento.calorias_x_gramo = Convert.ToDouble(reader["calorias_x_gramo"]);
@@ -76,18 +78,18 @@ namespace SPARTANFITApp.Repository
             conexion.Disconnect();
             return Alimentos;
         }
-        public int EliminarAlimento(string nombre)
+        public int EliminarAlimento(int id_alimento)
         {
             int filasAfectadas = 0;
             DBContextUtility conexion = new DBContextUtility();
             try
             {
                 conexion.Connect();
-                string SQL = "DELETE FROM ALIMENTO WHERE nombre = @nombre";
+                string SQL = "DELETE FROM ALIMENTO WHERE id_alimento = @id_alimento";
                 using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
 
                 {
-                    command.Parameters.AddWithValue("@nombre", nombre);
+                    command.Parameters.AddWithValue("@id_alimento", id_alimento);
                     command.ExecuteNonQuery();
                 }
                 filasAfectadas = 1;
@@ -111,9 +113,10 @@ namespace SPARTANFITApp.Repository
             {
 
                 conexion.Connect();
-                string SQL = "UPDATE ALIMENTO SET nombre= @nombre,calorias_x_gramo = @calorias_x_gramo, grasa=@grasa, carbohidrato=@carbohidrato, proteina=@proteina,fibra=@fibra  " + "WHERE nombre = @nombre";
+                string SQL = "UPDATE ALIMENTO SET nombre= @nombre,calorias_x_gramo = @calorias_x_gramo, grasa=@grasa, carbohidrato=@carbohidrato, proteina=@proteina,fibra=@fibra  " + "WHERE id_alimento = @id_alimento";
                 using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
                 {
+                    command.Parameters.AddWithValue("@id_alimento", alimento.id_alimento);
                     command.Parameters.AddWithValue("@nombre", alimento.nombre);
                     command.Parameters.AddWithValue("@calorias_x_gramo",alimento.calorias_x_gramo);
                     command.Parameters.AddWithValue("@grasa", alimento.grasa);

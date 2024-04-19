@@ -28,12 +28,12 @@
         @using (Html.BeginForm("AgregarAlimento", "Home", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
-            <h1>Agregar Ejercicio</h1>
+            <h1>Agregar Alimento</h1>
             <div class="form-row">
                 <div>
                     <label for="id_categoria_alimento">Categoria Alimento:</label>
                     <select id="id_categoria_alimento" name="id_categoria_alimento" required>
-                        <option value="">Seleccione</option>
+                        <option value="0">Seleccione</option>
                         <option value="1">Proteina</option>
                         <option value="2">Carbohidratos</option>
                         <option value="3">Frutas</option>
@@ -55,7 +55,7 @@
             </div>
             <div>
                 <label for="carbohidratos">Carbohidratos:</label>
-                <input type="number" id="carbohidratos" name="carbohidratos" required>
+                <input type="number" id="carbohidrato" name="carbohidrato" required>
             </div>
         </div>
         <div class="form-row">
@@ -63,8 +63,20 @@
                 <label for="proteina">Proteina:</label>
                 <input type="number" id="proteina" name="proteina" required>
             </div>
-
-
+            <div>
+                <label for="fibra">Fibra:</label>
+                <input type="number" id="fibra" name="fibra" required>
+            </div>
+            <div class="centrado">
+                <div class="form-row">
+                    <button class="boton-crear" onclick="crearCuenta()">Agregar Alimento</button>
+                </div>
+                <div class="botoncito">
+                    <div class="container">
+                        <button class="boton-cancelar" onclick="confirmarCancelar()">Cancelar</button>
+                    </div>
+                </div>
+            </div>
         </div>
     }  @if (ViewData["Mensaje"] != null)
         {

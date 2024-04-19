@@ -32,6 +32,7 @@
             @Html.AntiForgeryToken()
             <h1>Actualizar Ejercicio</h1>
             <div class="form-row">
+                <input type="hidden" name="id_ejercicio" value=@Model.id_ejercicio>
                 <div>
                     <label for="nombre_ejercicio">Nombres:</label>
                     <input type="text" id="nombre_ejercicio" name="nombre_ejercicio" value="@Model.nombre_ejercicio" required>

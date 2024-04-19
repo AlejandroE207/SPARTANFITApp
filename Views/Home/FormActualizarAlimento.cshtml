@@ -34,13 +34,14 @@
             @Html.AntiForgeryToken()
             <h1>Actualizar Alimento</h1>
             <div class="form-row">
+                <input type="hidden" id="id_alimento" name="id_alimento" value="@Model.id_alimento" required>
                 <div>
                     <label for="nombre">Nombre:</label>
                     <input type="text" id="nombre" name="nombre" value="@Model.nombre" required>
                 </div>
                 <div>
                     <label for="caloria_x_gramo">Calorias x Gramo:</label>
-                    <input type="number" id="caloria_x_gramo" name="caloria_x_gramo" value="@Model.calorias_x_gramo" required>
+                    <input type="number" id="calorias_x_gramo" name="calorias_x_gramo" value="@Model.calorias_x_gramo" required>
                 </div>
                 <div>
                     <label for="grasa">Grasa:</label>

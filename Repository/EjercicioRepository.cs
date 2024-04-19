@@ -27,7 +27,7 @@ namespace SPARTANFITApp.Repository
            
                     command.Parameters.AddWithValue("@nombre_ejercicio", ejercicio.nombre_ejercicio);
                     command.Parameters.AddWithValue("@id_grupo_muscular", ejercicio.id_grupo_muscular);
-                    command.Parameters.AddWithValue("@apoyo_visual", ejercicio.id_grupo_muscular);
+                    command.Parameters.AddWithValue("@apoyo_visual", ejercicio.apoyo_visual);
                   
                     command.ExecuteNonQuery();
                 }
@@ -47,7 +47,7 @@ namespace SPARTANFITApp.Repository
             DBContextUtility conexion = new DBContextUtility();
             conexion.Connect();
 
-            string SQL = "SELECT  nombre_ejercicio, id_grupo_muscular,apoyo_visual FROM EJERCICIO";
+            string SQL = "SELECT  id_ejercicio, nombre_ejercicio, id_grupo_muscular,apoyo_visual FROM EJERCICIO";
 
             using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
             {
@@ -57,7 +57,7 @@ namespace SPARTANFITApp.Repository
                     {
                         EjercicioDto ejercicio = new EjercicioDto();
                         {
-
+                            ejercicio.id_ejercicio = Convert.ToInt32(reader["id_ejercicio"]);
                             ejercicio.nombre_ejercicio = reader["nombre_ejercicio"].ToString();
                             ejercicio.id_grupo_muscular = Convert.ToInt32(reader["id_grupo_muscular"]);
                             ejercicio.apoyo_visual = reader["apoyo_visual"].ToString();
@@ -71,18 +71,18 @@ namespace SPARTANFITApp.Repository
             conexion.Disconnect();
             return Ejercicios;
         }
-        public int EliminarEjercicio(string nombre_ejercicio)
+        public int EliminarEjercicio(int id_ejercicio)
         {
             int filasAfectadas = 0;
             DBContextUtility conexion = new DBContextUtility();
             try
             {
                 conexion.Connect();
-                string SQL = "DELETE FROM EJERCICIO WHERE nombre_ejercicio = @nombre_ejercicio";
+                string SQL = "DELETE FROM EJERCICIO WHERE id_ejercicio = @id_ejercicio";
                 using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
 
                 {
-                    command.Parameters.AddWithValue("@nombre_ejercicio", nombre_ejercicio);
+                    command.Parameters.AddWithValue("@id_ejercicio", id_ejercicio);
                     command.ExecuteNonQuery();
                 }
                 filasAfectadas = 1;
@@ -106,12 +106,12 @@ namespace SPARTANFITApp.Repository
             {
 
                 conexion.Connect();
-                string SQL = "UPDATE EJERCICIO SET nombre_ejercicio = @nombre_ejercicio, apoyo_visual = @apoyo_visual  " + "WHERE nombre_ejercicio = @nombre_ejercicio";
+                string SQL = "UPDATE EJERCICIO SET nombre_ejercicio = @nombre_ejercicio, apoyo_visual = @apoyo_visual  " + "WHERE id_ejercicio = @id_ejercicio";
                 using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
                 {
                     command.Parameters.AddWithValue("@nombre_ejercicio", ejercicio.nombre_ejercicio);
-                   // command.Parameters.AddWithValue("@id_grupo_muscular", ejercicio.id_grupo_muscular);
                     command.Parameters.AddWithValue("@apoyo_visual", ejercicio.apoyo_visual);
+                    command.Parameters.AddWithValue("@id_ejercicio", ejercicio.id_ejercicio);
                     command.ExecuteNonQuery();
                 }
                 comando = 1;
