@@ -112,21 +112,24 @@ namespace SPARTANFITApp.Utilities
                 "color: #f3c623;" +
                 "font-size: 0.8rem;" +
                 "}" +
-
+                 ".codigo {" +
+                "text-align: center;" +
+                "}" +
                 "</style>" +
                 "</head>" +
                 "<body>" +
 
                 "<div class='container'>" +
                 "<div class='header'>" +
-                "<h1>¡Recordatorio de registro!</h1>" +
+                "<h1>Cambio de Contraseña</h1>" +
                 "</div>" +
 
                 "<div class='content'>" +
-                "<h2>Hola " + "</h2>" +
+                "<h2>Buen dia" + "</h2>" +
                 "<p>Esperamos que este correo te encuentre bien.</p>" +
                 "<p>El motivo de este correo es porque olvidaste o quieres cambiar tu contraseña.</p>" +
                 "<p>Este es tu codigo para cambiar tu contraseña:" +codigo+ "</p>"+
+                "<p class=´codigo´>"+codigo + "</p>"+
                 "<p>¡Nos vemos pronto!</p>" +
                 "</div>" +
 
