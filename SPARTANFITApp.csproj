@@ -144,6 +144,7 @@
     <Compile Include="Utilities\DBContextUtility.cs" />
     <Compile Include="Utilities\EncriptarContrasenaUtility.cs" />
     <Compile Include="Utilities\FechaUtility.cs" />
+    <Compile Include="Utilities\GeneradorCodigoUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

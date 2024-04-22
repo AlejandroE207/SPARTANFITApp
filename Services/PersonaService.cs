@@ -1,5 +1,6 @@
 ﻿using SPARTANFITApp.Dto;
 using SPARTANFITApp.Repository;
+using SPARTANFITApp.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,22 @@ namespace SPARTANFITApp.Services
             }
 
             return personaResp;
+        }
+        public PersonaDto enviarCodigo(String correo)
+        {
+            PersonaDto persona = new PersonaDto(); 
+            CorreoUtility correoUtility = new CorreoUtility();
+            correoUtility.enviarCorreoContrasena(correo);
+            return persona;
+        }
+
+        public int ActualizarContrasena (String correo, String contrasena,String codigo)
+        {
+            
+            int filasAfectadas = 0;
+            PersonaRepository personaRepository = new PersonaRepository();
+            personaRepository.ActualizarContrasena(correo,contrasena);
+            return filasAfectadas;
         }
     }
 }
