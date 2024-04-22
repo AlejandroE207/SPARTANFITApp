@@ -72,5 +72,33 @@ namespace SPARTANFITApp.Repository
             }
             return persona;
         }
+        public int ActualizarContrasena(string correo, string contrasena)
+        {
+            int comando = 0;
+            DBContextUtility conexion = new DBContextUtility();
+            try
+            {
+
+                conexion.Connect();
+                string SQL = "UPDATE USUARIO SET  contrasena=@contrasena " + "WHERE correo = @correo";
+                using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+                {
+                    command.Parameters.AddWithValue("@contrasena", correo);
+                    command.Parameters.AddWithValue("@contrasena", contrasena);
+
+                    command.ExecuteNonQuery();
+                }
+                comando = 1;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                conexion.Disconnect();
+            }
+            return comando;
+        }
     }
 }

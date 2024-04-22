@@ -44,107 +44,20 @@ namespace SPARTANFITApp.Utilities
             cliente.Send(email);
 
         }
-        public void enviarCorreoMensual()
+       
+        public string enviarCorreoContrasena(string destinatario)
         {
-            FechaUtility fechaUtility = new FechaUtility();
-            if (fechaUtility.ValidarDia())
-            {
-                UsuarioDto usuario = new UsuarioDto();
-                string mensajeCorreo = mensaje(usuario.persona.nombres);
-
-                EnviarCorreo(usuario.persona.correo, "Actualizacion Datos", mensajeCorreo, true);
-            }
-        }
-        public void enviarCorreoContrasena()
-        {
-            //FALTA PONER URL EN EL BOTON  DEL HTML   
+       
+            GeneradorCodigoUtility generadorCodigoUtility = new GeneradorCodigoUtility();
             UsuarioDto usuario = new UsuarioDto();
-            string mensajeCorreo = mensajeCon(usuario.persona.nombres);
+            String codigo=generadorCodigoUtility.NumeroAleatorio().ToString();
+            String mensajeCorreo = mensajeCon(codigo);
             EnviarCorreo(usuario.persona.correo, "Cambiar Contraseña", mensajeCorreo, true);
-
+            return codigo;
 
         }
-        public string mensaje(string nombreUsuario)
-        {
-            string mensaje = "<html>" +
-                "<head>" +
-                "<style>" +
-                "body {" +
-                "margin: 0;" +
-                "padding: 0;" +
-                "font-family: Arial, sans-serif;" +
-                "background-color: #ffffff;" +
-                "}" +
-                ".container {" +
-                "max-width: 30rem;" +
-                "margin: 0 auto;" +
-                "padding: 3rem;" +
-                "background-color: #171717;" +
-                "border-radius: 1rem;" +
-                "box-shadow: 0 0 2rem #2c2c2c;" +
-                "color: #ffffff;" +
-                "}" +
-
-                ".header {" +
-                "text-align: center;" +
-                "margin-bottom: 3rem;" +
-                "}" +
-                ".header h1 {" +
-                "color: #f3c623;" +
-                "}" +
-
-                ".content {" +
-                "padding: 0.5rem;" +
-                "background-color: #2c2c2c;" +
-                "border-radius: 1rempx;" +
-                "box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);" +
-                "}" +
-                ".content h2 {" +
-                "color: #f3c623;" +
-                "margin-bottom: 1.3rem;" +
-                "}" +
-                ".content p {" +
-                "color: #ffffff;" +
-                "font-size: 1rem;" +
-                "line-height: 1.6;" +
-                "}" +
-
-                ".footer {" +
-                "text-align: center;" +
-                "margin-top: 3rem;" +
-                "padding-top: 0.5rem;" +
-                "border-top: 0.1rem solid #f3c623;" +
-                "}" +
-                ".footer p {" +
-                "color: #f3c623;" +
-                "font-size: 0.8rem;" +
-                "}" +
-                "</style>" +
-                "</head>" +
-                "<body>" +
-
-                "<div class='container'>" +
-                "<div class='header'>" +
-                "<h1>¡Recordatorio de registro!</h1>" +
-                "</div>" +
-
-                "<div class='content'>" +
-                "<h2>Hola " + nombreUsuario + ",</h2>" +
-                "<p>Esperamos que este correo te encuentre bien.</p>" +
-                "<p>No olvides visitar nuestra página web para realizar tu actualización de datos personales.</p>" +
-                "<p>¡Gracias por ser parte de nuestra comunidad!</p>" +
-                "</div>" +
-
-                "<div class='footer'>" +
-                "<p>Este correo electrónico fue enviado por SPARTANFIT. Si tienes alguna pregunta, por favor contáctanos a través de spartanfitsoporte@gmail.com.</p>" +
-                "</div>" +
-                "</div>" +
-
-                "</body>" +
-                "</html>";
-            return mensaje;
-        }
-        public string mensajeCon(string nombreUsuario)
+       
+        public string mensajeCon(string codigo)
         {
             string mensajeCon = "<html>" +
                 "<head>" +
@@ -199,16 +112,6 @@ namespace SPARTANFITApp.Utilities
                 "color: #f3c623;" +
                 "font-size: 0.8rem;" +
                 "}" +
-                ".Boton{" +
-                "background-color: chartreuse;" +
-                "padding: 1rem;" +
-                "border-radius: 3rem;" +
-                "color: rgb(0, 0, 0);" +
-                "}" +
-                ".Boton:hover{" +
-                "background-color: red;" +
-                "color: white;" +
-                "}" +
 
                 "</style>" +
                 "</head>" +
@@ -220,10 +123,10 @@ namespace SPARTANFITApp.Utilities
                 "</div>" +
 
                 "<div class='content'>" +
-                "<h2>Hola " + nombreUsuario + ",</h2>" +
+                "<h2>Hola " + "</h2>" +
                 "<p>Esperamos que este correo te encuentre bien.</p>" +
                 "<p>El motivo de este correo es porque olvidaste o quieres cambiar tu contraseña.</p>" +
-                "<button class='Boton' onclick='window.location.href=\"URL\"'>Cambiar Contraseña</button>" +
+                "<p>Este es tu codigo para cambiar tu contraseña:" +codigo+ "</p>"+
                 "<p>¡Nos vemos pronto!</p>" +
                 "</div>" +
 

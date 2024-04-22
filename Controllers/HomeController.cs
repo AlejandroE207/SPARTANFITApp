@@ -344,5 +344,12 @@ namespace SPARTANFIT_App.Controllers
                 return View();
             }
         }
+        [HttpPost]
+        public ActionResult BuscarCorreo(string correo)
+        {
+            PersonaService personaService = new PersonaService();
+            personaService.enviarCodigo(correo);
+            return View("CambiarContrasena", correo);
+        }
     }
 }
