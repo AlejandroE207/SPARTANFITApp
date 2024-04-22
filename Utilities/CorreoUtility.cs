@@ -52,7 +52,7 @@ namespace SPARTANFITApp.Utilities
             UsuarioDto usuario = new UsuarioDto();
             String codigo=generadorCodigoUtility.NumeroAleatorio().ToString();
             String mensajeCorreo = mensajeCon(codigo);
-            EnviarCorreo(usuario.persona.correo, "Cambiar Contraseña", mensajeCorreo, true);
+            EnviarCorreo(destinatario, "Cambiar Contraseña", mensajeCorreo, true);
             return codigo;
 
         }
