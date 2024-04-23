@@ -4,6 +4,7 @@ using SPARTANFITApp.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Web;
 
 namespace SPARTANFITApp.Services
@@ -56,8 +57,22 @@ namespace SPARTANFITApp.Services
         {
             PersonaDto persona = new PersonaDto(); 
             CorreoUtility correoUtility = new CorreoUtility();
-            correoUtility.enviarCorreoContrasena(correo);
+            Recuperacion_contrasenaRepository recuperacion_ContrasenaRepository= new Recuperacion_contrasenaRepository();
+            PersonaRepository personaRepository = new PersonaRepository();
+            GeneradorCodigoUtility generadorCodigo=new GeneradorCodigoUtility();
+            if (personaRepository.buscarPersona(correo))
+            {
+                persona = personaRepository.SeleccionarPersona(correo);
+                correoUtility.enviarCorreoContrasena(correo);
+                String codigo = generadorCodigo.NumeroAleatorio().ToString();
+                recuperacion_ContrasenaRepository.registroRecuperacion(persona.id_usuario,codigo);
+
+                return persona;
+            }
+            else
+            {
             return persona;
+            }   
         }
 
         public int ActualizarContrasena (String correo, String contrasena,String codigo)
@@ -65,8 +80,13 @@ namespace SPARTANFITApp.Services
             
             int filasAfectadas = 0;
             PersonaRepository personaRepository = new PersonaRepository();
-            personaRepository.ActualizarContrasena(correo,contrasena);
+            Recuperacion_ContrasenaDto recuperacion=new Recuperacion_ContrasenaDto();
+            if(codigo==recuperacion.codigo)
+            {
+              personaRepository.ActualizarContrasena(correo,contrasena);
+            }
             return filasAfectadas;
         }
+      
     }
 }

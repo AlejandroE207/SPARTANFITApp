@@ -351,5 +351,13 @@ namespace SPARTANFIT_App.Controllers
             personaService.enviarCodigo(correo);
             return View("CambiarContrasena", correo);
         }
+
+        [HttpPost]
+        public ActionResult CambiarContraseña(string correo,string codigo, string contrasena)
+        {
+            PersonaService personaService = new PersonaService();
+            personaService.ActualizarContrasena(correo,contrasena, codigo);
+            return View("IniciarSesion");
+        }
     }
 }
