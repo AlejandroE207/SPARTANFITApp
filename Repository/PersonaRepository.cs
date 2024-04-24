@@ -34,6 +34,7 @@ namespace SPARTANFITApp.Repository
                             if (encr.ValidarContrasena(contrasena, contrasenaAlmacenada)){
                                 persona = new PersonaDto
                                 {
+                                    id_usuario = Convert.ToInt32(reader["id_usuario"]),
                                     id_rol = Convert.ToInt32(reader["id_rol"]),
                                     nombres = reader["nombres"].ToString(),
                                     apellidos = reader["apellidos"].ToString(),
@@ -83,7 +84,7 @@ namespace SPARTANFITApp.Repository
                 string SQL = "UPDATE USUARIO SET  contrasena=@contrasena " + "WHERE correo = @correo";
                 using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
                 {
-                    command.Parameters.AddWithValue("@contrasena", correo);
+                    command.Parameters.AddWithValue("@correo", correo);
                     command.Parameters.AddWithValue("@contrasena", contrasena);
 
                     command.ExecuteNonQuery();
@@ -99,6 +100,85 @@ namespace SPARTANFITApp.Repository
                 conexion.Disconnect();
             }
             return comando;
+        }
+        public bool buscarPersona(string correo)
+        {
+            DBContextUtility conexion = new DBContextUtility();
+            conexion.Connect();
+            string SQL = "SELECT COUNT(*) FROM USUARIO WHERE correo = @correo";
+            int personaEncontrado = 0;
+            using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+            {
+                command.Parameters.AddWithValue("@correo", correo);
+
+                personaEncontrado = (int)command.ExecuteScalar();
+            }
+            conexion.Disconnect();
+            if (personaEncontrado > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public PersonaDto SeleccionarPersona(string correo)
+        {
+            DBContextUtility conexion = new DBContextUtility();
+            PersonaDto persona = null;
+            PersonaDto personaResp = new PersonaDto();
+            EncriptarContrasenaUtility encr = new EncriptarContrasenaUtility();
+
+            try
+            {
+                conexion.Connect();
+                string SQL = "SELECT id_usuario,correo FROM USUARIO WHERE (correo = @correo)";
+                using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+                {
+                    command.Parameters.AddWithValue("@correo", correo);
+
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                           
+                                persona = new PersonaDto
+                                {
+                                    id_usuario = Convert.ToInt32(reader["id_usuario"]),
+                                    correo = reader["correo"].ToString()
+                                };
+                                conexion.Disconnect();
+                                persona.respuesta = 1;
+                                persona.mensaje = "Inicio correcto";
+                                return persona;
+                            
+                        }
+                        else
+                        {
+                            personaResp.respuesta = 0;
+                            personaResp.mensaje = "Inicio Incorrecto";
+                            return personaResp;
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                persona = new PersonaDto
+                {
+                    respuesta = -1,
+                    mensaje = "Error al inicio sesión: " + ex.Message
+                };
+            }
+            finally
+            {
+                conexion.Disconnect();
+            }
+            return persona;
         }
     }
 }
