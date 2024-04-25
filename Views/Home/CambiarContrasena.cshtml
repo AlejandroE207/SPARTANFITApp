@@ -1,7 +1,7 @@
 ﻿@model SPARTANFITApp.Dto.PersonaDto
 
 @{
-    ViewBag.Title = "BuscarCorreo";
+    ViewBag.Title = "CambiarContrasena";
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +28,7 @@
     </header>
     <div>
         <h2>Registrarse</h2>
-        @using (Html.BeginForm("CambiarContrasena", "Home", FormMethod.Post))
+        @using (Html.BeginForm("FormCambiarContrasena", "Home", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
 
@@ -61,8 +61,9 @@
         {
             <p>@ViewData["Mensaje"]</p>
         }
+        
     </div>
-
+        }
     <script>
     const contrasena = document.getElementById('contrasena');
     const conContra = document.getElementById('conContra');
