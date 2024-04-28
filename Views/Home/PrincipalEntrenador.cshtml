@@ -1,25 +1,67 @@
 ﻿
-@{
-    Layout = null;
-}
-
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>IniciarSesionEntrenador</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap" rel="stylesheet">
+    <link href="~/Scripts/css/StylePrincipalEntrenador.css" rel="stylesheet" />
+    <title>PrincipalEntrenador</title>
 </head>
 <body>
+
     <header>
         <a href="#" class="logo"> SPARTANFIT</a>
         <ul>
-            <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-            
-            <li>@Html.ActionLink("Registrarse", "Formulario_Registro", "Home")</li>
+            <li>@Html.ActionLink("Ejercicios", "MostrarEjercicios", "Home")</li>
+            <li>@Html.ActionLink("Rutinas", "", "Home")</li>
+            <li>@Html.ActionLink("Plan Nutricion", "", "Home")</li>
+            <li>@Html.ActionLink("Alimentos", "MostrarAlimentos", "Home")</li>
+            <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
         </ul>
     </header>
-    <div>
+    <div class="mostrarT">
+
+        <div class="campos-container">
+            <button class="btn draw-border" onclick="Rutinas()">Rutinas</button>
+        </div>
+        <div class="campos-container">
+            <button class="btn draw-border" onclick="Ejercicio()">Ejercicios</button>
+        </div>
+
+        <div class="campos-container">
+            <button class="btn draw-border" onclick="PlanA()">Plan Nutricion</button>
+        </div>
+
+        <div class="campos-container">
+            <button class="btn draw-border" onclick="Alimento()">Alimentos</button>
+        </div>
     </div>
+    <script>
+ function Rutinas() {
+     window.location.href = '@Url.Action("MostrarRutinas", "Home")';
+ }
+    </script>
+    <script>
+function Ejercicio() {
+    window.location.href = '@Url.Action("MostrarEjercicios", "Home")';
+}
+    </script>
+    <script>
+function PlanA() {
+    window.location.href = '@Url.Action("MostrarPlanNutricion", "Home")';
+}
+    </script>
+    <script>
+function Alimento() {
+    window.location.href = '@Url.Action("MostrarAlimentos", "Home")';
+}
+    </script>
+
+
+
 </body>
 </html>

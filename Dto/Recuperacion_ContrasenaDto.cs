@@ -10,6 +10,7 @@ namespace SPARTANFITApp.Dto
         public int id_recuperacion { get; set; }
         public int id_usuario { get; set; } 
         public string codigo { get; set;}
-        public string fecha { get; set;}    
+        public string fecha { get; set;}   
+        public string mensaje { get; set;}  
     }
 }

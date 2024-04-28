@@ -45,14 +45,14 @@ namespace SPARTANFITApp.Utilities
 
         }
        
-        public string enviarCorreoContrasena(string destinatario)
+        public string enviarCorreoContrasena(string destinatario,string clave)
         {
        
             GeneradorCodigoUtility generadorCodigoUtility = new GeneradorCodigoUtility();
             UsuarioDto usuario = new UsuarioDto();
-            String codigo=generadorCodigoUtility.NumeroAleatorio().ToString();
+            String codigo = clave;
             String mensajeCorreo = mensajeCon(codigo);
-            EnviarCorreo(usuario.persona.correo, "Cambiar Contraseña", mensajeCorreo, true);
+            EnviarCorreo(destinatario, "Cambiar Contraseña", mensajeCorreo, true);
             return codigo;
 
         }
