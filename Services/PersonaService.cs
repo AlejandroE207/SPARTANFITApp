@@ -64,7 +64,7 @@ namespace SPARTANFITApp.Services
             {
                
                 persona = personaRepository.SeleccionarPersona(correo);
-                recuperacion_ContrasenaRepository.EliminarCodigo(persona.id_usuario)
+                recuperacion_ContrasenaRepository.EliminarCodigo(persona.id_usuario);
                 string codigo = generadorCodigo.NumeroAleatorio().ToString();
                 correoUtility.enviarCorreoContrasena(correo,codigo);
                 
@@ -93,7 +93,7 @@ namespace SPARTANFITApp.Services
             {
                 EncriptarContrasenaUtility encriptarContrasenaUtility=new EncriptarContrasenaUtility();
                 string contraEn = encriptarContrasenaUtility.EncripContraRec(contrasena);
-                personaRepository.ActualizarContrasena(correo,contrasena);
+                personaRepository.ActualizarContrasena(correo,contraEn);
                 recuperacion_ContrasenaRepository.EliminarCodigo(persona.id_usuario);
             }
             return filasAfectadas;

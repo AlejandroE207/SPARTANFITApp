@@ -355,7 +355,7 @@ namespace SPARTANFIT_App.Controllers
         }
 
         [HttpPost]
-        public ActionResult CambiarContraseña(string correo,string codigo, string contrasena)
+        public ActionResult FormCambiarContrasena(string correo,string codigo, string contrasena)
         {
             PersonaService personaService = new PersonaService();
             personaService.ActualizarContrasena(correo,contrasena, codigo);

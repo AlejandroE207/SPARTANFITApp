@@ -18,7 +18,7 @@ namespace SPARTANFITApp.Repository
                 DBContextUtility conexion = new DBContextUtility();
                 conexion.Connect();
 
-                string SQL = "INSERT INTO RECUPERACION_CONTRASEÑA (id_usuario, codigo,fecha) " +
+                string SQL = "INSERT INTO RECUPERACION_CONTRASENA (id_usuario, codigo,fecha) " +
                              "VALUES (@id_usuario, @codigo, GETDATE())";
 
                 using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
@@ -95,7 +95,7 @@ namespace SPARTANFITApp.Repository
             try
             {
                 conexion.Connect();
-                string SQL = "DELETE FROM RECUPERACION_CONTRASEÑA WHERE id_usuario = @id_usuario";
+                string SQL = "DELETE FROM RECUPERACION_CONTRASENA WHERE id_usuario = @id_usuario";
                 using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
 
                 {

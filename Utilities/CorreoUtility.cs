@@ -125,10 +125,10 @@ namespace SPARTANFITApp.Utilities
                 "</div>" +
 
                 "<div class='content'>" +
-                "<h2>Buen dia" + "</h2>" +
+                "<h2 class='codigo'>Buen dia" + "</h2>" +
                 "<p>Esperamos que este correo te encuentre bien.</p>" +
                 "<p>El motivo de este correo es porque olvidaste o quieres cambiar tu contraseña.</p>" +
-                "<p>Este es tu codigo para cambiar tu contraseña:" +codigo+ "</p>"+
+                "<p>Este es tu codigo para cambiar tu contraseña:" + "</p>"+
                 "<p class=´codigo´>"+codigo + "</p>"+
                 "<p>¡Nos vemos pronto!</p>" +
                 "</div>" +
