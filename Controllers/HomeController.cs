@@ -349,7 +349,9 @@ namespace SPARTANFIT_App.Controllers
         {
             PersonaService personaService = new PersonaService();
             personaService.enviarCodigo(correo);
-            return View("CambiarContrasena", correo);
+            ViewData["correo"] = correo;
+            return View("CambiarContrasena");
+            
         }
 
         [HttpPost]

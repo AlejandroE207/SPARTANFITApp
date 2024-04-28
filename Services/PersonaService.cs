@@ -62,9 +62,12 @@ namespace SPARTANFITApp.Services
             GeneradorCodigoUtility generadorCodigo=new GeneradorCodigoUtility();
             if (personaRepository.buscarPersona(correo))
             {
+               
                 persona = personaRepository.SeleccionarPersona(correo);
-                correoUtility.enviarCorreoContrasena(correo);
-                String codigo = generadorCodigo.NumeroAleatorio().ToString();
+                recuperacion_ContrasenaRepository.EliminarCodigo(persona.id_usuario)
+                string codigo = generadorCodigo.NumeroAleatorio().ToString();
+                correoUtility.enviarCorreoContrasena(correo,codigo);
+                
                 recuperacion_ContrasenaRepository.registroRecuperacion(persona.id_usuario,codigo);
 
                 return persona;
@@ -80,10 +83,18 @@ namespace SPARTANFITApp.Services
             
             int filasAfectadas = 0;
             PersonaRepository personaRepository = new PersonaRepository();
+            PersonaDto persona = new PersonaDto();  
             Recuperacion_ContrasenaDto recuperacion=new Recuperacion_ContrasenaDto();
+            persona=personaRepository.SeleccionarPersona(correo);
+            Recuperacion_contrasenaRepository recuperacion_ContrasenaRepository=new Recuperacion_contrasenaRepository();
+            recuperacion=recuperacion_ContrasenaRepository.SeleccionarCodigo(persona.id_usuario);
+            
             if(codigo==recuperacion.codigo)
             {
-              personaRepository.ActualizarContrasena(correo,contrasena);
+                EncriptarContrasenaUtility encriptarContrasenaUtility=new EncriptarContrasenaUtility();
+                string contraEn = encriptarContrasenaUtility.EncripContraRec(contrasena);
+                personaRepository.ActualizarContrasena(correo,contrasena);
+                recuperacion_ContrasenaRepository.EliminarCodigo(persona.id_usuario);
             }
             return filasAfectadas;
         }

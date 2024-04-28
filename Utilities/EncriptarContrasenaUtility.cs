@@ -29,6 +29,25 @@ namespace SPARTANFITApp.Utilities
                 return sb.ToString();
             }
         }
+        public string EncripContraRec(string contrasena)
+        {
+            using (MD5 md5 = MD5.Create())
+            {
+                byte[] passwordBytes = Encoding.UTF8.GetBytes(contrasena);
+
+                // Calcular el hash MD5 de la contraseña
+                byte[] hashBytes = md5.ComputeHash(passwordBytes);
+
+                // Convertir el hash en una cadena hexadecimal
+                StringBuilder sb = new StringBuilder();
+                foreach (byte b in hashBytes)
+                {
+                    sb.Append(b.ToString("x2"));
+                }
+
+                return sb.ToString();
+            }
+        }
 
         public bool ValidarContrasena(string contraNormal, string contrasenaEncriptadaAlmacenada)
         {
