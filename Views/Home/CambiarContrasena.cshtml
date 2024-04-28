@@ -1,7 +1,8 @@
-﻿@model SPARTANFITApp.Dto.PersonaDto
-
-@{
+﻿@{
     ViewBag.Title = "CambiarContrasena";
+}
+@{
+    var correo = ViewData["correo"];
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +16,7 @@
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap"
           rel="stylesheet">
-    <title>Document</title>
+    <title>@ViewBag.Title</title>
 </head>
 <body>
     <header>
@@ -27,43 +28,42 @@
         </ul>
     </header>
     <div>
-        <h2>Registrarse</h2>
-        @using (Html.BeginForm("FormCambiarContrasena", "Home", FormMethod.Post))
+
+        @using (Html.BeginForm("CambiarContrasena", "Home", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
 
-    <div class="form-row">
-        <div>
-            <input type="hidden" name="correo" value=@Model.correo>
             <div>
-                <label for="codigo">Codigo:</label>
-                <input type="text" id="codigo" name="codigo" required>
+                <input type="hidden" name="correo" value="@correo" />
+            </div>
+
+            <div>
+                <label for="codigo">Código:</label>
+                <input type="text" id="codigo" name="codigo" required />
             </div>
 
             <div>
                 <label for="contrasena">Contraseña:</label>
-                <input type="password" id="contrasena" name="contrasena" required>
+                <input type="password" id="contrasena" name="contrasena" required />
             </div>
 
             <div>
                 <label for="conContra">Confirmar Contraseña:</label>
-                <input type="password" id="conContra" name="conContra" required>
+                <input type="password" id="conContra" name="conContra" required />
             </div>
-        </div>
 
-
-        <div class="contenedor">
-            <div class="form-row">
-                <button class="boton-enviar" onclick="validarContrasena()">Cambiar Contraseña</button>
+            <div class="contenedor">
+                <button class="boton-enviar" type="submit">Cambiar Contraseña</button>
             </div>
-        </div>
-        }  @if (ViewData["Mensaje"] != null)
+        }
+
+        @if (ViewData["Mensaje"] != null)
         {
             <p>@ViewData["Mensaje"]</p>
         }
-        
     </div>
-        }
+
+
     <script>
     const contrasena = document.getElementById('contrasena');
     const conContra = document.getElementById('conContra');
