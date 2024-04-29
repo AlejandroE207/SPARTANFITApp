@@ -368,6 +368,9 @@ namespace SPARTANFIT_App.Controllers
             ViewData["Ejercicios"] = Ejercicios;
             return View("MostrarEjercicios", Ejercicios);
         }
+
+        
+
       
     }
 }

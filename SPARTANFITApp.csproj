@@ -126,6 +126,7 @@
     <Compile Include="Dto\EjercicioDto.cs" />
     <Compile Include="Dto\PersonaDto.cs" />
     <Compile Include="Dto\Recuperacion_ContrasenaDto.cs" />
+    <Compile Include="Dto\RutinaDto.cs" />
     <Compile Include="Dto\UsuarioDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
