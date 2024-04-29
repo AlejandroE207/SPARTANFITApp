@@ -361,12 +361,18 @@ namespace SPARTANFIT_App.Controllers
             personaService.ActualizarContrasena(correo,contrasena, codigo);
             return View("IniciarSesion");
         }
+
+        public ActionResult CrearRutina()
+        {
+            return View();
+        }
+
         public ActionResult AgregarRutina()
         {
             EntrenadorService servicio = new EntrenadorService();
             List<EjercicioDto> Ejercicios = servicio.Mostrar_Ejercicio();
             ViewData["Ejercicios"] = Ejercicios;
-            return View("MostrarEjercicios", Ejercicios);
+            return View("AgregarRutina", Ejercicios);
         }
 
         
