@@ -3,10 +3,13 @@ using SPARTANFITApp.Dto;
 using SPARTANFITApp.Services;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using System.Xml.Linq;
+using X.PagedList;
 
 namespace SPARTANFIT_App.Controllers
 {
@@ -228,12 +231,20 @@ namespace SPARTANFIT_App.Controllers
                 return View();
             }
         }
-        public ActionResult MostrarEjercicios()
+        public ActionResult MostrarEjercicios(int pageNumber = 1, int pageSize = 10)
         {
             EntrenadorService servicio = new EntrenadorService();
             List<EjercicioDto> Ejercicios = servicio.Mostrar_Ejercicio();
+            int totalEjercicios = Ejercicios.Count;
+            int skip = (pageNumber - 1) * pageSize;
+            List<EjercicioDto> ejerciciosPaginados = Ejercicios.Skip(skip).Take(pageSize).ToList();
+            ViewBag.Ejercicios = Ejercicios;
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.PageSize = pageSize;
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalEjercicios / pageSize);
+
             ViewData["Ejercicios"] = Ejercicios;
-            return View("MostrarEjercicios", Ejercicios);
+            return View("MostrarEjercicios", ejerciciosPaginados);
         }
         [HttpPost]
         public ActionResult EliminarEjercicio(int id_ejercicio)
@@ -292,6 +303,7 @@ namespace SPARTANFIT_App.Controllers
             ViewData["Alimentos"] = Alimentos;
             return View("MostrarAlimentos", Alimentos);
         }
+
         [HttpPost]
         public ActionResult EliminarAlimento(int id_alimento)
         {
@@ -366,13 +378,62 @@ namespace SPARTANFIT_App.Controllers
         {
             return View();
         }
+        
+        /*
+        public ActionResult AgregarRutina(int pageNumber = 1, int pageSize = 11)
+        {
+            EntrenadorService servicio = new EntrenadorService();
+            List<EjercicioDto> todosLosEjercicios = servicio.Mostrar_Ejercicio();
+
+            int totalEjercicios = todosLosEjercicios.Count;
+            int skip = (pageNumber - 1) * pageSize;
+            List<EjercicioDto> ejerciciosPaginados = todosLosEjercicios.Skip(skip).Take(pageSize).ToList();
+
+            ViewBag.TotalEjercicios = totalEjercicios;
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.PageSize = pageSize;
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalEjercicios / pageSize);
+
+            return View(ejerciciosPaginados);
+        }
+        */
 
         public ActionResult AgregarRutina()
         {
             EntrenadorService servicio = new EntrenadorService();
-            List<EjercicioDto> Ejercicios = servicio.Mostrar_Ejercicio();
-            ViewData["Ejercicios"] = Ejercicios;
-            return View("AgregarRutina", Ejercicios);
+            List<EjercicioDto> ejercicios = servicio.Mostrar_Ejercicio();
+            ViewData["Ejercicios"] = ejercicios;
+            return View("AgregarRutina");
+        }
+
+        [HttpPost]
+        public ActionResult FormAgregarRutina(List<int> id_ejercicio, List<int> num_series, List<int> repeticiones)
+        {
+
+            List<EjercicioDto> ejerciciosSeleccionados = new List<EjercicioDto>();
+
+            for (int i = 0; i < id_ejercicio.Count; i++)
+            {
+                EjercicioDto ejercicio = new EjercicioDto
+                {
+                    id_ejercicio = id_ejercicio[i],
+                    num_series = num_series[i],
+                    repeticiones = repeticiones[i],
+                };
+
+                ejerciciosSeleccionados.Add(ejercicio);
+            }
+
+
+
+            return RedirectToAction("Index"); 
+        }
+
+
+        [HttpPost]
+        public ActionResult CrearRutina(RutinaDto rutina)
+        {
+            return View("AgregarRutina",rutina);
         }
 
         

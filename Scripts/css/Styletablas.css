@@ -84,13 +84,43 @@ tbody td:hover {
 
 .centrarT {
     margin-top: 9rem;
-    display: flex;
-    justify-content: center;
 }
 
+
+
+/* Modifica el color de fondo y el color del texto de los botones de paginación */
+.dataTables_paginate .paginate_button {
+    background-color: black;
+    color: black;
+}
+
+    /* Modifica el color de fondo y el color del texto del botón de paginación activo */
+    .dataTables_paginate .paginate_button.current {
+        background-color: black;
+        color: black;
+    }
+
+    /* Modifica el color de fondo y el color del texto de los botones de paginación al pasar el cursor sobre ellos */
+    .dataTables_paginate .paginate_button:hover {
+        background-color: black;
+        color: black;
+    }
+
+
+.botonCrear {
+    display: block;
+}
+
+.contTabla {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+  
 body {
-    background: #000000;
-    overflow: hidden;
+    background: #000000
 }
 
 .icono {

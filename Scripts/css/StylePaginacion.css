@@ -1,0 +1,17 @@
+﻿.paginacion{
+    display:block;
+    color: white;
+    background: red;
+}
+
+.botonCrear{
+    display:block;
+}
+
+.contTabla{
+    width: 100%;
+    height:100%;
+    display: flex;
+    justify-content:center;
+    margin:auto;
+}

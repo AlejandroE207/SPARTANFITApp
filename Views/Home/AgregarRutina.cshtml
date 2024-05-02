@@ -1,9 +1,14 @@
 ﻿@{
     ViewBag.Title = "AgregarRutina";
 }
+
+@model List<SPARTANFITApp.Dto.EjercicioDto>
+
 @{
     var Ejercicios = ViewData["Ejercicios"] as List<SPARTANFITApp.Dto.EjercicioDto>;
 }
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +23,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap"
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" rel="stylesheet">
     <title>MostrarEjercicios</title>
 </head>
 <body>
@@ -32,65 +38,94 @@
             <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
         </ul>
     </header>
-    <div class="centrarT">
-        @using (Html.BeginForm("FormAgregarRutina", "Home", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-            <table>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Nombres</th>
-                        <th>Grupo Muscular</th>
-                        <th>Apoyo Visual</th>
-                        <th>Series</th>
-                        <th>Repeticiones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var ejercicio in Ejercicios)
-                    {
-                        <tr>
-                            <td>
-                                <input type="checkbox" id="id_ejercicio" value="@ejercicio.id_ejercicio">
-                            </td>
-                            <td>
-                                @ejercicio.nombre_ejercicio
-                                <input type="hidden" name="nombre_ejercicio" value="@ejercicio.nombre_ejercicio" />
-                            </td>
-                            <td>
-                                @ejercicio.id_grupo_muscular
-                                <input type="hidden" name="id_grupo_muscular" value="@ejercicio.id_grupo_muscular" />
-                            </td>
-                            <td>
-                                @ejercicio.apoyo_visual
-                                <input type="hidden" name="apoyo_visual" value="@ejercicio.apoyo_visual" />
-                            </td>
-                            <td>
-                                <input type="number" id="num_series" name="num_series" required>
-                            </td>
-                            <td>
-                                <input type="number" id="repeticiones" name="repeticiones" required>
+    <main class="centrarT">
+        <div class="contTabla">
 
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
-            @if (ViewData["Mensaje"] != null)
+
+            @using (Html.BeginForm("FormAgregarRutina", "Home", FormMethod.Post))
             {
-                <p>@ViewData["Mensaje"]</p>
-                }
-            
+                @Html.AntiForgeryToken()
+                <table id="tablaEjercicios">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Nombres</th>
+                            <th>Grupo Muscular</th>
+                            <th>Apoyo Visual</th>
+                            <th>Series</th>
+                            <th>Repeticiones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var ejercicio in Ejercicios)
+                        {
+                            <tr>
+                                <td>
+                                    <input type="checkbox" id="id_ejercicio_@ejercicio.id_ejercicio" name="id_ejercicio" value="@ejercicio.id_ejercicio">
+                                </td>
+                                <td>
+                                    @ejercicio.nombre_ejercicio
+                                    <input type="hidden" name="nombre_ejercicio" value="@ejercicio.nombre_ejercicio" />
+                                </td>
+                                <td>
+                                    @ejercicio.id_grupo_muscular
+                                    <input type="hidden" name="id_grupo_muscular" value="@ejercicio.id_grupo_muscular" />
+                                </td>
+                                <td>
+                                    @ejercicio.apoyo_visual
+                                    <input type="hidden" name="apoyo_visual" value="@ejercicio.apoyo_visual" />
+                                </td>
+                                <td>
+                                    <input type="number" id="num_series" name="num_series">
+                                </td>
+                                <td>
+                                    <input type="number" id="repeticiones" name="repeticiones">
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <div class="container botonCrear">
+                    <button type="submit" class="boton-crear" onclick="">Crear Rutina</button>
+                </div>
+            }
         </div>
-    <div class="container">
-        <button class="boton-crear" onclick="crearRutina()">Crear Rutina</button>
-    </div>
+        @if (ViewData["Mensaje"] != null)
+        {
+            <p>@ViewData["Mensaje"]</p>
+        }
+
+
+
+
+    </main>
+
+
+
     <script>
     function crearRutina() {
-        window.location.href = '@Url.Action("PrincipalEntrenador", "Home")';
+        window.location.href = '@Url.Action("AgregarRutina", "Home")';
     }
     </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tablaEjercicios').DataTable({
+                "pagingType": "full_numbers", // Cambia el tipo de paginación
+                "language": { // Cambia el texto de la paginación
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>

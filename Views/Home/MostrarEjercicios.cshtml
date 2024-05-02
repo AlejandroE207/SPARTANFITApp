@@ -4,6 +4,7 @@
 @{
     var Ejercicios = ViewData["Ejercicios"] as List<SPARTANFITApp.Dto.EjercicioDto>;
 }
+@model List<SPARTANFITApp.Dto.EjercicioDto>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,13 +27,13 @@
         <a href="#" class="logo"> SPARTANFIT</a>
         <ul>
             <li>@Html.ActionLink("Ejercicios", "MostrarEjercicios", "Home")</li>
-            <li>@Html.ActionLink("Rutinas", "", "Home")</li>
+            <li>@Html.ActionLink("Rutinas", "CrearRutina", "Home")</li>
             <li>@Html.ActionLink("Plan Nutricion", "", "Home")</li>
             <li>@Html.ActionLink("Alimentos", "MostrarAlimentos", "Home")</li>
             <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
         </ul>
     </header>
-    <div class="centrarT">
+    <main class="centrarT">
         <table>
             <thead>
                 <tr>
@@ -44,13 +45,13 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var ejercicio in Ejercicios)
+                @foreach (var ejercicio in Model)
                 {
                     <tr>
                         <td>@ejercicio.nombre_ejercicio</td>
                         <td>@ejercicio.id_grupo_muscular</td>
                         <td>@ejercicio.apoyo_visual</td>
-                        
+
                         <td>
                             @using (Html.BeginForm("ActualizarEjercicio", "Home", FormMethod.Post))
                             {
@@ -83,8 +84,48 @@
                     </tr>
                 }
             </tbody>
+            <div class="paginacion">
+
+
+                @if (ViewBag.TotalEjercicios > ViewBag.PageSize)
+                {
+                    for (int i = 1; i <= ViewBag.TotalPages; i++)
+                    {
+                        if (i == ViewBag.PageNumber)
+                        {
+                            <span>@i</span>
+                        }
+                        else
+                        {
+                            <a class="paginacion_contenedor-num" href="@Url.Action("MostrarEjercicios", "Home", new { pageNumber = i, pageSize = ViewBag.PageSize })">@i</a>
+                        }
+                    }
+                }
+
+
+            </div>
         </table>
-    </div>
+        <div class="paginacion">
+
+
+            @if (ViewBag.TotalEjercicios > ViewBag.PageSize)
+            {
+                for (int i = 1; i <= ViewBag.TotalPages; i++)
+                {
+                    if (i == ViewBag.PageNumber)
+                    {
+                        <span>@i</span>
+                    }
+                    else
+                    {
+                        <a class="paginacion_contenedor-num" href="@Url.Action("MostrarEjercicios", "Home", new { pageNumber = i, pageSize = ViewBag.PageSize })">@i</a>
+                    }
+                }
+            }
+
+
+        </div>
+    </main>
     <div class="container">
         <button class="boton-crear" onclick="crearEjercicio()">Agregar Ejercicio</button>
     </div>
