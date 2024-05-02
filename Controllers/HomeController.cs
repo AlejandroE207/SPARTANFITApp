@@ -368,6 +368,14 @@ namespace SPARTANFIT_App.Controllers
             ViewData["Ejercicios"] = Ejercicios;
             return View("MostrarEjercicios", Ejercicios);
         }
-      
+        [HttpPost]
+        public ActionResult DescargarPdfDeEntrenadores()
+        {
+            AdministradorService administradorService = new AdministradorService();
+            administradorService.DescargarPdfDeEntrenadores();
+            return MostrarEjercicios();
+        }
+
+
     }
 }

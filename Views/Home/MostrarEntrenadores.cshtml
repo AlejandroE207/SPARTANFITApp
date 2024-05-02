@@ -94,6 +94,15 @@
     <div class="container">
         <button class="boton-crear" onclick="crearEntrenador()">Agregar Entrenador</button>
     </div>
+    <div class="container">
+        @using (Html.BeginForm("DescargarPdfDeEntrenadores", "Home", FormMethod.Get))
+        {
+            <button type="submit" class="boton-crear">
+                Descargar PDF de Entrenadores
+            </button>
+        }
+    </div>
+
     <script>
     function crearEntrenador() {
         window.location.href = '@Url.Action("AgregarEntrenador", "Home")';

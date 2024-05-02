@@ -5,6 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using iTextSharp.text.pdf.codec.wmf;
+using System.IO;
+
 
 namespace SPARTANFITApp.Services
 {
@@ -86,6 +91,22 @@ namespace SPARTANFITApp.Services
            UsuarioRepository usuarioRepository = new UsuarioRepository();
             var lista_Usuarios = usuarioRepository.MostrarUsuarios();
             return lista_Usuarios;
+        }
+        public void DescargarPdfDeEntrenadores()
+
+        {
+            ReporteUtility reporteUtility = new ReporteUtility();
+            var listaEntrenadores = Mostrar_Entrenadores();
+
+
+            string tempFilePath = Path.Combine(Path.GetTempPath(), "Lista_Entrenadores.pdf");
+            reporteUtility.CrearPdfDeEntrenadores(listaEntrenadores, tempFilePath);
+            HttpContext.Current.Response.Clear();
+            HttpContext.Current.Response.ContentType = "application/pdf";
+            HttpContext.Current.Response.AddHeader("Content-Disposition", "attachment; filename=Lista_Entrenadores.pdf");
+            HttpContext.Current.Response.WriteFile(tempFilePath);
+            HttpContext.Current.Response.Flush();
+            HttpContext.Current.Response.End();
         }
 
         public int EliminarEntrenador(String correo)
