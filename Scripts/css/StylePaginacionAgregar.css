@@ -1,0 +1,86 @@
+﻿#tablaEjercicios tbody tr:nth-child(even) {
+    background-color: black;
+}
+
+
+#tablaEjercicios tbody tr:nth-child(odd) {
+    background-color: black;
+}
+
+#tablaEjercicios_paginate .paginate_button.current {
+    color: #fff;
+}
+
+
+#tablaEjercicios_paginate .paginate_button.current {
+    background-color: #007bff;
+}
+
+
+#tablaEjercicios_paginate .paginate_button {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+    #tablaEjercicios_paginate .paginate_button:hover {
+        background-color: #ccc;
+    }
+
+
+.dataTables_paginate .paginate_button {
+    background-color: black;
+    color: black;
+}
+
+
+.dataTables_paginate .paginate_button.current {
+    background-color: black;
+    color: black;
+}
+
+
+.dataTables_paginate .paginate_button:hover {
+    background-color: black;
+    color: black;
+}
+
+#tablaEjercicios_filter {
+    color: white;
+    margin-bottom: 1rem;
+    text-align:left;
+}
+
+#tablaEjercicios_filter label {
+    margin: auto;
+}
+
+#tablaEjercicios_filter input {
+    color: black;
+    width:12rem;
+}
+
+#tablaEjercicios_length {
+    color: white;
+    margin: auto;
+    display: none;
+}
+
+#tablaEjercicios_length select {
+    color: white;
+    display: none;
+}
+
+#tablaEjercicios_length select option {
+    color: black;
+    display: none;
+}
+
+#tablaEjercicios_info {
+    color: white;
+    display: none;
+}
+
+#tablaEjercicios_paginate .paginate_button {
+    background-color: gold;
+    display: none;
+}

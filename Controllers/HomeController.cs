@@ -1,4 +1,5 @@
 ﻿using Microsoft.Ajax.Utilities;
+using Newtonsoft.Json;
 using SPARTANFITApp.Dto;
 using SPARTANFITApp.Services;
 using System;
@@ -10,6 +11,7 @@ using System.Web.Mvc;
 using System.Web.Services.Description;
 using System.Xml.Linq;
 using X.PagedList;
+
 
 namespace SPARTANFIT_App.Controllers
 {
@@ -378,8 +380,16 @@ namespace SPARTANFIT_App.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public ActionResult FormCrearRutina(RutinaDto rutina)
+        {
+            ViewData["Rutina"] = rutina;
+            return AgregarRutina();
+        }
         
         /*
+         * Codigo de paginacion desde back
         public ActionResult AgregarRutina(int pageNumber = 1, int pageSize = 11)
         {
             EntrenadorService servicio = new EntrenadorService();
@@ -406,29 +416,36 @@ namespace SPARTANFIT_App.Controllers
             return View("AgregarRutina");
         }
 
+
+
         [HttpPost]
-        public ActionResult FormAgregarRutina(List<int> id_ejercicio, List<int> num_series, List<int> repeticiones)
+        public ActionResult FormAgregarRutina(int[] selectedCheckboxIds, int[] listadoSeries, int[] listadoRepeticiones, RutinaDto rutina)
         {
-
-            List<EjercicioDto> ejerciciosSeleccionados = new List<EjercicioDto>();
-
-            for (int i = 0; i < id_ejercicio.Count; i++)
+            EntrenadorService entrenadorService = new EntrenadorService();
+            List<EjercicioDto> ejerciciosRutina = new List<EjercicioDto>();
+            if (selectedCheckboxIds != null)
             {
-                EjercicioDto ejercicio = new EjercicioDto
+
+                for(int i = 0; i < selectedCheckboxIds.Length; i++)
                 {
-                    id_ejercicio = id_ejercicio[i],
-                    num_series = num_series[i],
-                    repeticiones = repeticiones[i],
-                };
+                    int checkboxId = selectedCheckboxIds[i];
+                    int series = listadoSeries[i];
+                    int repeticiones = listadoRepeticiones[i];
 
-                ejerciciosSeleccionados.Add(ejercicio);
+                    EjercicioDto ejercicio = new EjercicioDto
+                    {
+                        id_ejercicio = checkboxId,
+                        num_series = series,
+                        repeticiones = repeticiones
+                    };
+
+                    ejerciciosRutina.Add(ejercicio);
+                }
+
             }
-
-
-
-            return RedirectToAction("Index"); 
+            entrenadorService.registrarRutina(rutina, ejerciciosRutina);
+            return View("CrearRutina");
         }
-
 
         [HttpPost]
         public ActionResult CrearRutina(RutinaDto rutina)

@@ -64,12 +64,16 @@ th, td {
     background-color: #d2cece00;
     padding: 0.5rem;
     color: rgb(255, 255, 255);
+    text-align:center;
 }
 
 th {
-    text-align: left;
     background-color: gold;
     color: black;
+}
+
+tbody{
+    background-color:black;
 }
 
 tbody tr:hover {
@@ -82,29 +86,16 @@ tbody td:hover {
     transition: background-color 0.3s ease;
 }
 
+.inputEjercicio {
+    border-radius: 1rem;
+    background-color: transparent;
+    color:white;
+    text-align:center;
+}
+
 .centrarT {
     margin-top: 9rem;
 }
-
-
-
-/* Modifica el color de fondo y el color del texto de los botones de paginación */
-.dataTables_paginate .paginate_button {
-    background-color: black;
-    color: black;
-}
-
-    /* Modifica el color de fondo y el color del texto del botón de paginación activo */
-    .dataTables_paginate .paginate_button.current {
-        background-color: black;
-        color: black;
-    }
-
-    /* Modifica el color de fondo y el color del texto de los botones de paginación al pasar el cursor sobre ellos */
-    .dataTables_paginate .paginate_button:hover {
-        background-color: black;
-        color: black;
-    }
 
 
 .botonCrear {
