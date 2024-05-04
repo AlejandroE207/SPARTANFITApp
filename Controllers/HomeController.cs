@@ -441,10 +441,16 @@ namespace SPARTANFIT_App.Controllers
 
                     ejerciciosRutina.Add(ejercicio);
                 }
-
             }
-            entrenadorService.registrarRutina(rutina, ejerciciosRutina);
-            return View("CrearRutina");
+            int resultado = entrenadorService.registrarRutina(rutina, ejerciciosRutina);
+            if (resultado != 0)
+            {
+                return View("CrearRutina");
+            }
+            else
+            {
+                return View("CrearRutina",resultado);
+            }
         }
 
         [HttpPost]

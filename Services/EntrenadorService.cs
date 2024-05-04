@@ -163,7 +163,7 @@ namespace SPARTANFITApp.Services
             return AlimentoResp;
         }
 
-        public RutinaDto registrarRutina(RutinaDto rutina, List<EjercicioDto> ejerciciosRutina)
+        public int registrarRutina(RutinaDto rutina, List<EjercicioDto> ejerciciosRutina)
         {
             RutinaDto rutinaResp = new RutinaDto(); ;
             RutinaRepository rutinaRepository = new RutinaRepository();
@@ -172,7 +172,7 @@ namespace SPARTANFITApp.Services
             int registroEjerciciosRutina = rutinaRepository.registrarEjerciciosRutina(ejerciciosRutina, id_rutina);
 
 
-            return rutinaResp;
+            return registroEjerciciosRutina;
         }
     }
 
