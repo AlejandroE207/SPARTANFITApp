@@ -122,4 +122,3 @@ namespace SPARTANFITApp.Utilities
     }
 
 }
-}
