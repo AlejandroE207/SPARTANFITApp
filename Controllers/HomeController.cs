@@ -3,6 +3,7 @@ using SPARTANFITApp.Dto;
 using SPARTANFITApp.Services;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -50,6 +51,8 @@ namespace SPARTANFIT_App.Controllers
         public ActionResult CerrarSesion()
         {
             Session["UserLogged"] = null;
+            Session.Clear();
+            Session.Abandon();
             return View("Index");
         }
 
@@ -151,10 +154,10 @@ namespace SPARTANFIT_App.Controllers
             ViewData["entrenadores"] = entrenadores;
             return View("MostrarEntrenadores");
         }
-        public ActionResult MostrarUsuarios(UsuarioDto usuario)
+        public ActionResult MostrarUsuarios()
         {
             AdministradorService servicio= new AdministradorService();
-            List<UsuarioDto>usuarios=servicio.Mostrar_Usuarios(usuario);
+            List<UsuarioDto>usuarios=servicio.Mostrar_Usuarios();
             ViewData["usuarios"] = usuarios;
             return View("MostrarUsuarios",usuarios);
         }
@@ -368,14 +371,70 @@ namespace SPARTANFIT_App.Controllers
             ViewData["Ejercicios"] = Ejercicios;
             return View("MostrarEjercicios", Ejercicios);
         }
+   
+     
+        public ActionResult ActualizarDatos() { return View("ActualizarDatos"); }
+
         [HttpPost]
-        public ActionResult DescargarPdfDeEntrenadores()
+        public ActionResult ActualizarDatos(UsuarioDto usuDatos)
         {
+            UsuarioDto usuario = new UsuarioDto();
+            usuario.persona = new PersonaDto();
+            UsuarioService usuarioService = new UsuarioService();
+            usuario = (UsuarioDto)Session["UserLogged"];
+
+            usuario.peso = usuDatos.peso;
+            usuario.estatura = usuDatos.estatura;
+           
+
+            usuario = usuarioService.actualizarDatosUsuario(usuario);
+
+            if (usuario.persona.respuesta != 0)
+            {
+                return View("Perfil");
+            }
+            else
+            {
+                return View("ActualizarDatos");
+            }
+        }
+        [HttpPost]
+        public ActionResult DescargarPdfUsuarios()
+        {
+           
+                AdministradorService administradorService = new AdministradorService(); 
+
+               
+                string tempFilePath = Path.Combine(Path.GetTempPath(), "Lista_Usuarios.pdf");
+                administradorService.CrearPdfUsuarios();           
+                Response.Clear(); 
+                Response.ContentType = "application/pdf"; 
+                Response.AddHeader("Content-Disposition", "attachment; filename=Lista_Usuarios.pdf");      
+                Response.WriteFile(tempFilePath);
+                Response.Flush();
+
+              return RedirectToAction("MostrarUsuarios"); 
+            }
+        [HttpPost]
+        public ActionResult DescargarPdfEntrenadores()
+        {
+
             AdministradorService administradorService = new AdministradorService();
-            administradorService.DescargarPdfDeEntrenadores();
-            return MostrarEjercicios();
+
+
+            string tempFilePath = Path.Combine(Path.GetTempPath(), "Lista_Usuarios.pdf");
+            administradorService.CrearPdfEntrenadores();
+            Response.Clear();
+            Response.ContentType = "application/pdf";
+            Response.AddHeader("Content-Disposition", "attachment; filename=Lista_Usuarios.pdf");
+            Response.WriteFile(tempFilePath);
+            Response.Flush();
+
+            return RedirectToAction("MostrarEntrenadores");
         }
 
 
+
     }
-}
+        }
+    

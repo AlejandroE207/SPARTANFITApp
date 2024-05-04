@@ -86,27 +86,31 @@ namespace SPARTANFITApp.Services
             var Lista_entrenadores = entrenadorRepository.MostrarEntrenadores();
             return Lista_entrenadores;
         }
-        public List<UsuarioDto> Mostrar_Usuarios(UsuarioDto usuario)
+        public List<UsuarioDto> Mostrar_Usuarios()
         {
            UsuarioRepository usuarioRepository = new UsuarioRepository();
             var lista_Usuarios = usuarioRepository.MostrarUsuarios();
             return lista_Usuarios;
         }
-        public void DescargarPdfDeEntrenadores()
-
+        public string CrearPdfUsuarios()
         {
-            ReporteUtility reporteUtility = new ReporteUtility();
-            var listaEntrenadores = Mostrar_Entrenadores();
+            ReporteUtility reporte = new ReporteUtility();
+            var lista = Mostrar_Usuarios();
 
+            string tempFilePath = Path.Combine(Path.GetTempPath(), "Lista_Usuarios.pdf");
+            reporte.CrearPdfUsuarios(lista, tempFilePath);
+
+            return tempFilePath; 
+        }
+        public string CrearPdfEntrenadores()
+        {
+            ReporteUtility reporte = new ReporteUtility();
+            var lista = Mostrar_Entrenadores();
 
             string tempFilePath = Path.Combine(Path.GetTempPath(), "Lista_Entrenadores.pdf");
-            reporteUtility.CrearPdfDeEntrenadores(listaEntrenadores, tempFilePath);
-            HttpContext.Current.Response.Clear();
-            HttpContext.Current.Response.ContentType = "application/pdf";
-            HttpContext.Current.Response.AddHeader("Content-Disposition", "attachment; filename=Lista_Entrenadores.pdf");
-            HttpContext.Current.Response.WriteFile(tempFilePath);
-            HttpContext.Current.Response.Flush();
-            HttpContext.Current.Response.End();
+            reporte.CrearPdfDeEntrenadores (lista, tempFilePath);
+
+            return tempFilePath;
         }
 
         public int EliminarEntrenador(String correo)

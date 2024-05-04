@@ -4,7 +4,32 @@
 @{
     var entrenadores = ViewData["entrenadores"] as List<SPARTANFITApp.Dto.PersonaDto>;
 }
+@{
+    // Recuperar el valor de la variable de sesión
+    SPARTANFITApp.Dto.PersonaDto personaLogeo = Session["UserLogged"] as SPARTANFITApp.Dto.PersonaDto;
+}
 
+@if (personaLogeo == null)
+{
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Redirección automática en ASP.NET</title>
+        <script type="text/javascript">
+            window.onload = function () {
+                setTimeout(function () {
+                    window.location.href = 'Index';
+                });
+            };
+        </script>
+    </head>
+    <body>
+        <h1>Inicie Sesion primero</h1>
+    </body>
+</html>
+}
+else
+{
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,9 +93,9 @@
                                 <button type="submit" onclick="return " class="boton-icono"><img src="~/Scripts/img/usuario (1).png" class="icono" alt="Editar"></button>
 
                             }  @if (ViewData["Mensaje"] != null)
-                            {
+        {
                                 <p>@ViewData["Mensaje"]</p>
-                            }
+        }
 
                         </td>
                         <td>
@@ -81,9 +106,9 @@
                                 <button type="submit" onclick="return confirmarEliminacion()" class="boton-icono"><img src="~/Scripts/img/usuario.png" class="icono" alt="Eliminar Entrenador"></button>
 
                             }  @if (ViewData["Mensaje"] != null)
-                            {
+        {
                                 <p>@ViewData["Mensaje"]</p>
-                            }
+        }
 
                         </td>
                     </tr>
@@ -95,12 +120,15 @@
         <button class="boton-crear" onclick="crearEntrenador()">Agregar Entrenador</button>
     </div>
     <div class="container">
-        @using (Html.BeginForm("DescargarPdfDeEntrenadores", "Home", FormMethod.Get))
+        @using (Html.BeginForm("DescargarPdfEntrenadores", "Home", FormMethod.Post))
         {
             <button type="submit" class="boton-crear">
                 Descargar PDF de Entrenadores
             </button>
-        }
+        }    @if (ViewData["Mensaje"] != null)
+    {
+            <p>@ViewData["Mensaje"]</p>
+    }
     </div>
 
     <script>
@@ -115,3 +143,4 @@
     </script>
 </body>
 </html>
+}

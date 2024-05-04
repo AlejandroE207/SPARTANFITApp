@@ -2,10 +2,34 @@
     ViewBag.Title = "MostrarUsuarios";
 }
 
-@{ 
+@{
     var usuarios = ViewData["usuarios"] as List<SPARTANFITApp.Dto.UsuarioDto>;
 }
-
+@{
+    // Recuperar el valor de la variable de sesión
+    SPARTANFITApp.Dto.PersonaDto personaLogeo = Session["UserLogged"] as SPARTANFITApp.Dto.PersonaDto;
+}
+@if (personaLogeo == null)
+{
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Redirección automática en ASP.NET</title>
+        <script type="text/javascript">
+            window.onload = function () {
+                setTimeout(function () {
+                    window.location.href = 'Index';
+                });
+            };
+        </script>
+    </head>
+    <body>
+        <h1>Inicie Sesion primero</h1>
+    </body>
+</html>
+}
+else
+{
 
 <!DOCTYPE html>
 <html lang="en">
@@ -67,7 +91,19 @@
             </tbody>
         </table>
     </div>
+    <div class="container">
+        @using (Html.BeginForm("DescargarPdfUsuarios", "Home", FormMethod.Post))
+        {
+            <button type="submit" class="boton-crear">
+                Descargar PDF de Usuarios
+            </button>
+        }  @if (ViewData["Mensaje"] != null)
+    {
+            <p>@ViewData["Mensaje"]</p>
+    }
+    </div>
 
 
 </body>
 </html>
+}

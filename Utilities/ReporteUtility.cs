@@ -15,29 +15,40 @@ namespace SPARTANFITApp.Utilities
     {
         public void CrearPdfDeEntrenadores(List<PersonaDto> entrenadores, string filePath)
         {
-            
-            Document doc = new Document(PageSize.A4);
-            
+            Document doc = new Document(PageSize.A4); 
             PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(filePath, FileMode.Create));
 
-           
-            doc.Open();
-
-           
-            doc.Add(new Paragraph("Lista de Entrenadores"));
-            doc.Add(new Paragraph(" ")); 
-
-           
-            PdfPTable table = new PdfPTable(6); 
+            doc.Open(); 
 
           
-            table.AddCell("ID");
-            table.AddCell("Nombres");
-            table.AddCell("Apellidos");
-            table.AddCell("Correo");
-            table.AddCell("Genero");
-            table.AddCell("Fecha de Nacimiento");
+            BaseColor goldColor = new BaseColor(255, 215, 0); 
 
+         
+            BaseColor goldBackground = new BaseColor(255, 223, 0); 
+
+         
+            Font titleFont = FontFactory.GetFont("Helvetica", 18, Font.BOLD, goldColor);
+
+           
+            Paragraph title = new Paragraph("Lista de Entrenadores", titleFont)
+            {
+                Alignment = Element.ALIGN_CENTER
+            };
+            doc.Add(title); 
+
+            doc.Add(new Paragraph(" ")); 
+
+          
+            PdfPTable table = new PdfPTable(6); 
+
+            
+            var headerFont = FontFactory.GetFont("Helvetica", 12, Font.BOLD, goldColor); 
+            table.AddCell(new PdfPCell(new Phrase("ID", headerFont)) { BackgroundColor = goldBackground });
+            table.AddCell(new PdfPCell(new Phrase("Nombres", headerFont)) { BackgroundColor = goldBackground });
+            table.AddCell(new PdfPCell(new Phrase("Apellidos", headerFont)) { BackgroundColor = goldBackground });
+            table.AddCell(new PdfPCell(new Phrase("Correo", headerFont)) { BackgroundColor = goldBackground });
+            table.AddCell(new PdfPCell(new Phrase("Género", headerFont)) { BackgroundColor = goldBackground });
+            table.AddCell(new PdfPCell(new Phrase("Fecha de Nacimiento", headerFont)) { BackgroundColor = goldBackground });
 
             
             foreach (var entrenador in entrenadores)
@@ -50,13 +61,65 @@ namespace SPARTANFITApp.Utilities
                 table.AddCell(entrenador.fecha_nacimiento);
             }
 
+            doc.Add(table); 
+
+            doc.Close(); 
+        }
+        public void CrearPdfUsuarios(List<UsuarioDto> usuarios, string filePath)
+        {
+            Document doc = new Document(PageSize.A4); 
+            PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(filePath, FileMode.Create));
+
+            doc.Open(); 
+
            
-            doc.Add(table);
+            BaseColor goldColor = new BaseColor(255, 215, 0); 
+
+            Font titleFont = FontFactory.GetFont("Helvetica", 18, Font.BOLD, goldColor);
 
           
-            doc.Close();
-        }
-       
+            Paragraph title = new Paragraph("Lista de Usuarios", titleFont)
+            {
+                Alignment = Element.ALIGN_CENTER 
+            };
+            doc.Add(title); 
 
+            doc.Add(new Paragraph(" ")); 
+
+           
+            BaseColor goldBackground = new BaseColor(255, 223, 0); 
+
+            PdfPTable table = new PdfPTable(6); 
+
+            Font headerFont = FontFactory.GetFont("Helvetica", 12, Font.BOLD, goldColor); 
+
+           
+            table.AddCell(new PdfPCell(new Phrase("ID", headerFont)) { BackgroundColor = goldBackground });
+            table.AddCell(new PdfPCell(new Phrase("Nombres", headerFont)) { BackgroundColor = goldBackground });
+            table.AddCell(new PdfPCell(new Phrase("Apellidos", headerFont)) { BackgroundColor = goldBackground });
+            table.AddCell(new PdfPCell(new Phrase("Correo", headerFont)) { BackgroundColor = goldBackground });
+            table.AddCell(new PdfPCell(new Phrase("Género", headerFont)) { BackgroundColor = goldBackground });
+            table.AddCell(new PdfPCell(new Phrase("Fecha de Nacimiento", headerFont)) { BackgroundColor = goldBackground });
+
+       
+            Font contentFont = FontFactory.GetFont("Arial", 12); 
+
+            
+            foreach (var usuario in usuarios)
+            {
+                table.AddCell(new PdfPCell(new Phrase(usuario.persona.id_usuario.ToString(), contentFont)));
+                table.AddCell(new PdfPCell(new Phrase(usuario.persona.nombres, contentFont)));
+                table.AddCell(new PdfPCell(new Phrase(usuario.persona.apellidos, contentFont)));
+                table.AddCell(new PdfPCell(new Phrase(usuario.persona.correo, contentFont)));
+                table.AddCell(new PdfPCell(new Phrase(usuario.persona.genero, contentFont)));
+                table.AddCell(new PdfPCell(new Phrase(usuario.persona.fecha_nacimiento, contentFont)));
+            }
+
+            doc.Add(table); 
+
+            doc.Close(); 
+        }
     }
+
+}
 }

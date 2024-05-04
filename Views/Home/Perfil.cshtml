@@ -136,17 +136,18 @@ else
         </div>
     </div>
     <div class="centrarB">
+        
         <div class="boton">
-            <button class="botCre" type="button" onclick="verProgreso()">Ver Progreso</button>
+            <button class="botCan" type="button" onclick="actualizarDatos()">Actualizar Objetivo</button>
         </div>
         <div class="boton">
-            <button class="botCan" type="button" onclick="actualizarDatos()">Actualizar Datos</button>
+            <button class="botCre" type="button" onclick="actualizarEstadisticas()">Actualizar Datos </button>
         </div>
     </div>
 
     <script>
-        function verProgreso() {
-            window.location.href = '@Url.Action("Progreso", "Home")';
+        function actualizarEstadisticas() {
+            window.location.href = '@Url.Action("ActualizarDatos", "Home")';
         }
     function actualizarDatos() {
         window.location.href ='@Url.Action("ActualizarObjetivo", "Home")';
