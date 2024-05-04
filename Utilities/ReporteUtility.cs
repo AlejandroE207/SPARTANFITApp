@@ -94,7 +94,7 @@ namespace SPARTANFITApp.Utilities
             Font headerFont = FontFactory.GetFont("Helvetica", 12, Font.BOLD, goldColor); 
 
            
-            table.AddCell(new PdfPCell(new Phrase("ID", headerFont)) { BackgroundColor = goldBackground });
+            table.AddCell(new PdfPCell(new Phrase("Id", headerFont)) { BackgroundColor = goldBackground });
             table.AddCell(new PdfPCell(new Phrase("Nombres", headerFont)) { BackgroundColor = goldBackground });
             table.AddCell(new PdfPCell(new Phrase("Apellidos", headerFont)) { BackgroundColor = goldBackground });
             table.AddCell(new PdfPCell(new Phrase("Correo", headerFont)) { BackgroundColor = goldBackground });
