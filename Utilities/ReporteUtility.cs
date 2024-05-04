@@ -24,10 +24,10 @@ namespace SPARTANFITApp.Utilities
             BaseColor goldColor = new BaseColor(255, 215, 0); 
 
          
-            BaseColor goldBackground = new BaseColor(255, 223, 0); 
+            BaseColor negro = new BaseColor(0, 0, 0); 
 
          
-            Font titleFont = FontFactory.GetFont("Helvetica", 18, Font.BOLD, goldColor);
+            Font titleFont = FontFactory.GetFont("Helvetica", 18, Font.BOLD, negro);
 
            
             Paragraph title = new Paragraph("Lista de Entrenadores", titleFont)
@@ -43,12 +43,12 @@ namespace SPARTANFITApp.Utilities
 
             
             var headerFont = FontFactory.GetFont("Helvetica", 12, Font.BOLD, goldColor); 
-            table.AddCell(new PdfPCell(new Phrase("ID", headerFont)) { BackgroundColor = goldBackground });
-            table.AddCell(new PdfPCell(new Phrase("Nombres", headerFont)) { BackgroundColor = goldBackground });
-            table.AddCell(new PdfPCell(new Phrase("Apellidos", headerFont)) { BackgroundColor = goldBackground });
-            table.AddCell(new PdfPCell(new Phrase("Correo", headerFont)) { BackgroundColor = goldBackground });
-            table.AddCell(new PdfPCell(new Phrase("Género", headerFont)) { BackgroundColor = goldBackground });
-            table.AddCell(new PdfPCell(new Phrase("Fecha de Nacimiento", headerFont)) { BackgroundColor = goldBackground });
+            table.AddCell(new PdfPCell(new Phrase("ID", headerFont)) { BackgroundColor = negro });
+            table.AddCell(new PdfPCell(new Phrase("Nombres", headerFont)) { BackgroundColor = negro });
+            table.AddCell(new PdfPCell(new Phrase("Apellidos", headerFont)) { BackgroundColor = negro });
+            table.AddCell(new PdfPCell(new Phrase("Correo", headerFont)) { BackgroundColor = negro });
+            table.AddCell(new PdfPCell(new Phrase("Género", headerFont)) { BackgroundColor = negro });
+            table.AddCell(new PdfPCell(new Phrase("Fecha de Nacimiento", headerFont)) { BackgroundColor = negro });
 
             
             foreach (var entrenador in entrenadores)
@@ -75,7 +75,7 @@ namespace SPARTANFITApp.Utilities
            
             BaseColor goldColor = new BaseColor(255, 215, 0); 
 
-            Font titleFont = FontFactory.GetFont("Helvetica", 18, Font.BOLD, goldColor);
+            Font titleFont = FontFactory.GetFont("Helvetica", 18, Font.BOLD, BaseColor.BLACK);
 
           
             Paragraph title = new Paragraph("Lista de Usuarios", titleFont)
@@ -87,19 +87,19 @@ namespace SPARTANFITApp.Utilities
             doc.Add(new Paragraph(" ")); 
 
            
-            BaseColor goldBackground = new BaseColor(255, 223, 0); 
+            BaseColor negro = new BaseColor(0, 0, 0); 
 
             PdfPTable table = new PdfPTable(6); 
 
             Font headerFont = FontFactory.GetFont("Helvetica", 12, Font.BOLD, goldColor); 
 
            
-            table.AddCell(new PdfPCell(new Phrase("Id", headerFont)) { BackgroundColor = goldBackground });
-            table.AddCell(new PdfPCell(new Phrase("Nombres", headerFont)) { BackgroundColor = goldBackground });
-            table.AddCell(new PdfPCell(new Phrase("Apellidos", headerFont)) { BackgroundColor = goldBackground });
-            table.AddCell(new PdfPCell(new Phrase("Correo", headerFont)) { BackgroundColor = goldBackground });
-            table.AddCell(new PdfPCell(new Phrase("Género", headerFont)) { BackgroundColor = goldBackground });
-            table.AddCell(new PdfPCell(new Phrase("Fecha de Nacimiento", headerFont)) { BackgroundColor = goldBackground });
+            table.AddCell(new PdfPCell(new Phrase("Id", headerFont)) { BackgroundColor = negro });
+            table.AddCell(new PdfPCell(new Phrase("Nombres", headerFont)) { BackgroundColor = negro });
+            table.AddCell(new PdfPCell(new Phrase("Apellidos", headerFont)) { BackgroundColor = negro });
+            table.AddCell(new PdfPCell(new Phrase("Correo", headerFont)) { BackgroundColor = negro });
+            table.AddCell(new PdfPCell(new Phrase("Género", headerFont)) { BackgroundColor = negro });
+            table.AddCell(new PdfPCell(new Phrase("Fecha de Nacimiento", headerFont)) { BackgroundColor = negro });
 
        
             Font contentFont = FontFactory.GetFont("Helvetica", 12); 

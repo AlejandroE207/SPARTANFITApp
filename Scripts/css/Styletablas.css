@@ -125,14 +125,15 @@ body {
     background-color: gold;
     color: black;
     border: none;
-    border-radius: 0.5rem;
-    padding: 1rem 3rem;
-    font-size: 1rem;
+    border-radius: .5rem;
+    padding:1rem 2rem;
+    font-size: .8rem;
     margin-top: 1.2rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
     font-family: "Yatra One", system-ui;
     text-transform: uppercase;
+    text-align:center;
 }
 
     .boton-crear:hover {
@@ -144,4 +145,7 @@ body {
     margin-top: 0rem;
     display: flex;
     justify-content: center;
+    text-align: center;
 }
+
+

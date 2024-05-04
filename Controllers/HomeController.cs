@@ -57,7 +57,9 @@ namespace SPARTANFIT_App.Controllers
         public ActionResult CerrarSesion()
         {
             Session["UserLogged"] = null;
-            return View("Index");
+            Session.Clear();
+            Session.Abandon();
+            return Index();
         }
 
 
@@ -103,7 +105,7 @@ namespace SPARTANFIT_App.Controllers
                     if (personaLogeo.respuesta != 0)
                     {
                         Session["UserLogged"] = personaLogeo;
-                        return View("MostrarUsuarios");
+                        return MostrarUsuarios();
                     }
                     else
                     {
@@ -158,10 +160,10 @@ namespace SPARTANFIT_App.Controllers
             ViewData["entrenadores"] = entrenadores;
             return View("MostrarEntrenadores");
         }
-        public ActionResult MostrarUsuarios(UsuarioDto usuario)
+        public ActionResult MostrarUsuarios()
         {
             AdministradorService servicio = new AdministradorService();
-            List<UsuarioDto> usuarios = servicio.Mostrar_Usuarios(usuario);
+            List<UsuarioDto> usuarios = servicio.Mostrar_Usuarios();
             ViewData["usuarios"] = usuarios;
             return View("MostrarUsuarios", usuarios);
         }
@@ -493,11 +495,11 @@ namespace SPARTANFIT_App.Controllers
             AdministradorService administradorService = new AdministradorService();
 
 
-            string tempFilePath = Path.Combine(Path.GetTempPath(), "Lista_Usuarios.pdf");
+            string tempFilePath = Path.Combine(Path.GetTempPath(), "Lista_Entrenadores.pdf");
             administradorService.CrearPdfEntrenadores();
             Response.Clear();
             Response.ContentType = "application/pdf";
-            Response.AddHeader("Content-Disposition", "attachment; filename=Lista_Usuarios.pdf");
+            Response.AddHeader("Content-Disposition", "attachment; filename=Lista_Entrenadores.pdf");
             Response.WriteFile(tempFilePath);
             Response.Flush();
 
