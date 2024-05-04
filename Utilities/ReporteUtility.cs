@@ -102,7 +102,7 @@ namespace SPARTANFITApp.Utilities
             table.AddCell(new PdfPCell(new Phrase("Fecha de Nacimiento", headerFont)) { BackgroundColor = goldBackground });
 
        
-            Font contentFont = FontFactory.GetFont("Arial", 12); 
+            Font contentFont = FontFactory.GetFont("Helvetica", 12); 
 
             
             foreach (var usuario in usuarios)
