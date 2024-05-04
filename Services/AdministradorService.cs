@@ -5,6 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using iTextSharp.text.pdf.codec.wmf;
+using System.IO;
+
 
 namespace SPARTANFITApp.Services
 {
@@ -81,11 +86,31 @@ namespace SPARTANFITApp.Services
             var Lista_entrenadores = entrenadorRepository.MostrarEntrenadores();
             return Lista_entrenadores;
         }
-        public List<UsuarioDto> Mostrar_Usuarios(UsuarioDto usuario)
+        public List<UsuarioDto> Mostrar_Usuarios()
         {
            UsuarioRepository usuarioRepository = new UsuarioRepository();
             var lista_Usuarios = usuarioRepository.MostrarUsuarios();
             return lista_Usuarios;
+        }
+        public string CrearPdfUsuarios()
+        {
+            ReporteUtility reporte = new ReporteUtility();
+            var lista = Mostrar_Usuarios();
+
+            string tempFilePath = Path.Combine(Path.GetTempPath(), "Lista_Usuarios.pdf");
+            reporte.CrearPdfUsuarios(lista, tempFilePath);
+
+            return tempFilePath; 
+        }
+        public string CrearPdfEntrenadores()
+        {
+            ReporteUtility reporte = new ReporteUtility();
+            var lista = Mostrar_Entrenadores();
+
+            string tempFilePath = Path.Combine(Path.GetTempPath(), "Lista_Entrenadores.pdf");
+            reporte.CrearPdfDeEntrenadores (lista, tempFilePath);
+
+            return tempFilePath;
         }
 
         public int EliminarEntrenador(String correo)

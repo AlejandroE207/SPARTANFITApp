@@ -84,7 +84,27 @@ namespace SPARTANFITApp.Services
             return usuarioResp;
 
         }
+        public UsuarioDto actualizarDatosUsuario(UsuarioDto usuario)
+        {
+            UsuarioRepository usuarioRepository = new UsuarioRepository();
+            UsuarioDto usuarioResp = new UsuarioDto();
+            usuarioResp.persona = new PersonaDto();
+            int resultado = usuarioRepository.ActualizarDatosUsuario(usuario);
 
+            if (resultado != 0)
+            {
+                usuarioResp.persona.respuesta = 1;
+                usuarioResp.persona.mensaje = "Actualización Exitosa";
+            }
+            else
+            {
+                usuarioResp.persona.respuesta = 0;
+                usuarioResp.persona.mensaje = "Error de Actualizacion";
+            }
+
+            return usuarioResp;
+
+        }
         public UsuarioDto eliminarUsuario(UsuarioDto usuario)
         {
             UsuarioRepository usuarioRepository = new UsuarioRepository();

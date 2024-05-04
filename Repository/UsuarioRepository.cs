@@ -240,6 +240,38 @@ namespace SPARTANFITApp.Repository
 
             return filasAfectadas;
         }
+        public int ActualizarDatosUsuario(UsuarioDto usuario)
+        {
+
+            int id = usuario.persona.id_usuario;
+            int comando = 0;
+            DBContextUtility conexion = new DBContextUtility();
+            try
+            {
+
+                conexion.Connect();
+                string SQL = "UPDATE USUARIO SET estatura=@estatura , peso=@peso" + "WHERE correo = @correo";
+                using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+                {
+                    command.Parameters.AddWithValue("@estatura", usuario.estatura);
+                    command.Parameters.AddWithValue("@peso", usuario.peso);                
+                    command.ExecuteNonQuery();
+                }
+                comando = 1;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                conexion.Disconnect();
+            }
+
+
+
+            return comando;
+        }
 
     }
 } 
