@@ -1,13 +1,19 @@
 ﻿using Microsoft.Ajax.Utilities;
+using Newtonsoft.Json;
 using SPARTANFITApp.Dto;
 using SPARTANFITApp.Services;
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using System.Xml.Linq;
+using X.PagedList;
+using System.IO;
+using System.Drawing.Printing;
+
 
 namespace SPARTANFIT_App.Controllers
 {
@@ -32,9 +38,9 @@ namespace SPARTANFIT_App.Controllers
             UsuarioService usuarioServices = new UsuarioService();
             UsuarioDto resultado = usuarioServices.registroUsuario(usuario);
 
-            if(resultado.persona.respuesta != 0)
+            if (resultado.persona.respuesta != 0)
             {
-                return View("Index",resultado);
+                return View("Index", resultado);
             }
             else
             {
@@ -51,8 +57,6 @@ namespace SPARTANFIT_App.Controllers
         public ActionResult CerrarSesion()
         {
             Session["UserLogged"] = null;
-            Session.Clear();
-            Session.Abandon();
             return View("Index");
         }
 
@@ -70,7 +74,7 @@ namespace SPARTANFIT_App.Controllers
                 if (usuario.persona.respuesta != 0)
                 {
                     UsuarioService usuarioService = new UsuarioService();
-                    usuario = usuarioService.logueo(usuario,contraNormal);
+                    usuario = usuarioService.logueo(usuario, contraNormal);
                     Session["UserLogged"] = usuario;
                     return View("Perfil");
                 }
@@ -94,7 +98,7 @@ namespace SPARTANFIT_App.Controllers
                     }
 
                 }
-                else if(personaLogeo.id_rol == 3)
+                else if (personaLogeo.id_rol == 3)
                 {
                     if (personaLogeo.respuesta != 0)
                     {
@@ -121,11 +125,11 @@ namespace SPARTANFIT_App.Controllers
             UsuarioDto usuario = new UsuarioDto();
             usuario.persona = new PersonaDto();
             UsuarioService usuarioService = new UsuarioService();
-            usuario = (UsuarioDto) Session["UserLogged"];
+            usuario = (UsuarioDto)Session["UserLogged"];
 
             usuario.rehabilitacion = usuObjetivo.rehabilitacion;
 
-            if(usuario.rehabilitacion == 1)
+            if (usuario.rehabilitacion == 1)
             {
                 usuario.id_objetivo = 0;
                 usuario.id_nivel_entrenamiento = 0;
@@ -138,7 +142,7 @@ namespace SPARTANFIT_App.Controllers
 
             usuario = usuarioService.actualizarObjetivo(usuario);
 
-            if(usuario.persona.respuesta != 0)
+            if (usuario.persona.respuesta != 0)
             {
                 return View("Perfil");
             }
@@ -149,22 +153,22 @@ namespace SPARTANFIT_App.Controllers
         }
         public ActionResult MostrarEntrenadores()
         {
-            AdministradorService servicio=new AdministradorService();
-            List<PersonaDto>entrenadores=servicio.Mostrar_Entrenadores();
+            AdministradorService servicio = new AdministradorService();
+            List<PersonaDto> entrenadores = servicio.Mostrar_Entrenadores();
             ViewData["entrenadores"] = entrenadores;
             return View("MostrarEntrenadores");
         }
-        public ActionResult MostrarUsuarios()
+        public ActionResult MostrarUsuarios(UsuarioDto usuario)
         {
-            AdministradorService servicio= new AdministradorService();
-            List<UsuarioDto>usuarios=servicio.Mostrar_Usuarios();
+            AdministradorService servicio = new AdministradorService();
+            List<UsuarioDto> usuarios = servicio.Mostrar_Usuarios(usuario);
             ViewData["usuarios"] = usuarios;
-            return View("MostrarUsuarios",usuarios);
+            return View("MostrarUsuarios", usuarios);
         }
         [HttpPost]
         public ActionResult EliminarEntrenador(String correo)
         {
-            AdministradorService servicio= new AdministradorService();
+            AdministradorService servicio = new AdministradorService();
             servicio.EliminarEntrenador(correo);
             return MostrarEntrenadores();
         }
@@ -180,7 +184,7 @@ namespace SPARTANFIT_App.Controllers
             AdministradorService servicio = new AdministradorService();
             PersonaDto resultado = new PersonaDto();
 
-            resultado=servicio.registrarEntrenador(entrenador);
+            resultado = servicio.registrarEntrenador(entrenador);
             if (resultado.respuesta != 0)
             {
                 return MostrarEntrenadores();
@@ -214,11 +218,11 @@ namespace SPARTANFIT_App.Controllers
         [HttpPost]
         public ActionResult ActualizarEntrenador(PersonaDto entrenador)
         {
-            return View("FormActualizarEntrenador",entrenador);
+            return View("FormActualizarEntrenador", entrenador);
         }
 
         [HttpPost]
-        public ActionResult FormActualizarEntrenador(PersonaDto entrenador) 
+        public ActionResult FormActualizarEntrenador(PersonaDto entrenador)
         {
             AdministradorService administradorService = new AdministradorService();
             int resultado = administradorService.ActualizarEntrenador(entrenador);
@@ -231,12 +235,20 @@ namespace SPARTANFIT_App.Controllers
                 return View();
             }
         }
-        public ActionResult MostrarEjercicios()
+        public ActionResult MostrarEjercicios(int pageNumber = 1, int pageSize = 10)
         {
             EntrenadorService servicio = new EntrenadorService();
             List<EjercicioDto> Ejercicios = servicio.Mostrar_Ejercicio();
+            int totalEjercicios = Ejercicios.Count;
+            int skip = (pageNumber - 1) * pageSize;
+            List<EjercicioDto> ejerciciosPaginados = Ejercicios.Skip(skip).Take(pageSize).ToList();
+            ViewBag.Ejercicios = Ejercicios;
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.PageSize = pageSize;
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalEjercicios / pageSize);
+
             ViewData["Ejercicios"] = Ejercicios;
-            return View("MostrarEjercicios", Ejercicios);
+            return View("MostrarEjercicios", ejerciciosPaginados);
         }
         [HttpPost]
         public ActionResult EliminarEjercicio(int id_ejercicio)
@@ -245,7 +257,7 @@ namespace SPARTANFIT_App.Controllers
             entrenadorService.EliminarEjercicio(id_ejercicio);
             return MostrarEjercicios();
         }
-            
+
         public ActionResult AgregarEjercicio()
         {
             return View();
@@ -295,6 +307,7 @@ namespace SPARTANFIT_App.Controllers
             ViewData["Alimentos"] = Alimentos;
             return View("MostrarAlimentos", Alimentos);
         }
+
         [HttpPost]
         public ActionResult EliminarAlimento(int id_alimento)
         {
@@ -354,25 +367,83 @@ namespace SPARTANFIT_App.Controllers
             personaService.enviarCodigo(correo);
             ViewData["correo"] = correo;
             return View("CambiarContrasena");
-            
+
         }
 
         [HttpPost]
-        public ActionResult FormCambiarContrasena(string correo,string codigo, string contrasena)
+        public ActionResult FormCambiarContrasena(string correo, string codigo, string contrasena)
         {
             PersonaService personaService = new PersonaService();
-            personaService.ActualizarContrasena(correo,contrasena, codigo);
+            personaService.ActualizarContrasena(correo, contrasena, codigo);
             return View("IniciarSesion");
         }
+
+        public ActionResult CrearRutina()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult FormCrearRutina(RutinaDto rutina)
+        {
+            ViewData["Rutina"] = rutina;
+            return AgregarRutina();
+        }
+
+
         public ActionResult AgregarRutina()
         {
             EntrenadorService servicio = new EntrenadorService();
-            List<EjercicioDto> Ejercicios = servicio.Mostrar_Ejercicio();
-            ViewData["Ejercicios"] = Ejercicios;
-            return View("MostrarEjercicios", Ejercicios);
+            List<EjercicioDto> ejercicios = servicio.Mostrar_Ejercicio();
+            ViewData["Ejercicios"] = ejercicios;
+            return View("AgregarRutina");
         }
-   
-     
+
+
+
+        [HttpPost]
+        public ActionResult FormAgregarRutina(int[] selectedCheckboxIds, int[] listadoSeries, int[] listadoRepeticiones, RutinaDto rutina)
+        {
+            EntrenadorService entrenadorService = new EntrenadorService();
+            List<EjercicioDto> ejerciciosRutina = new List<EjercicioDto>();
+            if (selectedCheckboxIds != null)
+            {
+
+                for (int i = 0; i < selectedCheckboxIds.Length; i++)
+                {
+                    int checkboxId = selectedCheckboxIds[i];
+                    int series = listadoSeries[i];
+                    int repeticiones = listadoRepeticiones[i];
+
+                    EjercicioDto ejercicio = new EjercicioDto
+                    {
+                        id_ejercicio = checkboxId,
+                        num_series = series,
+                        repeticiones = repeticiones
+                    };
+
+                    ejerciciosRutina.Add(ejercicio);
+                }
+            }
+            int resultado = entrenadorService.registrarRutina(rutina, ejerciciosRutina);
+            if (resultado != 0)
+            {
+                return View("CrearRutina");
+            }
+            else
+            {
+                return View("CrearRutina", resultado);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult CrearRutina(RutinaDto rutina)
+        {
+            return View("AgregarRutina", rutina);
+        }
+
+
+
         public ActionResult ActualizarDatos() { return View("ActualizarDatos"); }
 
         [HttpPost]
@@ -385,7 +456,7 @@ namespace SPARTANFIT_App.Controllers
 
             usuario.peso = usuDatos.peso;
             usuario.estatura = usuDatos.estatura;
-           
+
 
             usuario = usuarioService.actualizarDatosUsuario(usuario);
 
@@ -401,20 +472,20 @@ namespace SPARTANFIT_App.Controllers
         [HttpPost]
         public ActionResult DescargarPdfUsuarios()
         {
-           
-                AdministradorService administradorService = new AdministradorService(); 
 
-               
-                string tempFilePath = Path.Combine(Path.GetTempPath(), "Lista_Usuarios.pdf");
-                administradorService.CrearPdfUsuarios();           
-                Response.Clear(); 
-                Response.ContentType = "application/pdf"; 
-                Response.AddHeader("Content-Disposition", "attachment; filename=Lista_Usuarios.pdf");      
-                Response.WriteFile(tempFilePath);
-                Response.Flush();
+            AdministradorService administradorService = new AdministradorService();
 
-              return RedirectToAction("MostrarUsuarios"); 
-            }
+
+            string tempFilePath = Path.Combine(Path.GetTempPath(), "Lista_Usuarios.pdf");
+            administradorService.CrearPdfUsuarios();
+            Response.Clear();
+            Response.ContentType = "application/pdf";
+            Response.AddHeader("Content-Disposition", "attachment; filename=Lista_Usuarios.pdf");
+            Response.WriteFile(tempFilePath);
+            Response.Flush();
+
+            return RedirectToAction("MostrarUsuarios");
+        }
         [HttpPost]
         public ActionResult DescargarPdfEntrenadores()
         {
@@ -434,7 +505,5 @@ namespace SPARTANFIT_App.Controllers
         }
 
 
-
     }
-        }
-    
+}
