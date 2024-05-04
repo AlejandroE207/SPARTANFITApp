@@ -13,14 +13,19 @@ using System.Xml.Linq;
 using X.PagedList;
 using System.IO;
 using System.Drawing.Printing;
+using SPARTANFITApp.Controllers;
 
 
 namespace SPARTANFIT_App.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public ActionResult Index()
         {
+            Session["UserLogged"] = null;
+            Session.Clear();
+            Session.Abandon();
+
             return View();
         }
 
@@ -54,12 +59,14 @@ namespace SPARTANFIT_App.Controllers
             return View();
         }
 
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public ActionResult CerrarSesion()
         {
             Session["UserLogged"] = null;
             Session.Clear();
             Session.Abandon();
-            return Index();
+
+            return RedirectToAction("Index", "Home");
         }
 
 
