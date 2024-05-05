@@ -108,7 +108,7 @@ else
                 </div>
             }
         </div>
-        
+
         @if (ViewData["Mensaje"] != null)
         {
             <p>@ViewData["Mensaje"]</p>
@@ -121,7 +121,13 @@ else
             const listadoRepeticiones = [];
 
             const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-            for (const checkbox of checkboxes) {
+
+            // Ordenar los checkboxes por su posición en la página
+            const sortedCheckboxes = Array.from(checkboxes).sort((a, b) => {
+                return a.getBoundingClientRect().top - b.getBoundingClientRect().top;
+            });
+
+            for (const checkbox of sortedCheckboxes) {
                 selectedCheckboxIds.push(checkbox.value);
 
                 const ejercicioId = checkbox.value;
@@ -160,6 +166,7 @@ else
             form.submit();
         }
     </script>
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
