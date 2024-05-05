@@ -69,6 +69,10 @@ namespace SPARTANFIT_App.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public ActionResult PrincipalEntrenador()
+        {
+            return View("PrincipalEntrenador");
+        }
 
         [HttpPost]
         public ActionResult ControladorLogin(PersonaDto persona)
@@ -98,8 +102,8 @@ namespace SPARTANFIT_App.Controllers
                 {
                     if (personaLogeo.respuesta != 0)
                     {
-                        Session["UserLogged"] = personaLogeo;
-                        return View("PrincipalEntrenador");
+                        Session["entrenadorLogged"] = personaLogeo;
+                        return RedirectToAction("PrincipalEntrenador");
                     }
                     else
                     {
@@ -244,21 +248,15 @@ namespace SPARTANFIT_App.Controllers
                 return View();
             }
         }
-        public ActionResult MostrarEjercicios(int pageNumber = 1, int pageSize = 10)
+
+        public ActionResult MostrarEjercicios()
         {
             EntrenadorService servicio = new EntrenadorService();
-            List<EjercicioDto> Ejercicios = servicio.Mostrar_Ejercicio();
-            int totalEjercicios = Ejercicios.Count;
-            int skip = (pageNumber - 1) * pageSize;
-            List<EjercicioDto> ejerciciosPaginados = Ejercicios.Skip(skip).Take(pageSize).ToList();
-            ViewBag.Ejercicios = Ejercicios;
-            ViewBag.PageNumber = pageNumber;
-            ViewBag.PageSize = pageSize;
-            ViewBag.TotalPages = (int)Math.Ceiling((double)totalEjercicios / pageSize);
-
-            ViewData["Ejercicios"] = Ejercicios;
-            return View("MostrarEjercicios", ejerciciosPaginados);
+            List<EjercicioDto> ejercicios = servicio.Mostrar_Ejercicio();
+            ViewData["ejercicios"] = ejercicios;
+            return View("MostrarEjercicios", ejercicios);
         }
+
         [HttpPost]
         public ActionResult EliminarEjercicio(int id_ejercicio)
         {

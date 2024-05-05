@@ -1,6 +1,35 @@
 ﻿@{
     ViewBag.Title = "AgregarAlimento";
 }
+
+@model List<SPARTANFITApp.Dto.EjercicioDto>
+@{
+    // Recuperar el valor de la variable de sesión
+    SPARTANFITApp.Dto.PersonaDto personaLogeo = Session["entrenadorLogged"] as SPARTANFITApp.Dto.PersonaDto;
+}
+
+@if (personaLogeo == null)
+{
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Redirección automática en ASP.NET</title>
+        <script type="text/javascript">
+            window.onload = function () {
+                setTimeout(function () {
+                    window.location.href = 'Index';
+                });
+            };
+        </script>
+    </head>
+    <body>
+        <h1>Inicie Sesion primero</h1>
+    </body>
+</html>
+}
+else
+{
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,54 +77,55 @@
                 <label for="calorias_x_gramo">Calorias por gramo:</label>
                 <input type="number" id="calorias_x_gramo" name="calorias_x_gramo" required>
             </div>
-        
-        <div class="form-row">
-            <div>
-                <label for="grasa">Grasa:</label>
-                <input type="number" id="grasa" name="grasa" required>
-            </div>
-            <div>
-                <label for="carbohidratos">Carbohidratos:</label>
-                <input type="number" id="carbohidrato" name="carbohidrato" required>
-            </div>
-        </div>
-        <div class="form-row">
-            <div>
-                <label for="proteina">Proteina:</label>
-                <input type="number" id="proteina" name="proteina" required>
-            </div>
-            <div>
-                <label for="fibra">Fibra:</label>
-                <input type="number" id="fibra" name="fibra" required>
-            </div>
-            <div class="centrado">
-                <div class="form-row">
-                    <button class="boton-crear" onclick="crearCuenta()">Agregar Alimento</button>
+
+            <div class="form-row">
+                <div>
+                    <label for="grasa">Grasa:</label>
+                    <input type="number" id="grasa" name="grasa" required>
                 </div>
-                <div class="botoncito">
-                    <div class="container">
-                        <button class="boton-cancelar" onclick="confirmarCancelar()">Cancelar</button>
+                <div>
+                    <label for="carbohidratos">Carbohidratos:</label>
+                    <input type="number" id="carbohidrato" name="carbohidrato" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div>
+                    <label for="proteina">Proteina:</label>
+                    <input type="number" id="proteina" name="proteina" required>
+                </div>
+                <div>
+                    <label for="fibra">Fibra:</label>
+                    <input type="number" id="fibra" name="fibra" required>
+                </div>
+                <div class="centrado">
+                    <div class="form-row">
+                        <button class="boton-crear" onclick="crearCuenta()">Agregar Alimento</button>
+                    </div>
+                    <div class="botoncito">
+                        <div class="container">
+                            <button class="boton-cancelar" onclick="confirmarCancelar()">Cancelar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }  @if (ViewData["Mensaje"] != null)
-        {
+        }  @if (ViewData["Mensaje"] != null)
+    {
             <p>@ViewData["Mensaje"]</p>
-        }
+    }
 
-    <script>
+        <script>
  function confirmarCancelar() {
      if (confirm("¿Estás seguro de que quieres cancelar?")) {
          window.location.href = '@Url.Action("MostrarAlimentos", "Home")';
      } }
-    </script>
-    <script>
+        </script>
+        <script>
 
-    </script>
+        </script>
 
 
 
 </body>
 
 </html>
+}

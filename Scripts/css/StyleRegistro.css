@@ -151,11 +151,15 @@ select {
     border-radius: 0.5rem;
     padding: 1rem 3rem;
     font-size: 1rem;
-    margin-top: 10rem;
+    margin-top: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
     font-family: "Yatra One", system-ui;
     text-transform: uppercase;
+}
+
+#agregarEjercicio {
+    margin-top: 1rem;
 }
 
     .boton-crear:hover {

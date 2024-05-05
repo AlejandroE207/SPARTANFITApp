@@ -158,7 +158,7 @@
     <Compile Include="Repository\Recuperacion_contrasenaRepository.cs" />
     <Compile Include="Repository\RutinaRepository.cs" />
     <Compile Include="Repository\UsuarioRepository.cs" />
-    <Content Include="Scripts\css\StylePaginacion.css" />
+    <Content Include="Scripts\css\StylePag.css" />
     <Compile Include="Services\AdministradorService.cs" />
     <Compile Include="Services\EntrenadorService.cs" />
     <Compile Include="Services\PersonaService.cs" />

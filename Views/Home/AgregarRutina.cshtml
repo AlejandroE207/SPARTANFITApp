@@ -1,19 +1,32 @@
 ﻿@{
     ViewBag.Title = "AgregarRutina";
-}
-
-@model List<SPARTANFITApp.Dto.EjercicioDto>
-
-@{ 
     SPARTANFITApp.Dto.RutinaDto rutina = ViewData["Rutina"] as SPARTANFITApp.Dto.RutinaDto;
-}
-
-@{
     var Ejercicios = ViewData["Ejercicios"] as List<SPARTANFITApp.Dto.EjercicioDto>;
+    // Recuperar el valor de la variable de sesión
+    SPARTANFITApp.Dto.PersonaDto personaLogeo = Session["entrenadorLogged"] as SPARTANFITApp.Dto.PersonaDto;
 }
 
-
-
+@if (personaLogeo == null)
+{
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Redirección automática en ASP.NET</title>
+        <script type="text/javascript">
+            window.onload = function () {
+                setTimeout(function () {
+                    window.location.href = 'Index';
+                });
+            };
+        </script>
+    </head>
+    <body>
+        <h1>Inicie Sesión primero</h1>
+    </body>
+</html>
+}
+else
+{
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,11 +41,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap"
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    
     <title>MostrarEjercicios</title>
 </head>
 <body>
-
     <header>
         <a href="#" class="logo"> SPARTANFIT</a>
         <ul>
@@ -45,16 +56,15 @@
     </header>
     <main class="centrarT">
         <div class="contTabla">
-
-
             @using (Html.BeginForm("FormAgregarRutina", "Home", FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
                 <input type="hidden" id="id_nivel_rutina" name="id_nivel_rutina" value="@rutina.id_nivel_rutina" />
+                <input type="hidden" id="id_objetivo" name="id_objetivo" value="@rutina.id_objetivo" />
                 <input type="hidden" id="nombre_rutina" name="nombre_rutina" value="@rutina.nombre_rutina" />
                 <input type="hidden" id="dia" name="dia" value="@rutina.dia" />
-                <input type="hidden" id="id_nivel_rutina" name="id_nivel_rutina" value="@rutina.id_nivel_rutina" />
                 <input type="hidden" id="descripcion" name="descripcion" value="@rutina.descripcion" />
+                <input type="hidden" id="id_entrenador" name="id_entrenador" value="@personaLogeo.id_usuario" />
                 <table id="tablaEjercicios">
                     <thead>
                         <tr>
@@ -72,7 +82,7 @@
                             <tr>
                                 <td>
                                     <input type="hidden" id="selectedExercises" name="selectedExercises" />
-                                    <input type="checkbox" class="ejercicio-checkbox" id=" @ejercicio.id_ejercicio" name="id_ejercicio" value="@ejercicio.id_ejercicio">
+                                    <input type="checkbox" class="ejercicio-checkbox" id="@ejercicio.id_ejercicio" name="id_ejercicio" value="@ejercicio.id_ejercicio">
                                 </td>
                                 <td>
                                     @ejercicio.nombre_ejercicio
@@ -98,39 +108,13 @@
                 </div>
             }
         </div>
-
-
+        
         @if (ViewData["Mensaje"] != null)
         {
             <p>@ViewData["Mensaje"]</p>
         }
-
     </main>
-
-
     <script>
-    function crearRutina() {
-        window.location.href = '@Url.Action("AgregarRutina", "Home")';
-    }
-    </script>
-    
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-
-    <script>
-        $(document).ready(function () {
-            $('#tablaEjercicios').DataTable({
-                searching: true,
-                paging: false,
-                info: false
-            });
-        });
-    </script>
-
-
-
-    <script>
-           
         function getSelectedCheckboxIds() {
             const selectedCheckboxIds = [];
             const listadoSeries = [];
@@ -148,8 +132,7 @@
                 listadoRepeticiones.push(numRepeticiones);
             }
 
-
-            const form = document.querySelector('form'); 
+            const form = document.querySelector('form');
 
             for (const serie of listadoSeries) {
                 const hiddenInput = document.createElement('input');
@@ -170,18 +153,26 @@
             for (const checkboxId of selectedCheckboxIds) {
                 const hiddenInput = document.createElement('input');
                 hiddenInput.type = 'hidden';
-                hiddenInput.name = 'selectedCheckboxIds[]'; 
+                hiddenInput.name = 'selectedCheckboxIds[]';
                 hiddenInput.value = checkboxId;
                 form.appendChild(hiddenInput);
             }
             form.submit();
-            
-
-            console.log("Selected Checkbox IDs:");
-            console.log(selectedCheckboxIds);
         }
-
     </script>
-    
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#tablaEjercicios').DataTable({
+                searching: true,
+                paging: false,
+                info: false
+            });
+        });
+    </script>
 </body>
 </html>
+}

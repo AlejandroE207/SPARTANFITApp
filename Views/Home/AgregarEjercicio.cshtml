@@ -1,6 +1,35 @@
 ﻿@{
     ViewBag.Title = "AgregarEjercicio";
 }
+
+
+@{
+    // Recuperar el valor de la variable de sesión
+    SPARTANFITApp.Dto.PersonaDto personaLogeo = Session["entrenadorLogged"] as SPARTANFITApp.Dto.PersonaDto;
+}
+
+@if (personaLogeo == null)
+{
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Redirección automática en ASP.NET</title>
+        <script type="text/javascript">
+            window.onload = function () {
+                setTimeout(function () {
+                    window.location.href = 'Index';
+                });
+            };
+        </script>
+    </head>
+    <body>
+        <h1>Inicie Sesion primero</h1>
+    </body>
+</html>
+}
+else
+{
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,41 +75,42 @@
                     <option value="6">Biceps</option>
                     <option value="7">Pantorrillas</option>
                     <option value="8">Abdomen</option>
-
+                    <option value="9">Cardio</option>
                 </select>
             </div>
-        <div>
-            <label for="apoyo_visual">Url Imagen</label>
-            <input type="text" id="apoyo_visual" name="apoyo_visual" required>
-        </div>
-        
-        <div class="centrado">
-            <div class="form-row">
-                <button class="boton-crear" onclick="crearCuenta()">Agregar Ejercicio</button>
+            <div>
+                <label for="apoyo_visual">Url Imagen</label>
+                <input type="text" id="apoyo_visual" name="apoyo_visual" required>
             </div>
-            <div class="botoncito">
-                <div class="container">
-                    <button class="boton-cancelar" onclick="confirmarCancelar()">Cancelar</button>
+
+            <div class="centrado">
+                <div class="form-row">
+                    <button class="boton-crear" id="agregarEjercicio" onclick="crearCuenta()">Agregar Ejercicio</button>
+                </div>
+                <div class="botoncito">
+                    <div class="container">
+                        <button class="boton-cancelar" onclick="confirmarCancelar()">Cancelar</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    }  @if (ViewData["Mensaje"] != null)
-        {
+        }  @if (ViewData["Mensaje"] != null)
+    {
             <p>@ViewData["Mensaje"]</p>
-        }
+    }
 
-    <script>
+        <script>
  function confirmarCancelar() {
      if (confirm("¿Estás seguro de que quieres cancelar?")) {
          window.location.href = '@Url.Action("MostrarEjercicios", "Home")';
      } }
-    </script>
-    <script>
+        </script>
+        <script>
 
-    </script>
+        </script>
 
 
 
 </body>
 
 </html>
+}

@@ -1,14 +1,35 @@
 ﻿@{
     ViewBag.Title = "CrearRutina";
+    SPARTANFITApp.Dto.PersonaDto personaLogeo = Session["entrenadorLogged"] as SPARTANFITApp.Dto.PersonaDto;
 }
 
+@if (personaLogeo == null)
+{
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Redirección automática en ASP.NET</title>
+        <script type="text/javascript">
+            window.onload = function () {
+                setTimeout(function () {
+                    window.location.href = 'Index';
+                });
+            };
+        </script>
+    </head>
+    <body>
+        <h1>Inicie Sesion primero</h1>
+    </body>
+</html>
+}
+else
+{
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="~/Scripts/css/StyleRegistro.css" rel="stylesheet" />
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap">
@@ -24,7 +45,7 @@
             <li>@Html.ActionLink("Rutinas", "", "Home")</li>
             <li>@Html.ActionLink("Plan Nutricion", "", "Home")</li>
             <li>@Html.ActionLink("Alimentos", "MostrarAlimentos", "Home")</li>
-            <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</
+            <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
         </ul>
     </header>
     <div>
@@ -32,7 +53,6 @@
         @using (Html.BeginForm("FormCrearRutina", "Home", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
-
 
             <div class="form-row">
                 <div>
@@ -42,16 +62,24 @@
                         <option value="1">Basico</option>
                         <option value="2">Medio</option>
                         <option value="3">Avanzado</option>
-
                     </select>
                 </div>
+            </div>
+            <div class="form-row" id="objetivo">
+                <label for="id_objetivo">Objetivo:</label>
+                <select id="id_objetivo" name="id_objetivo">
+                    <option value="0">Seleccione</option>
+                    <option value="1">Definición</option>
+                    <option value="2">Mantenimiento</option>
+                    <option value="3">Hipertrofia</option>
+                    <option value="4">Fuerza</option>
+                </select>
             </div>
             <div class="form-row">
                 <div>
                     <label for="nombre_rutina">Nombre Rutina:</label>
                     <input type="text" id="nombre_rutina" name="nombre_rutina" required>
                 </div>
-
             </div>
             <div class="form-row">
                 <div>
@@ -67,7 +95,6 @@
                         <option value="Domingo">Domingo</option>
                     </select>
                 </div>
-
             </div>
             <div class="form-row">
                 <div>
@@ -75,7 +102,6 @@
                     <input type="text" id="descripcion" name="descripcion" required>
                 </div>
             </div>
-
             <div class="centrado">
                 <div class="form-row">
                     <button type="submit" class="boton-crear" onclick="">Crear Rutina</button>
@@ -86,17 +112,13 @@
                     </div>
                 </div>
             </div>
+        }
 
-
-        }  @if (ViewData["Mensaje"] != null)
+        @if (ViewData["Mensaje"] != null)
         {
             <p>@ViewData["Mensaje"]</p>
         }
     </div>
-
-
-
-
 
     <script>
     function confirmar() {
@@ -116,3 +138,4 @@
 </body>
 
 </html>
+}

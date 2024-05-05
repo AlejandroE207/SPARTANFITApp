@@ -19,18 +19,19 @@ namespace SPARTANFITApp.Repository
                 DBContextUtility conexion = new DBContextUtility();
                 conexion.Connect();
 
-                string SQL = "INSERT INTO RUTINA (id_nivel_rutina, nombre_rutina,dia,descripcion)"
-                            + "VALUES (@id_nivel_rutina, @nombre_rutina, @dia, @descripcion)";
+                string SQL = "INSERT INTO RUTINA (id_nivel_rutina, id_objetivo, nombre_rutina,dia,descripcion, id_entrenador)"
+                            + "VALUES (@id_nivel_rutina, @id_objetivo, @nombre_rutina, @dia, @descripcion, @id_entrenador)";
 
 
                 using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
                 {
 
                     command.Parameters.AddWithValue("@id_nivel_rutina", rutina.id_nivel_rutina);
+                    command.Parameters.AddWithValue("@id_objetivo", rutina.id_objetivo);
                     command.Parameters.AddWithValue("@nombre_rutina", rutina.nombre_rutina);
                     command.Parameters.AddWithValue("@dia", rutina.dia);
                     command.Parameters.AddWithValue("@descripcion", rutina.descripcion);
-
+                    command.Parameters.AddWithValue("@id_entrenador", rutina.id_entrenador);
 
                     command.ExecuteNonQuery();
                     comando = 1;

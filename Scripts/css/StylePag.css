@@ -1,8 +1,7 @@
 ﻿#tablaEjercicios tbody tr:nth-child(even),
 #tablaAlimenos tbody tr:nth-child(even),
-#tablaPersonas tbody tr:nth-child(even) 
-{
-    background-color: red;
+#tablaPersonas tbody tr:nth-child(even) {
+    background-color: black;
 }
 
 
@@ -64,17 +63,17 @@
     text-align: center;
 }
 
-    #tablaEjercicios_filter label,
-    #tablaAlimentos_filter label,
-    #tablaPersonas_filter label {
-        margin: auto;
-    }
+#tablaEjercicios_filter label,
+#tablaAlimentos_filter label,
+#tablaPersonas_filter label {
+    margin: auto;
+}
 
-    #tablaEjercicios_filter input,
-    #tablaAlimentos_filter input,
-    #tablaPersonas_filter input {
-        color: white;
-    }
+#tablaEjercicios_filter input,
+#tablaAlimentos_filter input,
+#tablaPersonas_filter input {
+    color: white;
+}
 
 #tablaEjercicios_length,
 #tablaAlimentos_length,
@@ -89,11 +88,11 @@
     color: white;
 }
 
-    #tablaEjercicios_length select option,
-    #tablaAlimentos_length select option,
-    #tablaPersonas_length select option {
-        color: black;
-    }
+#tablaEjercicios_length select option,
+#tablaAlimentos_length select option,
+#tablaPersonas_length select option {
+    color: black;
+}
 
 #tablaEjercicios_info,
 #tablaAlimentos_info,
@@ -107,9 +106,14 @@
     background-color: gold;
 }
 
-.odd{
-    background-color:black;
+.odd {
+    background-color: black;
 }
-#tablaPersonas_filter{
-    color:white;
+
+.even {
+    background-color: black;
+}
+
+#tablaPersonas_filter {
+    color: white;
 }
