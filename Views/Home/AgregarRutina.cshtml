@@ -104,9 +104,10 @@ else
                     </tbody>
                 </table>
                 <div class="container botonCrear">
-                    <button type="submit" class="boton-crear" onclick="getSelectedCheckboxIds()">Crear Rutina</button>
+                    <button type="submit" class="boton-crear" onclick="ejecutar()">Crear Rutina</button>
                 </div>
             }
+            <button onclick="verificacion()">VERIFICACION</button>
         </div>
 
         @if (ViewData["Mensaje"] != null)
@@ -114,29 +115,60 @@ else
             <p>@ViewData["Mensaje"]</p>
         }
     </main>
+    <!--
     <script>
-        function getSelectedCheckboxIds() {
-            const selectedCheckboxIds = [];
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+        const selectedCheckboxIDs = [];
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                if (checkbox.checked) {
+                    selectedCheckboxIDs.push(checkbox.id);
+                } else {
+                    const index = selectedCheckboxIDs.indexOf(checkbox.id);
+                    if (index >= 0) {
+                        selectedCheckboxIDs.splice(index, 1);
+                    }
+                }
+
+                console.log(selectedCheckboxIDs);
+            });
+        });
+    </script>
+        -->
+
+    <script>
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const selectedCheckboxIDs = [];
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                if (checkbox.checked) {
+                    selectedCheckboxIDs.push(checkbox.id);
+                } else {
+                    const index = selectedCheckboxIDs.indexOf(checkbox.id);
+                    if (index >= 0) {
+                        selectedCheckboxIDs.splice(index, 1);
+                    }
+                }
+
+                console.log(selectedCheckboxIDs);
+            });
+        });
+
+
+        function getSelectedCheckboxIds(selectedCheckboxIDs) {
             const listadoSeries = [];
             const listadoRepeticiones = [];
 
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-
-            // Ordenar los checkboxes por su posición en la página
-            const sortedCheckboxes = Array.from(checkboxes).sort((a, b) => {
-                return a.getBoundingClientRect().top - b.getBoundingClientRect().top;
-            });
-
-            for (const checkbox of sortedCheckboxes) {
-                selectedCheckboxIds.push(checkbox.value);
-
-                const ejercicioId = checkbox.value;
-                const numSeries = document.getElementById('num_series_' + ejercicioId).value;
+            selectedCheckboxIDs.forEach(checkboxId => {
+                const numSeries = document.getElementById('num_series_' + checkboxId).value;
                 listadoSeries.push(numSeries);
 
-                const numRepeticiones = document.getElementById('repeticiones_' + ejercicioId).value;
+                const numRepeticiones = document.getElementById('repeticiones_' + checkboxId).value;
                 listadoRepeticiones.push(numRepeticiones);
-            }
+            });
 
             const form = document.querySelector('form');
 
@@ -156,7 +188,7 @@ else
                 form.appendChild(hiddenInput);
             }
 
-            for (const checkboxId of selectedCheckboxIds) {
+            for (const checkboxId of selectedCheckboxIDs) {
                 const hiddenInput = document.createElement('input');
                 hiddenInput.type = 'hidden';
                 hiddenInput.name = 'selectedCheckboxIds[]';
@@ -165,6 +197,15 @@ else
             }
             form.submit();
         }
+
+        function ejecutar() {
+            getSelectedCheckboxIds(selectedCheckboxIDs);
+        }
+
+        // Ejemplo de uso de la función getSelectedCheckboxIds()
+        // Puedes llamar a esta función pasando la lista selectedCheckboxIDs como argumento
+        // getSelectedCheckboxIds(selectedCheckboxIDs);
+
     </script>
 
 
