@@ -159,7 +159,6 @@
     <Compile Include="Repository\RutinaRepository.cs" />
     <Compile Include="Repository\UsuarioRepository.cs" />
     <Compile Include="Utilities\SintetizarFormularios.cs" />
-    <Content Include="Scripts\css\StylePaginacion.css" />
     <Compile Include="Services\AdministradorService.cs" />
     <Compile Include="Services\EntrenadorService.cs" />
     <Compile Include="Services\PersonaService.cs" />
