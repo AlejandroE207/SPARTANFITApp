@@ -50,6 +50,11 @@ namespace SPARTANFITApp.Services
         public PersonaDto registrarEntrenador(PersonaDto entrenador)
         {
             PersonaDto entrenadorResp = new PersonaDto();
+            SintetizarFormularios sintetizarFormularios = new SintetizarFormularios();  
+            entrenador.nombres=sintetizarFormularios.Sintetizar(entrenador.nombres);
+            entrenador.apellidos=sintetizarFormularios.Sintetizar(entrenador.apellidos);
+            entrenador.correo=sintetizarFormularios.Sintetizar(entrenador.correo);
+            entrenador.contrasena=sintetizarFormularios.Sintetizar(entrenador.contrasena);
             EntrenadorRepository entrenadorRepository = new EntrenadorRepository();
 
 
@@ -134,9 +139,14 @@ namespace SPARTANFITApp.Services
             {
                 int filasAfectadas = 0;
                 EntrenadorRepository entrenadorRepository = new EntrenadorRepository();
-
-                try
+                SintetizarFormularios sintetizarFormularios= new SintetizarFormularios();
+                entrenador.nombres = sintetizarFormularios.Sintetizar(entrenador.nombres);
+                entrenador.apellidos = sintetizarFormularios.Sintetizar(entrenador.apellidos);
+                entrenador.correo = sintetizarFormularios.Sintetizar(entrenador.correo);
+                entrenador.contrasena = sintetizarFormularios.Sintetizar(entrenador.contrasena);
+            try
                 {
+
                 EncriptarContrasenaUtility encrip = new EncriptarContrasenaUtility();
                 entrenador.contrasena = encrip.EncriptarContrasena(entrenador);
 
