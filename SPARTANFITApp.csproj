@@ -52,6 +52,12 @@
       <HintPath>packages\iTextSharp.5.5.13.3\lib\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -116,6 +122,12 @@
       <Private>True</Private>
       <HintPath>packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="X.PagedList, Version=9.1.2.0, Culture=neutral, PublicKeyToken=525ccaa9023f010c, processorArchitecture=MSIL">
+      <HintPath>packages\X.PagedList.9.1.2\lib\netstandard2.0\X.PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="X.PagedList4, Version=7.6.0.0, Culture=neutral, PublicKeyToken=00b6c4f97602e5e8, processorArchitecture=MSIL">
+      <HintPath>packages\X.PagedList4.7.6.0\lib\net45\X.PagedList4.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
@@ -132,6 +144,7 @@
     <Compile Include="Dto\EjercicioDto.cs" />
     <Compile Include="Dto\PersonaDto.cs" />
     <Compile Include="Dto\Recuperacion_ContrasenaDto.cs" />
+    <Compile Include="Dto\RutinaDto.cs" />
     <Compile Include="Dto\UsuarioDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -143,7 +156,9 @@
     <Compile Include="Repository\EntrenadorRepository.cs" />
     <Compile Include="Repository\PersonaRepository.cs" />
     <Compile Include="Repository\Recuperacion_contrasenaRepository.cs" />
+    <Compile Include="Repository\RutinaRepository.cs" />
     <Compile Include="Repository\UsuarioRepository.cs" />
+    <Content Include="Scripts\css\StylePaginacion.css" />
     <Compile Include="Services\AdministradorService.cs" />
     <Compile Include="Services\EntrenadorService.cs" />
     <Compile Include="Services\PersonaService.cs" />
@@ -156,11 +171,13 @@
     <Compile Include="Utilities\ReporteUtility.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\css\StyleContra.css" />
+    <Content Include="Scripts\css\StylePaginacionAgregar.css" />
     <Content Include="Scripts\css\StylePrincipalEntrenador.css" />
     <Content Include="Scripts\css\StyleRegistro.css" />
     <Content Include="Scripts\css\stylesPerfil.css" />

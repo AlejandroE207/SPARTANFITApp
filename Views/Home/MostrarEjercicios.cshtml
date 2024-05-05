@@ -4,6 +4,7 @@
 @{
     var Ejercicios = ViewData["Ejercicios"] as List<SPARTANFITApp.Dto.EjercicioDto>;
 }
+@model List<SPARTANFITApp.Dto.EjercicioDto>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,12 +13,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="~/Scripts/css/Styletablas.css" rel="stylesheet" />
+    <link href="~/Scripts/css/StylePaginacion.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap"
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap"
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" rel="stylesheet">
     <title>MostrarEjercicios</title>
 </head>
 <body>
@@ -26,14 +29,14 @@
         <a href="#" class="logo"> SPARTANFIT</a>
         <ul>
             <li>@Html.ActionLink("Ejercicios", "MostrarEjercicios", "Home")</li>
-            <li>@Html.ActionLink("Rutinas", "", "Home")</li>
+            <li>@Html.ActionLink("Rutinas", "CrearRutina", "Home")</li>
             <li>@Html.ActionLink("Plan Nutricion", "", "Home")</li>
             <li>@Html.ActionLink("Alimentos", "MostrarAlimentos", "Home")</li>
             <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
         </ul>
     </header>
-    <div class="centrarT">
-        <table>
+    <main class="centrarT">
+        <table id="tablaEjercicios">
             <thead>
                 <tr>
                     <th>Nombres</th>
@@ -44,13 +47,13 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var ejercicio in Ejercicios)
+                @foreach (var ejercicio in Model)
                 {
                     <tr>
                         <td>@ejercicio.nombre_ejercicio</td>
                         <td>@ejercicio.id_grupo_muscular</td>
                         <td>@ejercicio.apoyo_visual</td>
-                        
+
                         <td>
                             @using (Html.BeginForm("ActualizarEjercicio", "Home", FormMethod.Post))
                             {
@@ -83,8 +86,48 @@
                     </tr>
                 }
             </tbody>
+            <div class="paginacion">
+
+
+                @if (ViewBag.TotalEjercicios > ViewBag.PageSize)
+                {
+                    for (int i = 1; i <= ViewBag.TotalPages; i++)
+                    {
+                        if (i == ViewBag.PageNumber)
+                        {
+                            <span>@i</span>
+                        }
+                        else
+                        {
+                            <a class="paginacion_contenedor-num" href="@Url.Action("MostrarEjercicios", "Home", new { pageNumber = i, pageSize = ViewBag.PageSize })">@i</a>
+                        }
+                    }
+                }
+
+
+            </div>
         </table>
-    </div>
+        <div class="paginacion">
+
+
+            @if (ViewBag.TotalEjercicios > ViewBag.PageSize)
+            {
+                for (int i = 1; i <= ViewBag.TotalPages; i++)
+                {
+                    if (i == ViewBag.PageNumber)
+                    {
+                        <span>@i</span>
+                    }
+                    else
+                    {
+                        <a class="paginacion_contenedor-num" href="@Url.Action("MostrarEjercicios", "Home", new { pageNumber = i, pageSize = ViewBag.PageSize })">@i</a>
+                    }
+                }
+            }
+
+
+        </div>
+    </main>
     <div class="container">
         <button class="boton-crear" onclick="crearEjercicio()">Agregar Ejercicio</button>
     </div>
@@ -98,5 +141,25 @@
             return confirm("¿Estás seguro de que quieres eliminar el Ejercicio?");
         }
     </script>
+
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tablaEjercicios').DataTable({
+                "pagingType": "full_numbers", 
+                "language": { 
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>

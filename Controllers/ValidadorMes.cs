@@ -6,84 +6,23 @@ using System.Web.Mvc;
 
 namespace SPARTANFITApp.Controllers
 {
-    public class ValidadorMes : Controller
-    {
-        // GET: ValidadorMes
-        public ActionResult Index()
-        {
-            return View();
-        }
+    
 
-        // GET: ValidadorMes/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
 
-        // GET: ValidadorMes/Create
-        public ActionResult Create()
+    public class BaseController : Controller
         {
-            return View();
-        }
-
-        // POST: ValidadorMes/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
+            protected void SetNoCacheHeaders()
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                Response.Cache.SetExpires(DateTime.UtcNow.AddYears(-1)); 
+                Response.Cache.SetNoStore();
             }
-            catch
+
+            protected override void OnActionExecuting(ActionExecutingContext filterContext)
             {
-                return View();
+                SetNoCacheHeaders();
+
+                base.OnActionExecuting(filterContext);
             }
         }
-
-        // GET: ValidadorMes/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: ValidadorMes/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ValidadorMes/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ValidadorMes/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-    }
 }

@@ -1,4 +1,5 @@
-﻿using SPARTANFITApp.Dto;
+﻿
+using SPARTANFITApp.Dto;
 using SPARTANFITApp.Repository;
 using SPARTANFITApp.Utilities;
 using System;
@@ -160,6 +161,18 @@ namespace SPARTANFITApp.Services
 
             }
             return AlimentoResp;
+        }
+
+        public int registrarRutina(RutinaDto rutina, List<EjercicioDto> ejerciciosRutina)
+        {
+            RutinaDto rutinaResp = new RutinaDto(); ;
+            RutinaRepository rutinaRepository = new RutinaRepository();
+            int id_rutina = rutinaRepository.regitrarRutina(rutina);
+
+            int registroEjerciciosRutina = rutinaRepository.registrarEjerciciosRutina(ejerciciosRutina, id_rutina);
+
+
+            return registroEjerciciosRutina;
         }
     }
 

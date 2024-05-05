@@ -58,7 +58,7 @@ namespace SPARTANFITApp.Repository
             DBContextUtility conexion = new DBContextUtility();
             conexion.Connect();
 
-            string SQL = "SELECT  nombres, apellidos, correo, contrasena, fecha_nacimiento, estatura, peso, genero, id_nivel_entrenamiento, id_objetivo, rehabilitacion FROM USUARIO WHERE id_rol = 1";
+            string SQL = "SELECT  id_usuario,nombres, apellidos, correo, contrasena, fecha_nacimiento, estatura, peso, genero, id_nivel_entrenamiento, id_objetivo, rehabilitacion FROM USUARIO WHERE id_rol = 1";
 
             using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
             {
@@ -70,6 +70,7 @@ namespace SPARTANFITApp.Repository
 
                         persona = new PersonaDto
                         {
+                            id_usuario = Convert.ToInt32(reader["id_usuario"]),
                             nombres = reader["nombres"].ToString(),
                             apellidos = reader["apellidos"].ToString(),
                             correo = reader["correo"].ToString(),

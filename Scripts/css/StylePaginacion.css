@@ -1,0 +1,115 @@
+﻿#tablaEjercicios tbody tr:nth-child(even),
+#tablaAlimenos tbody tr:nth-child(even),
+#tablaPersonas tbody tr:nth-child(even) 
+{
+    background-color: red;
+}
+
+
+#tablaEjercicios tbody tr:nth-child(odd),
+#tablaAlimentos tbody tr:nth-child(odd),
+#tablaPersonas tbody tr:nth-child(odd) {
+    background-color: black;
+}
+
+#tablaEjercicios_paginate .paginate_button.current,
+#tablaAlimentos_paginate .paginate_button.current,
+#tablaPersonas_paginate .paginate_button.current {
+    color: #fff;
+}
+
+#tablaEjercicios_paginate .paginate_button.current,
+#tablaAlimentos_paginate .paginate_button.current,
+#tablaPersonas_paginate .paginate_button.current {
+    background-color: #007bff;
+}
+
+
+#tablaEjercicios_paginate .paginate_button,
+#tablaAlimentos_paginate .paginate_button,
+#tablaPersonas_paginate .paginate_button {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+#tablaEjercicios_paginate .paginate_button:hover,
+#tablaAlimentos_paginate .paginate_button:hover,
+#tablaPersonas_paginate .paginate_button:hover {
+    background-color: #ccc;
+}
+
+
+.dataTables_paginate .paginate_button {
+    background-color: black;
+    color: black;
+}
+
+
+.dataTables_paginate .paginate_button.current {
+    background-color: black;
+    color: black;
+}
+
+
+.dataTables_paginate .paginate_button:hover {
+    background-color: black;
+    color: black;
+}
+
+#tablaEjercicios_filter,
+#tablaAlimentos_filter,
+#tablaPersonas_filter {
+    color: white;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+    #tablaEjercicios_filter label,
+    #tablaAlimentos_filter label,
+    #tablaPersonas_filter label {
+        margin: auto;
+    }
+
+    #tablaEjercicios_filter input,
+    #tablaAlimentos_filter input,
+    #tablaPersonas_filter input {
+        color: white;
+    }
+
+#tablaEjercicios_length,
+#tablaAlimentos_length,
+#tablaPersonas_length {
+    color: white;
+    margin: auto;
+}
+
+#tablaEjercicios_length select,
+#tablaAlimentos_length select,
+#tablaPersonas_length select {
+    color: white;
+}
+
+    #tablaEjercicios_length select option,
+    #tablaAlimentos_length select option,
+    #tablaPersonas_length select option {
+        color: black;
+    }
+
+#tablaEjercicios_info,
+#tablaAlimentos_info,
+#tablaPersonas_info {
+    color: white;
+}
+
+#tablaEjercicios_paginate .paginate_button,
+#tablaAlimentos_paginate .paginate_button,
+#tablaPersonas_paginate .paginate_button {
+    background-color: gold;
+}
+
+.odd{
+    background-color:black;
+}
+#tablaPersonas_filter{
+    color:white;
+}

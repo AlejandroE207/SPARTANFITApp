@@ -37,12 +37,14 @@ else
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="~/Scripts/css/Styletablas.css" rel="stylesheet" />
+    <link href="~/Scripts/css/StylePaginacion.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap"
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap"
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" rel="stylesheet">
     <title>PrincipalAdministrador</title>
 </head>
 <body>
@@ -56,91 +58,114 @@ else
         </ul>
     </header>
     <div class="centrarT">
-        <table>
-            <thead>
-                <tr>
-                    <th>Nombres</th>
-                    <th>Apellidos</th>
-                    <th>Correo</th>
-                    <th>Fecha de Nacimiento</th>
-                    <th>Genero</th>
-                    <th> </th>
-                    <th> </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var entrenador in entrenadores)
-                {
+        <div class="contTabla">
+
+            <table id="tablaPersonas">
+                <thead>
                     <tr>
-                        <td>@entrenador.nombres</td>
-                        <td>@entrenador.apellidos</td>
-                        <td>@entrenador.correo</td>
-                        <td>@entrenador.fecha_nacimiento</td>
-                        <td>@entrenador.genero</td>
-
-                        <td>
-                            @using (Html.BeginForm("ActualizarEntrenador", "Home", FormMethod.Post))
-                            {
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="id_usuario" value=@entrenador.id_usuario>
-                                <input type="hidden" name="id_rol" value=@entrenador.id_rol>
-                                <input type="hidden" name="nombres" value=@entrenador.nombres>
-                                <input type="hidden" name="apellidos" value=@entrenador.apellidos>
-                                <input type="hidden" name="correo" value=@entrenador.correo>
-                                <input type="hidden" name="contrasena" value=@entrenador.contrasena>
-                                <input type="hidden" name="fecha_nacimiento" value=@entrenador.fecha_nacimiento>
-                                <input type="hidden" name="genero" value=@entrenador.genero>
-                                <button type="submit" onclick="return " class="boton-icono"><img src="~/Scripts/img/usuario (1).png" class="icono" alt="Editar"></button>
-
-                            }  @if (ViewData["Mensaje"] != null)
-        {
-                                <p>@ViewData["Mensaje"]</p>
-        }
-
-                        </td>
-                        <td>
-                            @using (Html.BeginForm("EliminarEntrenador", "Home", FormMethod.Post))
-                            {
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="correo" value=@entrenador.correo>
-                                <button type="submit" onclick="return confirmarEliminacion()" class="boton-icono"><img src="~/Scripts/img/usuario.png" class="icono" alt="Eliminar Entrenador"></button>
-
-                            }  @if (ViewData["Mensaje"] != null)
-        {
-                                <p>@ViewData["Mensaje"]</p>
-        }
-
-                        </td>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <th>Correo</th>
+                        <th>Fecha de Nacimiento</th>
+                        <th>Genero</th>
+                        <th> </th>
+                        <th> </th>
                     </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-    <div class="container">
-        <button class="boton-crear" onclick="crearEntrenador()">Agregar Entrenador</button>
-    </div>
-    <div class="container">
-        @using (Html.BeginForm("DescargarPdfEntrenadores", "Home", FormMethod.Post))
-        {
-            <button type="submit" class="boton-crear">
-                Descargar PDF de Entrenadores
-            </button>
-        }    @if (ViewData["Mensaje"] != null)
-    {
-            <p>@ViewData["Mensaje"]</p>
-    }
-    </div>
+                </thead>
+                <tbody>
+                    @foreach (var entrenador in entrenadores)
+                    {
+                        <tr>
+                            <td>@entrenador.nombres</td>
+                            <td>@entrenador.apellidos</td>
+                            <td>@entrenador.correo</td>
+                            <td>@entrenador.fecha_nacimiento</td>
+                            <td>@entrenador.genero</td>
 
-    <script>
+                            <td>
+                                @using (Html.BeginForm("ActualizarEntrenador", "Home", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id_usuario" value=@entrenador.id_usuario>
+                                    <input type="hidden" name="id_rol" value=@entrenador.id_rol>
+                                    <input type="hidden" name="nombres" value=@entrenador.nombres>
+                                    <input type="hidden" name="apellidos" value=@entrenador.apellidos>
+                                    <input type="hidden" name="correo" value=@entrenador.correo>
+                                    <input type="hidden" name="contrasena" value=@entrenador.contrasena>
+                                    <input type="hidden" name="fecha_nacimiento" value=@entrenador.fecha_nacimiento>
+                                    <input type="hidden" name="genero" value=@entrenador.genero>
+                                    <button type="submit" onclick="return " class="boton-icono"><img src="~/Scripts/img/usuario (1).png" class="icono" alt="Editar"></button>
+
+                                }  @if (ViewData["Mensaje"] != null)
+                                {
+                                    <p>@ViewData["Mensaje"]</p>
+                                }
+
+                            </td>
+                            <td>
+                                @using (Html.BeginForm("EliminarEntrenador", "Home", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="correo" value=@entrenador.correo>
+                                    <button type="submit" onclick="return confirmarEliminacion()" class="boton-icono"><img src="~/Scripts/img/usuario.png" class="icono" alt="Eliminar Entrenador"></button>
+
+                                }  @if (ViewData["Mensaje"] != null)
+                                {
+                                    <p>@ViewData["Mensaje"]</p>
+                                }
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="botonesOpciones">
+        <div class="container" id="container2">
+            <button class="boton-crear" onclick="crearEntrenador()">Agregar Entrenador</button>
+        </div>
+        <div class="container" id="container3">
+            @using (Html.BeginForm("DescargarPdfEntrenadores", "Home", FormMethod.Post))
+            {
+                <button type="submit" class="boton-crear ">
+                    Descargar PDF
+                </button>
+            }    @if (ViewData["Mensaje"] != null)
+            {
+                <p>@ViewData["Mensaje"]</p>
+            }
+        </div>
+    </div>
+        
+
+        <script>
     function crearEntrenador() {
         window.location.href = '@Url.Action("AgregarEntrenador", "Home")';
     }
-    </script>
-    <script>
-        function confirmarEliminacion() {
-            return confirm("¿Estás seguro de que quieres eliminar el Entrenador?");
-        }
-    </script>
+        </script>
+        <script>
+            function confirmarEliminacion() {
+                return confirm("¿Estás seguro de que quieres eliminar el Entrenador?");
+            }
+        </script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#tablaPersonas').DataTable({
+                    "pagingType": "full_numbers",
+                    "language": {
+                        "paginate": {
+                            "first": "Primero",
+                            "last": "Último",
+                            "next": "Siguiente",
+                            "previous": "Anterior"
+                        }
+                    }
+                });
+            });
+        </script>
 </body>
 </html>
 }

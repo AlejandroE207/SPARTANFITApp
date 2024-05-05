@@ -1,9 +1,18 @@
 ﻿@{
     ViewBag.Title = "AgregarRutina";
 }
+
+@model List<SPARTANFITApp.Dto.EjercicioDto>
+
+@{ 
+    SPARTANFITApp.Dto.RutinaDto rutina = ViewData["Rutina"] as SPARTANFITApp.Dto.RutinaDto;
+}
+
 @{
     var Ejercicios = ViewData["Ejercicios"] as List<SPARTANFITApp.Dto.EjercicioDto>;
 }
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,12 +21,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="~/Scripts/css/Styletablas.css" rel="stylesheet" />
+    <link href="~/Scripts/css/StylePaginacionAgregar.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap"
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap"
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
     <title>MostrarEjercicios</title>
 </head>
 <body>
@@ -32,65 +43,145 @@
             <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
         </ul>
     </header>
-    <div class="centrarT">
-        @using (Html.BeginForm("FormAgregarRutina", "Home", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-            <table>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Nombres</th>
-                        <th>Grupo Muscular</th>
-                        <th>Apoyo Visual</th>
-                        <th>Series</th>
-                        <th>Repeticiones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var ejercicio in Ejercicios)
-                    {
-                        <tr>
-                            <td>
-                                <input type="checkbox" id="id_ejercicio" value="@ejercicio.id_ejercicio">
+    <main class="centrarT">
+        <div class="contTabla">
 
-                            </td>
-                            <td>
-                                @ejercicio.nombre_ejercicio
-                                <input type="hidden" name="nombre_ejercicio" value="@ejercicio.nombre_ejercicio" />
-                            </td>
-                            <td>
-                                @ejercicio.id_grupo_muscular
-                                <input type="hidden" name="id_grupo_muscular" value="@ejercicio.id_grupo_muscular" />
-                            </td>
-                            <td>
-                                @ejercicio.apoyo_visual
-                                <input type="hidden" name="apoyo_visual" value="@ejercicio.apoyo_visual" />
-                            </td>
-                            <td>
-                                <input type="number" id="num_series" name="num_series" required>
-                            </td>
-                            <td>
-                                <input type="number" id="repeticiones" name="repeticiones" required>
 
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-            @if (ViewData["Mensaje"] != null)
+            @using (Html.BeginForm("FormAgregarRutina", "Home", FormMethod.Post))
             {
-                <p>@ViewData["Mensaje"]</p>
-                }
+                @Html.AntiForgeryToken()
+                <input type="hidden" id="id_nivel_rutina" name="id_nivel_rutina" value="@rutina.id_nivel_rutina" />
+                <input type="hidden" id="nombre_rutina" name="nombre_rutina" value="@rutina.nombre_rutina" />
+                <input type="hidden" id="dia" name="dia" value="@rutina.dia" />
+                <input type="hidden" id="id_nivel_rutina" name="id_nivel_rutina" value="@rutina.id_nivel_rutina" />
+                <input type="hidden" id="descripcion" name="descripcion" value="@rutina.descripcion" />
+                <table id="tablaEjercicios">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Nombres</th>
+                            <th>Grupo Muscular</th>
+                            <th>Apoyo Visual</th>
+                            <th>Series</th>
+                            <th>Repeticiones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var ejercicio in Ejercicios)
+                        {
+                            <tr>
+                                <td>
+                                    <input type="hidden" id="selectedExercises" name="selectedExercises" />
+                                    <input type="checkbox" class="ejercicio-checkbox" id=" @ejercicio.id_ejercicio" name="id_ejercicio" value="@ejercicio.id_ejercicio">
+                                </td>
+                                <td>
+                                    @ejercicio.nombre_ejercicio
+                                </td>
+                                <td>
+                                    @ejercicio.id_grupo_muscular
+                                </td>
+                                <td>
+                                    @ejercicio.apoyo_visual
+                                </td>
+                                <td>
+                                    <input type="number" id="num_series_@ejercicio.id_ejercicio" class="inputEjercicio" name="num_series_@ejercicio.id_ejercicio">
+                                </td>
+                                <td>
+                                    <input type="number" id="repeticiones_@ejercicio.id_ejercicio" class="inputEjercicio" name="repeticiones_@ejercicio.id_ejercicio">
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="container botonCrear">
+                    <button type="submit" class="boton-crear" onclick="getSelectedCheckboxIds()">Crear Rutina</button>
+                </div>
             }
         </div>
-    <div class="container">
-        <button class="boton-crear" onclick="crearRutina()">Crear Rutina</button>
-    </div>
+
+
+        @if (ViewData["Mensaje"] != null)
+        {
+            <p>@ViewData["Mensaje"]</p>
+        }
+
+    </main>
+
+
     <script>
     function crearRutina() {
-        window.location.href = '@Url.Action("PrincipalEntrenador", "Home")';
+        window.location.href = '@Url.Action("AgregarRutina", "Home")';
     }
     </script>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#tablaEjercicios').DataTable({
+                searching: true,
+                paging: false,
+                info: false
+            });
+        });
+    </script>
+
+
+
+    <script>
+           
+        function getSelectedCheckboxIds() {
+            const selectedCheckboxIds = [];
+            const listadoSeries = [];
+            const listadoRepeticiones = [];
+
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            for (const checkbox of checkboxes) {
+                selectedCheckboxIds.push(checkbox.value);
+
+                const ejercicioId = checkbox.value;
+                const numSeries = document.getElementById('num_series_' + ejercicioId).value;
+                listadoSeries.push(numSeries);
+
+                const numRepeticiones = document.getElementById('repeticiones_' + ejercicioId).value;
+                listadoRepeticiones.push(numRepeticiones);
+            }
+
+
+            const form = document.querySelector('form'); 
+
+            for (const serie of listadoSeries) {
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'listadoSeries[]';
+                hiddenInput.value = serie;
+                form.appendChild(hiddenInput);
+            }
+
+            for (const repeticiones of listadoRepeticiones) {
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'listadoRepeticiones[]';
+                hiddenInput.value = repeticiones;
+                form.appendChild(hiddenInput);
+            }
+
+            for (const checkboxId of selectedCheckboxIds) {
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'selectedCheckboxIds[]'; 
+                hiddenInput.value = checkboxId;
+                form.appendChild(hiddenInput);
+            }
+            form.submit();
+            
+
+            console.log("Selected Checkbox IDs:");
+            console.log(selectedCheckboxIds);
+        }
+
+    </script>
+    
 </body>
 </html>

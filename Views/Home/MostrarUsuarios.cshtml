@@ -37,6 +37,7 @@ else
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="~/Scripts/css/Styletablas.css" rel="stylesheet" />
+    <link href="~/Scripts/css/StylePaginacion.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap"
@@ -44,6 +45,7 @@ else
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap"
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" rel="stylesheet">
     <title>PrincipalAdministrador</title>
 </head>
 <body>
@@ -57,53 +59,71 @@ else
         </ul>
     </header>
     <div class="centrarT">
-        <table>
-            <thead>
-                <tr>
-                    <th>Nombres</th>
-                    <th>Apellidos</th>
-                    <th>Correo</th>
-                    <th>Fecha de Nacimiento</th>
-                    <th>Genero</th>
-                    <th>Peso</th>
-                    <th>Estatura</th>
-                    <th>Rehabilitacion</th>
-                    <th>Nivel Entrenamiento</th>
-                    <th>Objetivo</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var usuario in usuarios)
-                {
+        <div class="contTabla">
+            <table id="tablaPersonas">
+                <thead>
                     <tr>
-                        <td>@usuario.persona.nombres</td>
-                        <td>@usuario.persona.apellidos</td>
-                        <td>@usuario.persona.correo</td>
-                        <td>@usuario.persona.fecha_nacimiento</td>
-                        <td>@usuario.persona.genero</td>
-                        <td>@usuario.peso</td>
-                        <td>@usuario.estatura</td>
-                        <td>@usuario.rehabilitacion</td>
-                        <td>@usuario.id_nivel_entrenamiento</td>
-                        <td>@usuario.id_objetivo</td>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <th>Correo</th>
+                        <th>Fecha de Nacimiento</th>
+                        <th>Genero</th>
+                        <th>Peso</th>
+                        <th>Estatura</th>
+                        <th>Rehabilitacion</th>
+                        <th>Nivel Entrenamiento</th>
+                        <th>Objetivo</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var usuario in usuarios)
+                    {
+                        <tr>
+                            <td>@usuario.persona.nombres</td>
+                            <td>@usuario.persona.apellidos</td>
+                            <td>@usuario.persona.correo</td>
+                            <td>@usuario.persona.fecha_nacimiento</td>
+                            <td>@usuario.persona.genero</td>
+                            <td>@usuario.peso</td>
+                            <td>@usuario.estatura</td>
+                            <td>@usuario.rehabilitacion</td>
+                            <td>@usuario.id_nivel_entrenamiento</td>
+                            <td>@usuario.id_objetivo</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="container">
         @using (Html.BeginForm("DescargarPdfUsuarios", "Home", FormMethod.Post))
         {
             <button type="submit" class="boton-crear">
-                Descargar PDF de Usuarios
+                Descargar PDF
             </button>
         }  @if (ViewData["Mensaje"] != null)
-    {
+        {
             <p>@ViewData["Mensaje"]</p>
-    }
+        }
     </div>
 
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tablaPersonas').DataTable({
+                "pagingType": "full_numbers",
+                "language": {
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
 }
