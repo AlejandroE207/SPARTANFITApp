@@ -238,6 +238,8 @@
     <Content Include="Views\Home\AgregarRutina.cshtml" />
     <Content Include="Views\Home\CrearRutina.cshtml" />
     <Content Include="Views\Home\ActualizarDatos.cshtml" />
+    <Content Include="Views\Home\AgregarPlanAlimenticio.cshtml" />
+    <Content Include="Views\Home\CrearPlanAlimenticio.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

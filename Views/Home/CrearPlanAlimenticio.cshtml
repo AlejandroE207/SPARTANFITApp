@@ -1,0 +1,117 @@
+﻿  @{
+      ViewBag.Title = "CrearPlanAlimenticio";
+    SPARTANFITApp.Dto.PersonaDto personaLogeo = Session["entrenadorLogged"] as SPARTANFITApp.Dto.PersonaDto;
+}
+
+@if (personaLogeo == null)
+{
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Redirección automática en ASP.NET</title>
+        <script type="text/javascript">
+            window.onload = function () {
+                setTimeout(function () {
+                    window.location.href = 'Index';
+                });
+            };
+        </script>
+    </head>
+    <body>
+        <h1>Inicie Sesion primero</h1>
+    </body>
+</html>
+}
+else
+{
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Scripts/css/StyleRegistro.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap"
+          rel="stylesheet">
+    <title>CrearPlanAlimenticio</title>
+</head>
+<body>
+    <header>
+        <a href="#" class="logo"> SPARTANFIT</a>
+        <ul>
+            <li>@Html.ActionLink("Ejercicios", "MostrarEjercicios", "Home")</li>
+            <li>@Html.ActionLink("Rutinas", "", "Home")</li>
+            <li>@Html.ActionLink("Plan Nutricion", "", "Home")</li>
+            <li>@Html.ActionLink("Alimentos", "MostrarAlimentos", "Home")</li>
+            <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
+        </ul>
+    </header>
+    <div>
+        <h2>Registrarse</h2>
+        @using (Html.BeginForm("FormCrearPlanAlimenticio", "Home", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            
+          
+            <div class="form-row">
+                <div>
+                    <label for="nombre_rutina">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div>
+                    <label for="dia">Dia</label>
+                    <select id="dia" name="dia">
+                        <option value="null">Seleccione</option>
+                        <option value="Lunes">Lunes</option>
+                        <option value="Martes">Martes</option>
+                        <option value="Miercoles">Miercoles</option>
+                        <option value="Jueves">Jueves</option>
+                        <option value="Viernes">Viernes</option>
+                        <option value="Sabado">Sabado</option>
+                        <option value="Domingo">Domingo</option>
+                    </select>
+                </div>
+            </div>
+          
+            <div class="centrado">
+                <div class="form-row">
+                    <button type="submit" class="boton-crear" onclick="">Crear Plan</button>
+                </div>
+                <div class="botoncito">
+                    <div class="container">
+                        <button class="boton-cancelar" onclick="confirmar()">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (ViewData["Mensaje"] != null)
+        {
+            <p>@ViewData["Mensaje"]</p>
+        }
+    </div>
+
+    <script>
+    function confirmar() {
+        if (confirm("¿Estás seguro de que quieres cancelar?")) {
+            window.location.href = '@Url.Action("PrincipalEntrenador", "Home")';
+        } }
+
+    </script>
+    <!--
+    <script>
+    function crear() {
+         window.alert("Rutina creada con exito");
+         window.location.href = '@Url.Action("AgregarPlanAlimenticio", "Home")';
+     }
+    </script>
+        -->
+</body>
+
+</html>
+}

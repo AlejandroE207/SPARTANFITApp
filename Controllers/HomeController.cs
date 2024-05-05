@@ -408,6 +408,7 @@ namespace SPARTANFIT_App.Controllers
 
 
 
+
         [HttpPost]
         public ActionResult FormAgregarRutina(int[] selectedCheckboxIds, int[] listadoSeries, int[] listadoRepeticiones, RutinaDto rutina)
         {
@@ -510,7 +511,19 @@ namespace SPARTANFIT_App.Controllers
 
             return RedirectToAction("MostrarEntrenadores");
         }
+        public ActionResult AgregarPlanAlimenticio()
+        {
+            EntrenadorService servicio = new EntrenadorService();
+            List<AlimentoDto> alimentos = servicio.Mostrar_Alimento();
+            ViewData["alimentos"] = alimentos;
+            return View("AgregarPlanAlimenticio");
+        }
+        public ActionResult CrearPlanAlimenticio()
+        {
+            return View();
+        }
 
+       
 
     }
 }
