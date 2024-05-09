@@ -2,7 +2,6 @@
     ViewBag.Title = "AgregarAlimento";
 }
 
-@model List<SPARTANFITApp.Dto.EjercicioDto>
 @{
     // Recuperar el valor de la variable de sesión
     SPARTANFITApp.Dto.PersonaDto personaLogeo = Session["entrenadorLogged"] as SPARTANFITApp.Dto.PersonaDto;
@@ -75,27 +74,27 @@ else
             </div>
             <div>
                 <label for="calorias_x_gramo">Calorias por gramo:</label>
-                <input type="number" id="calorias_x_gramo" name="calorias_x_gramo" required>
+                <input type="text" id="calorias_x_gramo" name="calorias_x_gramo" required>
             </div>
 
             <div class="form-row">
                 <div>
                     <label for="grasa">Grasa:</label>
-                    <input type="number" id="grasa" name="grasa" required>
+                    <input type="text" id="grasa" name="grasa" required>
                 </div>
                 <div>
                     <label for="carbohidratos">Carbohidratos:</label>
-                    <input type="number" id="carbohidrato" name="carbohidrato" required>
+                    <input type="text" id="carbohidrato" name="carbohidrato"  required>
                 </div>
             </div>
             <div class="form-row">
                 <div>
                     <label for="proteina">Proteina:</label>
-                    <input type="number" id="proteina" name="proteina" required>
+                    <input type="text" id="proteina" name="proteina"  required>
                 </div>
                 <div>
                     <label for="fibra">Fibra:</label>
-                    <input type="number" id="fibra" name="fibra" required>
+                    <input type="text" id="fibra" name="fibra"  required>
                 </div>
                 <div class="centrado">
                     <div class="form-row">

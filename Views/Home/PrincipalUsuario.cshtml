@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "PrincipalUsuario";
+}
+
+@{
+    var ejerciciosDia = ViewData["ejerciciosDia"] as List<SPARTANFITApp.Dto.EjercicioDto>;
+    var rutinaDia = ViewData["rutinaDia"] as SPARTANFITApp.Dto.RutinaDto;
+    SPARTANFITApp.Dto.UsuarioDto usuario = Session["UserLogged"] as SPARTANFITApp.Dto.UsuarioDto;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Scripts/css/img.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap"
+          rel="stylesheet">
+    <title>PrincialUsuario</title>
+</head>
+<body>
+
+    <header>
+    </header>
+    </header>
+    <main>
+        <div>
+            <h1>
+                Buen dia @usuario.persona.nombres
+            </h1>
+            <p>
+                @rutinaDia.nombre_rutina
+            </p>
+        </div>
+        @foreach (var ejercicio in ejerciciosDia)
+        {
+            <h2>
+                @ejercicio.nombre_ejercicio
+            </h2>
+            <div class="centrarImg">
+                <img src="@ejercicio.apoyo_visual" alt="@ejercicio.nombre_ejercicio">
+            </div>
+            <div class="mostrarT">
+
+
+                <p>
+                    Cantidad de series: @ejercicio.num_series
+                </p>
+                <p>
+                    cantidad de repeticiones:@ejercicio.repeticiones
+                </p>
+            </div>
+        }
+
+
+
+    </main>
+</body>
+</html>

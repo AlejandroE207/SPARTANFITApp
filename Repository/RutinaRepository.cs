@@ -139,5 +139,163 @@ namespace SPARTANFITApp.Repository
 
             return comando;
         }
+
+        public int asignarRutina(UsuarioDto usuario)
+        {
+            int comando = 0;
+
+            List<String> dias = new List<String> { "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado" };
+
+            DBContextUtility conexion = new DBContextUtility();
+            try
+            {
+                conexion.Connect();
+                foreach (String dia in dias)
+                {
+                    string SQL = "SELECT id_rutina FROM RUTINA WHERE id_nivel_rutina = @id_nivel_rutina AND id_objetivo = @id_objetivo AND dia = @dia";
+                    using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+                    {
+                        command.Parameters.AddWithValue("@id_nivel_rutina", usuario.id_nivel_entrenamiento);
+                        command.Parameters.AddWithValue("@id_objetivo", usuario.id_objetivo);
+                        command.Parameters.AddWithValue("@dia", dia);
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+
+                                int id_rutina = Convert.ToInt32(reader["id_rutina"]);
+                                comando = asignarRutinaDia(usuario.persona.id_usuario, id_rutina);
+                            }
+                            else
+                            {
+                                comando = -1;
+
+                            }
+                        }
+                    }
+                }
+                return comando;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            finally { conexion.Disconnect(); }
+
+            return comando;
+        }
+
+        public int asignarRutinaDia(int id_usuario, int id_rutina)
+        {
+            int comando = 0;
+            DBContextUtility conexion = new DBContextUtility();
+
+            try
+            {
+                conexion.Connect();
+                string SQL = "INSERT INTO USUARIO_RUTINA (id_usuario,id_rutina) VALUES (@id_usuario,@id_rutina)";
+                using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+                {
+                    command.Parameters.AddWithValue("@id_usuario", id_usuario);
+                    command.Parameters.AddWithValue("@id_rutina", id_rutina);
+                    comando = command.ExecuteNonQuery();
+                    comando = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            finally { conexion.Disconnect(); }
+            return comando;
+        }
+
+        public RutinaDto buscarRutinaIdUsuario(int id_usuario, string dia)
+        {
+            RutinaDto rutinaDia = new RutinaDto();
+            DBContextUtility conexion = new DBContextUtility();
+            try
+            {
+                conexion.Connect();
+                string SQL = "SELECT r.id_rutina, r.nombre_rutina, r.dia, r.descripcion FROM RUTINA AS r " +
+                    "INNER JOIN USUARIO_RUTINA AS ur ON ur.id_rutina = r.id_rutina " +
+                    "WHERE ur.id_usuario = @id_usuario and dia = @dia";
+
+                using (SqlCommand command  = new SqlCommand(SQL, conexion.Conexion()))
+                {
+                    command.Parameters.AddWithValue("@id_usuario", id_usuario);
+                    command.Parameters.AddWithValue("@dia", dia);
+
+                    using(SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+
+                            rutinaDia.id_rutina = Convert.ToInt32(reader["id_rutina"]);
+                            rutinaDia.nombre_rutina = reader["nombre_rutina"].ToString();
+                            rutinaDia.dia = reader["dia"].ToString();
+                            rutinaDia.descripcion = reader["descripcion"].ToString();
+                            rutinaDia.respuesta = 1;
+                            rutinaDia.mensaje = "Busqueda exitosa";
+                            return rutinaDia;
+                        }
+                    }
+                }
+            }catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }finally
+            {
+                conexion.Disconnect();
+            }
+            return rutinaDia;
+        }
+
+        public List<EjercicioDto> ObtenerEjerciciosDia(int id_rutina)
+        {
+            List<EjercicioDto> ejerciciosDia = new List<EjercicioDto>();
+            DBContextUtility conexion = new DBContextUtility();
+
+            try
+            {
+                conexion.Connect();
+                string SQL = "SELECT eje.id_ejercicio, eje.nombre_ejercicio, eje.id_grupo_muscular, eje.apoyo_visual, rue.num_series, rue.num_repeticiones " +
+                    "FROM EJERCICIO AS eje " +
+                    "INNER JOIN RUTINA_EJERCICIO AS rue ON rue.id_ejercicio = eje.id_ejercicio " +
+                    "WHERE rue.id_rutina = @id_rutina";
+
+                using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+                {
+                    command.Parameters.AddWithValue("@id_rutina", id_rutina);
+
+                    using(SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            EjercicioDto ejercicio = new EjercicioDto()
+                            {
+                                id_ejercicio = Convert.ToInt32(reader["id_ejercicio"]),
+                                nombre_ejercicio = reader["nombre_ejercicio"].ToString(),
+                                id_grupo_muscular = Convert.ToInt32(reader["id_grupo_muscular"]),
+                                apoyo_visual = reader["apoyo_visual"].ToString(),
+                                num_series = Convert.ToInt32(reader["num_series"]),
+                                repeticiones = Convert.ToInt32(reader["num_repeticiones"])
+                            };
+
+                            ejerciciosDia.Add(ejercicio);
+                        }
+                    }
+                    return ejerciciosDia;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally { conexion.Disconnect(); }
+            return ejerciciosDia;
+        }
     }
 }

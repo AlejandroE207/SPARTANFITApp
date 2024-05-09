@@ -158,7 +158,9 @@
     <Compile Include="Repository\Recuperacion_contrasenaRepository.cs" />
     <Compile Include="Repository\RutinaRepository.cs" />
     <Compile Include="Repository\UsuarioRepository.cs" />
+    <Compile Include="Utilities\IdentificadorDiaUtility.cs" />
     <Compile Include="Utilities\SintetizarFormularios.cs" />
+    <Content Include="Scripts\css\img.css" />
     <Content Include="Scripts\css\StylePag.css" />
     <Compile Include="Services\AdministradorService.cs" />
     <Compile Include="Services\EntrenadorService.cs" />
@@ -238,6 +240,7 @@
     <Content Include="Views\Home\AgregarRutina.cshtml" />
     <Content Include="Views\Home\CrearRutina.cshtml" />
     <Content Include="Views\Home\ActualizarDatos.cshtml" />
+    <Content Include="Views\Home\PrincipalUsuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

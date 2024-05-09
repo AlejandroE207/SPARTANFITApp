@@ -68,13 +68,15 @@ else
                 <div class="form-row">
                     <button type="submit" class="boton-crear" onclick="return crearCuenta()">Actualizar</button>
                 </div>
-                <div class="botoncito">
-                    <div class="container">
-                        <button class="boton-cancelar" onclick="confirmarCancelar()">Cancelar</button>
-                    </div>
-                </div>
+
             </div>
+        <div class="botoncito">
+            <div class="container">
+            <button class="boton-cancelar" onclick="confirmarCancelar()">Cancelar</button>
+        </div>  
+    </div>
         }
+        
 
         @if (ViewData["Mensaje"] != null)
         {
@@ -84,7 +86,8 @@ else
 
     <script>
         function confirmarCancelar() {
-            return confirm("¿Estás seguro de que quieres cancelar?");
+             window.location.href = '@Url.Action("MostrarEjercicios", "Home")';}
+
         }
     </script>
 </body>

@@ -22,10 +22,7 @@ namespace SPARTANFIT_App.Controllers
     {
         public ActionResult Index()
         {
-            Session["UserLogged"] = null;
-            Session.Clear();
-            Session.Abandon();
-
+ 
             return View();
         }
 
@@ -89,7 +86,8 @@ namespace SPARTANFIT_App.Controllers
                     UsuarioService usuarioService = new UsuarioService();
                     usuario = usuarioService.logueo(usuario, contraNormal);
                     Session["UserLogged"] = usuario;
-                    return View("Perfil");
+
+                    return RedirectToAction("PrincipalUsuario");
                 }
                 else
                 {
@@ -103,7 +101,7 @@ namespace SPARTANFIT_App.Controllers
                     if (personaLogeo.respuesta != 0)
                     {
                         Session["entrenadorLogged"] = personaLogeo;
-                        return RedirectToAction("PrincipalEntrenador");
+                        return RedirectToAction("PrincipalEntrenador"); //LINEA QUE TOCA UTILIZAR EN LAS DEMAS PAGINAS PRINCIPALES DESPUES DEL LOGIN
                     }
                     else
                     {
@@ -329,8 +327,24 @@ namespace SPARTANFIT_App.Controllers
         }
 
         [HttpPost]
-        public ActionResult AgregarAlimento(AlimentoDto alimento)
+        public ActionResult AgregarAlimento(string nombre, int id_categoria_alimento, string calorias_x_gramo, string grasa, string carbohidrato, string proteina, string fibra)
         {
+            double calorias_x_gramoValue = double.Parse(calorias_x_gramo);
+            double grasaValue = double.Parse(grasa);
+            double carbohidratoValue = double.Parse(carbohidrato);
+            double proteinaValue = double.Parse(proteina);
+            double fibraValue = double.Parse(fibra);
+            AlimentoDto alimento = new AlimentoDto()
+            {
+                nombre = nombre,
+                id_categoria_alimento = id_categoria_alimento,
+                calorias_x_gramo = calorias_x_gramoValue,
+                grasa = grasaValue,
+                carbohidrato = carbohidratoValue,
+                proteina = proteinaValue,
+                fibra = fibraValue
+
+            };
             EntrenadorService entrenadorServicio = new EntrenadorService();
             AlimentoDto resultado = new AlimentoDto();
 
@@ -397,7 +411,6 @@ namespace SPARTANFIT_App.Controllers
             return AgregarRutina();
         }
 
-
         public ActionResult AgregarRutina()
         {
             EntrenadorService servicio = new EntrenadorService();
@@ -405,8 +418,6 @@ namespace SPARTANFIT_App.Controllers
             ViewData["Ejercicios"] = ejercicios;
             return View("AgregarRutina");
         }
-
-
 
         [HttpPost]
         public ActionResult FormAgregarRutina(int[] selectedCheckboxIds, int[] listadoSeries, int[] listadoRepeticiones, RutinaDto rutina)
@@ -419,7 +430,7 @@ namespace SPARTANFIT_App.Controllers
                 for (int i = 0; i < selectedCheckboxIds.Length; i++)
                 {
                     int checkboxId = selectedCheckboxIds[i];
-                    int series = listadoSeries[i];
+                    int series = listadoSeries[i];   
                     int repeticiones = listadoRepeticiones[i];
 
                     EjercicioDto ejercicio = new EjercicioDto
@@ -448,8 +459,6 @@ namespace SPARTANFIT_App.Controllers
         {
             return View("AgregarRutina", rutina);
         }
-
-
 
         public ActionResult ActualizarDatos() { return View("ActualizarDatos"); }
 
@@ -511,6 +520,20 @@ namespace SPARTANFIT_App.Controllers
             return RedirectToAction("MostrarEntrenadores");
         }
 
+        public ActionResult PrincipalUsuario()
+        {
+            UsuarioDto usuario = new UsuarioDto();
+            UsuarioService usuarioService = new UsuarioService();
+            usuario = (UsuarioDto)Session["UserLogged"];
 
+            List<EjercicioDto> ejerciciosDia = new List<EjercicioDto>();
+            RutinaDto rutinaDia = new RutinaDto();
+
+            (rutinaDia,ejerciciosDia) = usuarioService.mostrarRutinaDia(usuario);
+
+            ViewData["ejerciciosDia"] = ejerciciosDia;
+            ViewData["rutinaDia"] = rutinaDia;
+            return View();
+        }
     }
 }

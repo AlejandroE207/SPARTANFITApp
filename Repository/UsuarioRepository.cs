@@ -1,4 +1,5 @@
-﻿using SPARTANFITApp.Dto;
+﻿using Antlr.Runtime.Tree;
+using SPARTANFITApp.Dto;
 using SPARTANFITApp.Utilities;
 
 using System;
@@ -8,14 +9,17 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Net.NetworkInformation;
 using System.Web;
+using System.Web.Mvc.Ajax;
 using System.Web.UI;
 
 namespace SPARTANFITApp.Repository
 {
     public class UsuarioRepository
     {
-        public int registroUsuario(UsuarioDto usuario)
+        public UsuarioDto registroUsuario(UsuarioDto usuario)
         {
+            UsuarioDto usuarioResp = new UsuarioDto();
+            PersonaDto persona = new PersonaDto();
             int comando = 0;
             try
             {
@@ -49,9 +53,70 @@ namespace SPARTANFITApp.Repository
             {
                 Console.WriteLine(ex.ToString());
             }
+            if (comando != 0)
+            {
+                usuarioResp = ObtenerUltimoUsuario();
+                if (usuarioResp.persona.id_usuario != 0)
+                {
+                    usuarioResp.persona.respuesta = 1;
+                    usuarioResp.persona.mensaje = "Registro exitoso";
+                }
+                else
+                {
+                    usuarioResp.persona.respuesta = 0;
+                    usuarioResp.persona.mensaje = "Registro fallido";
+                }
+            }
+            return usuarioResp;
+            
 
-            return comando;
         }
+
+        public UsuarioDto ObtenerUltimoUsuario()
+        {
+            UsuarioDto usuario = new UsuarioDto();
+            DBContextUtility conexion = new DBContextUtility();
+
+            try
+            {
+                conexion.Connect();
+                string SQL = "SELECT MAX(id_usuario) as id_max FROM USUARIO";
+                using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            usuario.persona = new PersonaDto(); 
+                            usuario.persona.id_usuario = Convert.ToInt32(reader["id_max"]);
+                            usuario.persona.respuesta = 1;
+                            usuario.persona.mensaje = "Obtencion con exito";
+                        }
+                        else
+                        {
+                            usuario.persona = new PersonaDto();
+                            usuario.persona.respuesta = 0;
+                            usuario.persona.mensaje = "Error al momento de obtener id";
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                usuario.persona = new PersonaDto(); 
+                usuario.persona.respuesta = -1;
+                usuario.persona.mensaje = "Error al obtener id: " + ex.Message;
+            }
+            finally
+            {
+                conexion.Disconnect();
+            }
+
+            return usuario;
+        }
+
+
+
         public List<UsuarioDto> MostrarUsuarios()
         {
             List<UsuarioDto> usuarios = new List<UsuarioDto>();
@@ -97,6 +162,56 @@ namespace SPARTANFITApp.Repository
             return usuarios;
         }
 
+        public UsuarioDto buscarPorId(int id)
+        {
+            UsuarioDto usuario = new UsuarioDto();
+            PersonaDto persona = new PersonaDto();
+            try
+            {
+                DBContextUtility conexion = new DBContextUtility();
+                conexion.Connect();
+
+                string SQL = "SELECT  id_usuario, fecha_nacimiento, estatura, peso, genero, id_nivel_entrenamiento, id_objetivo, rehabilitacion FROM USUARIO WHERE id_usuario = @id_usuario ";
+                using(SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+                {
+                    command.Parameters.AddWithValue("@id_usuario", id);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            persona.id_usuario = Convert.ToInt32(reader["id_usuario"]);
+                            persona.fecha_nacimiento = reader["fecha_nacimiento"].ToString();
+
+                            usuario.estatura = Convert.ToDouble(reader["estatura"]);
+                            usuario.peso = Convert.ToDouble(reader["peso"]);
+                            usuario.id_nivel_entrenamiento = Convert.ToInt32(reader["id_nivel_entrenamiento"]);
+                            usuario.id_objetivo = Convert.ToInt32(reader["id_objetivo"]);
+                            usuario.rehabilitacion = Convert.ToInt32(reader["rehabilitacion"]);
+
+                            persona.respuesta = 1;
+                            persona.mensaje = "Usuario encontrado";
+
+                            usuario.persona = persona;
+                            conexion.Disconnect();
+                            return usuario;
+                        }
+                        else
+                        {
+                            usuario.persona.respuesta = 0;
+                            usuario.persona.mensaje = "Usuario no encontrado";
+                            return usuario;
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                usuario.persona.respuesta = -1;
+                usuario.persona.mensaje = "Error en proceso";
+            }
+            return usuario;
+        }
 
         public bool buscarUsuario(string correo)
         {
@@ -269,10 +384,10 @@ namespace SPARTANFITApp.Repository
                 conexion.Disconnect();
             }
 
-
-
             return comando;
         }
+
+
 
     }
 } 

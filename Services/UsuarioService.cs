@@ -13,8 +13,12 @@ namespace SPARTANFITApp.Services
         public UsuarioDto registroUsuario(UsuarioDto usuario)
         {
             UsuarioDto usuarioResp = new UsuarioDto();
+            UsuarioDto usuarioAux = new UsuarioDto();
+
             usuarioResp.persona = new PersonaDto();
             UsuarioRepository usuarioRepository = new UsuarioRepository();
+
+            RutinaRepository rutinaRepository = new RutinaRepository();
 
           
             if (usuarioRepository.buscarUsuario(usuario.persona.correo))
@@ -29,18 +33,33 @@ namespace SPARTANFITApp.Services
                 EncriptarContrasenaUtility encrip = new EncriptarContrasenaUtility();
                 usuario.persona.contrasena = encrip.EncriptarContrasena(usuario.persona);
                 
-                int resultadoRegistro = usuarioRepository.registroUsuario(usuario);
+                usuarioResp = usuarioRepository.registroUsuario(usuario);
 
-                if (resultadoRegistro != 0)
+                if (usuarioResp.persona.respuesta != 0)
                 {
-                    usuarioResp.persona.respuesta = 1;
-                    usuarioResp.persona.mensaje = "Se ha registrado el usuario correctamente";
+
+                    usuarioAux = usuarioRepository.buscarPorId(usuarioResp.persona.id_usuario);
+                    int resultado = rutinaRepository.asignarRutina(usuarioAux);
+                    if(resultado != 0)
+                    {
+                        usuarioResp.persona.respuesta = 1;
+                        usuarioResp.persona.mensaje = "Se ha registrado el usuario correctamente";
+                    }
+                    else
+                    {
+                        usuarioResp.persona.respuesta = 0;
+                        usuarioResp.persona.mensaje = "Error al momento de asignar rutina";
+                    }
+
+
                 }
                 else
                 {
                     usuarioResp.persona.respuesta = 0;
                     usuarioResp.persona.mensaje = "Error en el registro del usuario";
                 }
+
+
             }
             return usuarioResp;
         }
@@ -66,14 +85,27 @@ namespace SPARTANFITApp.Services
         public UsuarioDto actualizarObjetivo(UsuarioDto usuario)
         {
             UsuarioRepository usuarioRepository = new UsuarioRepository();
+            RutinaRepository rutinaRepository = new RutinaRepository();
+
             UsuarioDto usuarioResp = new UsuarioDto();
             usuarioResp.persona = new PersonaDto();
             int resultado = usuarioRepository.ActualizarObjetivoUsuario(usuario);
 
             if(resultado != 0)
             {
-                usuarioResp.persona.respuesta = 1;
-                usuarioResp.persona.mensaje = "Actualización Exitosa";
+                int resultadoAux = rutinaRepository.asignarRutina(usuario);
+                if(resultadoAux != 0)
+                {
+                    usuarioResp.persona.respuesta = 1;
+                    usuarioResp.persona.mensaje = "Actualización de objetivo y asignacion de rutina exitoso";
+                }
+                else
+                {
+                    usuarioResp.persona.respuesta = 0;
+                    usuarioResp.persona.mensaje = "Actualización de objetivo y asignacion de rutina fallida";
+                }
+                
+
             }
             else
             {
@@ -125,6 +157,23 @@ namespace SPARTANFITApp.Services
 
             return usuarioResp;
         }
+        
+        public (RutinaDto,List<EjercicioDto>)  mostrarRutinaDia(UsuarioDto usuario)
+        {
+            List<EjercicioDto> ejerciciosDia = new List<EjercicioDto> ();
+            RutinaDto rutinaResp = new RutinaDto();
+            RutinaRepository rutinaRepository = new RutinaRepository();
+            IdentificadorDiaUtility identDia = new IdentificadorDiaUtility();
+
+            string dia = identDia.DiaActual();
+
+            rutinaResp = rutinaRepository.buscarRutinaIdUsuario(usuario.persona.id_usuario, dia);
+            ejerciciosDia = rutinaRepository.ObtenerEjerciciosDia(rutinaResp.id_rutina);
+
+            return (rutinaResp,ejerciciosDia);
+        }
+
+
 
     }
 }
