@@ -1,0 +1,176 @@
+﻿@{
+    ViewBag.Title = "AgregarPlanAlimenticio";
+    //SPARTANFITApp.Dto.RutinaDto rutina = ViewData["Rutina"] as SPARTANFITApp.Dto.RutinaDto;
+    var alimentos = ViewData["alimentos"] as List<SPARTANFITApp.Dto.AlimentoDto>;
+    SPARTANFITApp.Dto.PlanAlimenticioDto planAlimenticio = ViewData["planAlimenticio"] as SPARTANFITApp.Dto.PlanAlimenticioDto;
+    // Recuperar el valor de la variable de sesión
+    SPARTANFITApp.Dto.PersonaDto personaLogeo = Session["entrenadorLogged"] as SPARTANFITApp.Dto.PersonaDto;
+}
+
+@if (personaLogeo == null)
+{
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Redirección automática en ASP.NET</title>
+        <script type="text/javascript">
+            window.onload = function () {
+                setTimeout(function () {
+                    window.location.href = 'Index';
+                });
+            };
+        </script>
+    </head>
+    <body>
+        <h1>Inicie Sesión primero</h1>
+    </body>
+</html>
+}
+else
+{
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="~/Scripts/css/Styletablas.css" rel="stylesheet" />
+    <link href="~/Scripts/css/StylePaginacionAgregar.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>AgregarPlanAlimenticio</title>
+</head>
+<body>
+    <header>
+        <a href="#" class="logo"> SPARTANFIT</a>
+        <ul>
+            <li>@Html.ActionLink("Ejercicios", "MostrarEjercicios", "Home")</li>
+            <li>@Html.ActionLink("Rutinas", "", "Home")</li>
+            <li>@Html.ActionLink("Plan Nutricion", "", "Home")</li>
+            <li>@Html.ActionLink("Alimentos", "MostrarAlimentos", "Home")</li>
+            <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
+        </ul>
+    </header>
+    <main class="centrarT">
+        <div class="contTabla">
+            @using (Html.BeginForm("FormAgregarPlanAlimenticio", "Home", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <input type="hidden" id="nombre" name="nombre" value="@planAlimenticio.nombre" />
+                <input type="hidden" id="dia" name="dia" value="@planAlimenticio.dia" />
+                <input type="hidden" id="id_entrenador" name="id_entrenador" value="@personaLogeo.id_usuario" />
+                <table id="tablaEjercicios">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Nombre</th>
+                            <th>Calorias por gramo</th>
+                            <th>Grasa</th>
+                            <th>Carbohidrato</th>
+                            <th>Proteina</th>
+                            <th>Fibra</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var alimento in alimentos)
+                        {
+                            <tr>
+                                <td>
+                                    <input type="hidden" id="selectedExercises" name="selectedExercises" />
+                                    <input type="checkbox" class="ejercicio-checkbox" id="@alimento.id_alimento" name="id_alimento" value="@alimento.id_alimento">
+                                </td>
+                                <td>
+                                    @alimento.nombre
+                                </td>
+                                <td>
+                                    @alimento.id_categoria_alimento
+                                </td>
+                                <td>
+                                    @alimento.calorias_x_gramo
+                                </td>
+                                <td>
+                                    @alimento.grasa
+                                </td>
+                                <td>
+                                    @alimento.carbohidrato
+                                </td>
+                                <td>
+                                    @alimento.proteina
+                                </td>
+                                <td>
+                                    @alimento.fibra
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="container botonCrear">
+                    <button type="submit" class="boton-crear" onclick="ejecutar()">Crear Rutina</button>
+                </div>
+            }
+
+        </div>
+
+        @if (ViewData["Mensaje"] != null)
+        {
+            <p>@ViewData["Mensaje"]</p>
+        }
+    </main>
+
+
+    <script>
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const selectedCheckboxIDs = [];
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                if (checkbox.checked) {
+                    selectedCheckboxIDs.push(checkbox.id);
+                } else {
+                    const index = selectedCheckboxIDs.indexOf(checkbox.id);
+                    if (index >= 0) {
+                        selectedCheckboxIDs.splice(index, 1);
+                    }
+                }
+                console.log(selectedCheckboxIDs);
+            });
+        });
+        function getSelectedCheckboxIds(selectedCheckboxIDs) {
+
+            const form = document.querySelector('form');
+
+            for (const checkboxId of selectedCheckboxIDs) {
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'selectedCheckboxIds[]';
+                hiddenInput.value = checkboxId;
+                form.appendChild(hiddenInput);
+            }
+            form.submit();
+        }
+        function ejecutar() {
+            getSelectedCheckboxIds(selectedCheckboxIDs);
+        }
+
+    </script>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#tablaEjercicios').DataTable({
+                searching: true,
+                paging: false,
+                info: false
+            });
+        });
+    </script>
+</body>
+</html>
+}

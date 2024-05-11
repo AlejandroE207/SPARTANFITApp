@@ -182,7 +182,7 @@ namespace SPARTANFITApp.Repository
                         {
                             persona.id_usuario = Convert.ToInt32(reader["id_usuario"]);
                             persona.fecha_nacimiento = reader["fecha_nacimiento"].ToString();
-
+                            persona.genero = reader["genero"].ToString();
                             usuario.estatura = Convert.ToDouble(reader["estatura"]);
                             usuario.peso = Convert.ToDouble(reader["peso"]);
                             usuario.id_nivel_entrenamiento = Convert.ToInt32(reader["id_nivel_entrenamiento"]);

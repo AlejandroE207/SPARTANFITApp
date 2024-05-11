@@ -19,6 +19,7 @@ namespace SPARTANFITApp.Services
             UsuarioRepository usuarioRepository = new UsuarioRepository();
 
             RutinaRepository rutinaRepository = new RutinaRepository();
+            PlanAlimenticioRepository planAlimenticioRepository = new PlanAlimenticioRepository();
 
           
             if (usuarioRepository.buscarUsuario(usuario.persona.correo))
@@ -40,7 +41,8 @@ namespace SPARTANFITApp.Services
 
                     usuarioAux = usuarioRepository.buscarPorId(usuarioResp.persona.id_usuario);
                     int resultado = rutinaRepository.asignarRutina(usuarioAux);
-                    if(resultado != 0)
+                    int resultadoAlimento = planAlimenticioRepository.asignarPlanAlimenticio(usuarioAux);
+                    if(resultado != 0 && resultadoAlimento != 0)
                     {
                         usuarioResp.persona.respuesta = 1;
                         usuarioResp.persona.mensaje = "Se ha registrado el usuario correctamente";
@@ -86,15 +88,18 @@ namespace SPARTANFITApp.Services
         {
             UsuarioRepository usuarioRepository = new UsuarioRepository();
             RutinaRepository rutinaRepository = new RutinaRepository();
+            PlanAlimenticioRepository planAlimenticioRepository = new PlanAlimenticioRepository();
 
             UsuarioDto usuarioResp = new UsuarioDto();
             usuarioResp.persona = new PersonaDto();
             int resultado = usuarioRepository.ActualizarObjetivoUsuario(usuario);
+            
 
             if(resultado != 0)
             {
                 int resultadoAux = rutinaRepository.asignarRutina(usuario);
-                if(resultadoAux != 0)
+                int resultadoAlimento = planAlimenticioRepository.asignarPlanAlimenticio(usuario);
+                if (resultadoAux != 0 && resultadoAlimento != 0)
                 {
                     usuarioResp.persona.respuesta = 1;
                     usuarioResp.persona.mensaje = "Actualización de objetivo y asignacion de rutina exitoso";
@@ -173,6 +178,20 @@ namespace SPARTANFITApp.Services
             return (rutinaResp,ejerciciosDia);
         }
 
+        public (PlanAlimenticioDto,List<AlimentoDto>) mostrarPlanNutricionalDia(UsuarioDto usuario)
+        {
+            List<AlimentoDto> alimentosDia = new List<AlimentoDto>();
+            PlanAlimenticioDto planAlimenticio = new PlanAlimenticioDto();
+            PlanAlimenticioRepository planRepository = new PlanAlimenticioRepository();
+
+            IdentificadorDiaUtility identDia = new IdentificadorDiaUtility ();
+            string dia = identDia.DiaActual();
+            planAlimenticio = planRepository.buscarPlanIdUsuario(usuario.persona.id_usuario, dia);
+
+            alimentosDia = planRepository.obtenerAlimentosDia(planAlimenticio.id_plan_alimenticio);
+
+            return(planAlimenticio, alimentosDia);
+        }
 
 
     }

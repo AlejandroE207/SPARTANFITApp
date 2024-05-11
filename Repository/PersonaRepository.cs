@@ -31,6 +31,7 @@ namespace SPARTANFITApp.Repository
                         if (reader.Read())
                         {
                             string contrasenaAlmacenada = reader["contrasena"].ToString();
+
                             if (encr.ValidarContrasena(contrasena, contrasenaAlmacenada)){
                                 persona = new PersonaDto
                                 {

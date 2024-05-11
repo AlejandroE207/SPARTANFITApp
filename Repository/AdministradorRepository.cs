@@ -78,6 +78,7 @@ namespace SPARTANFITApp.Repository
                     {
                         if (reader.Read())
                         {
+
                             administrador = new PersonaDto
                             {
                                 id_rol = Convert.ToInt32(reader["id_rol"]),

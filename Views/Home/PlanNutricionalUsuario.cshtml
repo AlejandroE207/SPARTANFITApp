@@ -1,0 +1,47 @@
+﻿@{ 
+    ViewBag.Title = "PlanNutricionalUsuario";
+}
+@{ 
+    var planAlimenticio = ViewData["planAlimenticio"] as SPARTANFITApp.Dto.PlanAlimenticioDto;
+    var dietaDia = ViewData["dietaDia"] as List<SPARTANFITApp.Dto.AlimentoDto>;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PlanNutricionalUsuario</title>
+</head>
+<body>
+    <header>
+
+    </header>
+    <main>
+        <h1>
+            Descripcion
+        </h1>
+        <p>
+            @planAlimenticio.descripcion
+        </p>
+
+        @foreach (var alimento in dietaDia)
+        {
+            <h2>
+                @alimento.nombre
+            </h2>
+            <p>
+                Calorias por gramo: @alimento.calorias_x_gramo
+            </p>
+            <p>
+                gramos de proteina por gramo: @alimento.proteina
+            </p>
+            <p>
+                gramos de carbohidrato por gramo: @alimento.carbohidrato
+            </p>
+            <p>
+                gramos de grasa por gramo: @alimento.grasa
+            </p>
+        }
+    </main>
+</body>
+</html>

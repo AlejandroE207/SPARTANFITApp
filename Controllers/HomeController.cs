@@ -14,6 +14,7 @@ using X.PagedList;
 using System.IO;
 using System.Drawing.Printing;
 using SPARTANFITApp.Controllers;
+using Org.BouncyCastle.Bcpg.Sig;
 
 
 namespace SPARTANFIT_App.Controllers
@@ -86,8 +87,7 @@ namespace SPARTANFIT_App.Controllers
                     UsuarioService usuarioService = new UsuarioService();
                     usuario = usuarioService.logueo(usuario, contraNormal);
                     Session["UserLogged"] = usuario;
-
-                    return RedirectToAction("PrincipalUsuario");
+                    return View("Perfil");
                 }
                 else
                 {
@@ -101,7 +101,7 @@ namespace SPARTANFIT_App.Controllers
                     if (personaLogeo.respuesta != 0)
                     {
                         Session["entrenadorLogged"] = personaLogeo;
-                        return RedirectToAction("PrincipalEntrenador"); //LINEA QUE TOCA UTILIZAR EN LAS DEMAS PAGINAS PRINCIPALES DESPUES DEL LOGIN
+                        return RedirectToAction("PrincipalEntrenador");
                     }
                     else
                     {
@@ -381,6 +381,9 @@ namespace SPARTANFIT_App.Controllers
                 return View();
             }
         }
+
+
+
         [HttpPost]
         public ActionResult BuscarCorreo(string correo)
         {
@@ -399,6 +402,7 @@ namespace SPARTANFIT_App.Controllers
             return View("IniciarSesion");
         }
 
+        //--------------------------------------------------------------------------------------------------
         public ActionResult CrearRutina()
         {
             return View();
@@ -460,6 +464,50 @@ namespace SPARTANFIT_App.Controllers
             return View("AgregarRutina", rutina);
         }
 
+        [HttpPost]
+        public ActionResult FormCrearPlanAlimenticio(PlanAlimenticioDto planAlimenticio)
+        {
+            ViewData["planAlimenticio"] = planAlimenticio;
+            return AgregarPlanAlimenticio();
+        }
+
+        [HttpPost]
+        public ActionResult FormAgregarPlanAlimenticio(PlanAlimenticioDto planAlimenticio, int[] selectedCheckboxIds)
+        {
+            EntrenadorService entrenadorService = new EntrenadorService();
+
+            List<int> idAlimentos = new List<int>();
+            for(int i = 0; i < selectedCheckboxIds.Length; i++)
+            {
+                idAlimentos.Add(selectedCheckboxIds[i]);
+            }
+
+            int resultado = entrenadorService.registrarPlanNutricional(planAlimenticio, idAlimentos);
+            if(resultado != 0)
+            {
+                return RedirectToAction("CrearPlanAlimenticio");
+            }
+            else
+            {
+                return View();
+            }
+            
+        }
+
+        public ActionResult AgregarPlanAlimenticio()
+        {
+            EntrenadorService servicio = new EntrenadorService();
+            List<AlimentoDto> alimentos = servicio.Mostrar_Alimento();
+            ViewData["alimentos"] = alimentos;
+            return View("AgregarPlanAlimenticio");
+        }
+        public ActionResult CrearPlanAlimenticio()
+        {
+            return View();
+        }
+
+
+
         public ActionResult ActualizarDatos() { return View("ActualizarDatos"); }
 
         [HttpPost]
@@ -485,6 +533,8 @@ namespace SPARTANFIT_App.Controllers
                 return View("ActualizarDatos");
             }
         }
+
+
         [HttpPost]
         public ActionResult DescargarPdfUsuarios()
         {
@@ -534,6 +584,23 @@ namespace SPARTANFIT_App.Controllers
             ViewData["ejerciciosDia"] = ejerciciosDia;
             ViewData["rutinaDia"] = rutinaDia;
             return View();
+        }
+
+        public ActionResult PlanNutricionalUsuario()
+        {
+            UsuarioDto usuario = new UsuarioDto();
+            UsuarioService usuarioService = new UsuarioService();
+            PlanAlimenticioDto planAlimenticio = new PlanAlimenticioDto();
+            usuario = (UsuarioDto)Session["UserLogged"];
+
+            List<AlimentoDto> dietaDia = new List<AlimentoDto>();
+
+            (planAlimenticio,dietaDia) = usuarioService.mostrarPlanNutricionalDia(usuario);
+
+            ViewData["planAlimenticio"] = planAlimenticio;
+            ViewData["dietaDia"] = dietaDia;
+            return View();
+
         }
     }
 }

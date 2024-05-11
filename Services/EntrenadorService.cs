@@ -174,22 +174,20 @@ namespace SPARTANFITApp.Services
 
             return registroEjerciciosRutina;
         }
+        
+        public int registrarPlanNutricional(PlanAlimenticioDto planAlimenticio, List<int> idAlimentos) 
+        {
+            PlanAlimenticioDto planResp = new PlanAlimenticioDto();
+            PlanAlimenticioRepository planRepository = new PlanAlimenticioRepository();
+
+            int id_plan_alimenticio = planRepository.registrarPlan(planAlimenticio);
+
+            int registroAlimentoPlan = planRepository.registrarAlimentoPlan(idAlimentos, id_plan_alimenticio);
+
+            return registroAlimentoPlan;
+        }
+    
+    
     }
-
-    //public PersonaDto logueo(PersonaDto entrenador)
-    //{
-    //    EntrenadorRepository entrenadorRepository = new EntrenadorRepository();
-    //    PersonaDto entrenadorResp = entrenadorRepository.IniciarSesion(entrenador.correo, entrenador.contrasena);
-
-    //    if (entrenadorResp.respuesta == 1)
-    //    {
-    //        entrenadorResp.mensaje = "Inicio de sesión correcto";
-    //    }
-    //    else
-    //    {
-    //        entrenadorResp.mensaje = "Inicio de sesión incorrecto";
-    //    }
-
-    //    return entrenadorResp;
-    //}
+    
 }

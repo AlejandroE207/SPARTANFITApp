@@ -143,6 +143,7 @@
     <Compile Include="Dto\AlimentoDto.cs" />
     <Compile Include="Dto\EjercicioDto.cs" />
     <Compile Include="Dto\PersonaDto.cs" />
+    <Compile Include="Dto\PlanAlimenticioDto.cs" />
     <Compile Include="Dto\Recuperacion_ContrasenaDto.cs" />
     <Compile Include="Dto\RutinaDto.cs" />
     <Compile Include="Dto\UsuarioDto.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Repository\EjercicioRepository.cs" />
     <Compile Include="Repository\EntrenadorRepository.cs" />
     <Compile Include="Repository\PersonaRepository.cs" />
+    <Compile Include="Repository\PlanAlimenticioRepository.cs" />
     <Compile Include="Repository\Recuperacion_contrasenaRepository.cs" />
     <Compile Include="Repository\RutinaRepository.cs" />
     <Compile Include="Repository\UsuarioRepository.cs" />
@@ -241,6 +243,9 @@
     <Content Include="Views\Home\CrearRutina.cshtml" />
     <Content Include="Views\Home\ActualizarDatos.cshtml" />
     <Content Include="Views\Home\PrincipalUsuario.cshtml" />
+    <Content Include="Views\Home\AgregarPlanAlimenticio.cshtml" />
+    <Content Include="Views\Home\CrearPlanAlimenticio.cshtml" />
+    <Content Include="Views\Home\PlanNutricionalUsuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

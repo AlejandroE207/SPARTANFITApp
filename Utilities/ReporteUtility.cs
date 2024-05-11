@@ -39,7 +39,7 @@ namespace SPARTANFITApp.Utilities
             doc.Add(new Paragraph(" ")); 
 
           
-            PdfPTable table = new PdfPTable(6); 
+            PdfPTable table = new PdfPTable(5); 
 
             
             var headerFont = FontFactory.GetFont("Helvetica", 12, Font.BOLD, goldColor); 
@@ -48,7 +48,7 @@ namespace SPARTANFITApp.Utilities
             table.AddCell(new PdfPCell(new Phrase("Apellidos", headerFont)) { BackgroundColor = negro });
             table.AddCell(new PdfPCell(new Phrase("Correo", headerFont)) { BackgroundColor = negro });
             table.AddCell(new PdfPCell(new Phrase("Género", headerFont)) { BackgroundColor = negro });
-            table.AddCell(new PdfPCell(new Phrase("Fecha de Nacimiento", headerFont)) { BackgroundColor = negro });
+
 
             
             foreach (var entrenador in entrenadores)
@@ -58,7 +58,7 @@ namespace SPARTANFITApp.Utilities
                 table.AddCell(entrenador.apellidos);
                 table.AddCell(entrenador.correo);
                 table.AddCell(entrenador.genero);
-                table.AddCell(entrenador.fecha_nacimiento);
+
             }
 
             doc.Add(table); 
@@ -89,7 +89,7 @@ namespace SPARTANFITApp.Utilities
            
             BaseColor negro = new BaseColor(0, 0, 0); 
 
-            PdfPTable table = new PdfPTable(6); 
+            PdfPTable table = new PdfPTable(5); 
 
             Font headerFont = FontFactory.GetFont("Helvetica", 12, Font.BOLD, goldColor); 
 
@@ -99,7 +99,7 @@ namespace SPARTANFITApp.Utilities
             table.AddCell(new PdfPCell(new Phrase("Apellidos", headerFont)) { BackgroundColor = negro });
             table.AddCell(new PdfPCell(new Phrase("Correo", headerFont)) { BackgroundColor = negro });
             table.AddCell(new PdfPCell(new Phrase("Género", headerFont)) { BackgroundColor = negro });
-            table.AddCell(new PdfPCell(new Phrase("Fecha de Nacimiento", headerFont)) { BackgroundColor = negro });
+
 
        
             Font contentFont = FontFactory.GetFont("Helvetica", 12); 
@@ -112,7 +112,7 @@ namespace SPARTANFITApp.Utilities
                 table.AddCell(new PdfPCell(new Phrase(usuario.persona.apellidos, contentFont)));
                 table.AddCell(new PdfPCell(new Phrase(usuario.persona.correo, contentFont)));
                 table.AddCell(new PdfPCell(new Phrase(usuario.persona.genero, contentFont)));
-                table.AddCell(new PdfPCell(new Phrase(usuario.persona.fecha_nacimiento, contentFont)));
+
             }
 
             doc.Add(table); 
