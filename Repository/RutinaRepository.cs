@@ -297,5 +297,130 @@ namespace SPARTANFITApp.Repository
             finally { conexion.Disconnect(); }
             return ejerciciosDia;
         }
+
+        public List<RutinaDto> MostrasRutinas()
+        {
+            List<RutinaDto> rutinas = new List<RutinaDto>();
+            DBContextUtility conexion = new DBContextUtility();
+
+            try
+            {
+                conexion.Connect();
+                string SQL = "SELECT id_rutina, id_nivel_rutina, id_objetivo, nombre_rutina, dia, descripcion FROM RUTINA";
+                using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+                {
+                    using(SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            RutinaDto rutina = new RutinaDto()
+                            {
+                                id_rutina = Convert.ToInt32(reader["id_rutina"]),
+                                id_nivel_rutina = Convert.ToInt32(reader["id_nivel_rutina"]),
+                                id_objetivo = Convert.ToInt32(reader["id_objetivo"]),
+                                nombre_rutina = reader["nombre_rutina"].ToString(),
+                                dia = reader["dia"].ToString(),
+                                descripcion = reader["descripcion"].ToString()
+                            };
+                            rutinas.Add(rutina);
+                        }
+                    }
+                    return rutinas;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally { conexion.Disconnect(); }
+            return rutinas;
+        } 
+
+        public RutinaDto EliminarRutina (int id_rutina)
+        {
+            RutinaDto rutinaResp = new RutinaDto();
+            DBContextUtility conexion = new DBContextUtility();
+            int comando = 0;
+            try
+            {
+                comando = EliminarUsuarioRutina(id_rutina);
+                if(comando != 0)
+                {
+                    comando = EliminarRutinaEjercicio(id_rutina);
+                    if(comando != 0)
+                    {
+                        conexion.Connect();
+                        string SQL = "DELETE FROM RUTINA WHERE id_rutina = @id_rutina";
+                        using(SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+                        {
+                            command.Parameters.AddWithValue("@id_rutina", id_rutina);
+                            comando = command.ExecuteNonQuery();
+                            rutinaResp.respuesta = 1;
+                            rutinaResp.mensaje = "Rutina eliminada con exito";
+                            return rutinaResp;
+                        }
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally { conexion.Disconnect(); }
+            return rutinaResp;
+        }
+
+
+        public int EliminarUsuarioRutina(int id_rutina)
+        {
+            int comando = 0;
+
+            DBContextUtility conexion = new DBContextUtility();
+            try
+            {
+                conexion.Connect();
+                string SQL = "DELETE FROM USUARIO_RUTINA WHERE id_rutina = @id_rutina";
+                using(SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+                {
+                    command.Parameters.AddWithValue("@id_rutina", id_rutina);
+                    comando = command.ExecuteNonQuery();
+                    comando = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally { conexion.Disconnect(); }
+            return comando;
+        }
+
+        public int EliminarRutinaEjercicio(int id_rutina)
+        {
+            int comando = 0;
+
+            DBContextUtility conexion = new DBContextUtility();
+            try
+            {
+                conexion.Connect();
+                string SQL = "DELETE FROM RUTINA_EJERCICIO WHERE id_rutina = @id_rutina";
+                using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+                {
+                    command.Parameters.AddWithValue("@id_rutina", id_rutina);
+                    comando = command.ExecuteNonQuery();
+                    comando = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally { conexion.Disconnect(); }
+            return comando;
+        }
+
     }
 }

@@ -87,7 +87,7 @@ namespace SPARTANFIT_App.Controllers
                     UsuarioService usuarioService = new UsuarioService();
                     usuario = usuarioService.logueo(usuario, contraNormal);
                     Session["UserLogged"] = usuario;
-                    return View("Perfil");
+                    return RedirectToAction("PrincipalUsuario");
                 }
                 else
                 {
@@ -122,7 +122,7 @@ namespace SPARTANFIT_App.Controllers
                     }
                 }
             }
-            return View();
+            return View("Index");
         }
         public ActionResult BuscarCorreo() { return View("BuscarCorreo"); }
         public ActionResult CambiarContrasena() { return View("CambiarContrasena"); }
@@ -601,6 +601,61 @@ namespace SPARTANFIT_App.Controllers
             ViewData["dietaDia"] = dietaDia;
             return View();
 
+        }
+        
+        public ActionResult MostrarRutinas()
+        {
+            EntrenadorService entrenadorService = new EntrenadorService();
+
+            List<RutinaDto> rutinas = new List<RutinaDto>();
+
+            rutinas = entrenadorService.MostrarRutinas();
+
+            ViewData["rutinas"] = rutinas;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult EliminarRutina(int id_rutina)
+        {
+            RutinaDto rutina = new RutinaDto();
+            EntrenadorService entrenadorService = new EntrenadorService();
+
+            rutina = entrenadorService.EliminarRutina(id_rutina);
+
+            if(rutina.respuesta != 0)
+            {
+                return RedirectToAction("MostrarRutinas");
+            }
+            return View();
+        }
+
+        public ActionResult MostrarPlanesAlimenticios()
+        {
+            PlanAlimenticioDto plan = new PlanAlimenticioDto();
+            EntrenadorService entrenadorService = new EntrenadorService();
+
+            List<PlanAlimenticioDto> planes = new List<PlanAlimenticioDto>();
+
+            planes = entrenadorService.MostrarPlanes();
+
+            ViewData["planes"] = planes;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult EliminarPlanAlimenticio(int id_plan_alimenticio)
+        {
+            PlanAlimenticioDto plan = new PlanAlimenticioDto();
+            EntrenadorService entrenadorService = new EntrenadorService();
+
+            plan = entrenadorService.EliminarPlan(id_plan_alimenticio);
+
+            if (plan.respuesta != 0)
+            {
+                return RedirectToAction("MostrarPlanesAlimenticios");
+            }
+            return View();
         }
     }
 }

@@ -47,13 +47,13 @@ else
         <a href="#" class="logo"> SPARTANFIT</a>
         <ul>
             <li>@Html.ActionLink("Ejercicios", "MostrarEjercicios", "Home")</li>
-            <li>@Html.ActionLink("Rutinas", "", "Home")</li>
-            <li>@Html.ActionLink("Plan Nutricion", "", "Home")</li>
+            <li>@Html.ActionLink("Rutinas", "MostrarRutinas", "Home")</li>
+            <li>@Html.ActionLink("Plan Nutricion", "MostrarPlanesAlimenticios", "Home")</li>
             <li>@Html.ActionLink("Alimentos", "MostrarAlimentos", "Home")</li>
             <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
         </ul>
     </header>
-    <div>
+    <div class="cont_form">
         @using (Html.BeginForm("AgregarAlimento", "Home", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
@@ -84,34 +84,35 @@ else
                 </div>
                 <div>
                     <label for="carbohidratos">Carbohidratos:</label>
-                    <input type="text" id="carbohidrato" name="carbohidrato"  required>
+                    <input type="text" id="carbohidrato" name="carbohidrato" required>
                 </div>
             </div>
             <div class="form-row">
                 <div>
                     <label for="proteina">Proteina:</label>
-                    <input type="text" id="proteina" name="proteina"  required>
+                    <input type="text" id="proteina" name="proteina" required>
                 </div>
                 <div>
                     <label for="fibra">Fibra:</label>
-                    <input type="text" id="fibra" name="fibra"  required>
+                    <input type="text" id="fibra" name="fibra" required>
                 </div>
                 <div class="centrado">
                     <div class="form-row">
                         <button class="boton-crear" onclick="crearCuenta()">Agregar Alimento</button>
                     </div>
-                    <div class="botoncito">
-                        <div class="container">
-                            <button class="boton-cancelar" onclick="confirmarCancelar()">Cancelar</button>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         }  @if (ViewData["Mensaje"] != null)
-    {
+        {
             <p>@ViewData["Mensaje"]</p>
-    }
-
+        }
+        <div class="botoncito">
+            <div class="container">
+                <button class="boton-cancelar" onclick="confirmarCancelar()">Cancelar</button>
+            </div>
+        </div>
+    </div>
         <script>
  function confirmarCancelar() {
      if (confirm("¿Estás seguro de que quieres cancelar?")) {

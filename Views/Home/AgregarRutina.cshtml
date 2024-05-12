@@ -48,8 +48,8 @@ else
         <a href="#" class="logo"> SPARTANFIT</a>
         <ul>
             <li>@Html.ActionLink("Ejercicios", "MostrarEjercicios", "Home")</li>
-            <li>@Html.ActionLink("Rutinas", "", "Home")</li>
-            <li>@Html.ActionLink("Plan Nutricion", "", "Home")</li>
+            <li>@Html.ActionLink("Rutinas", "MostrarRutinas", "Home")</li>
+            <li>@Html.ActionLink("Plan Nutricion", "MostrarPlanesAlimenticios", "Home")</li>
             <li>@Html.ActionLink("Alimentos", "MostrarAlimentos", "Home")</li>
             <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
         </ul>
@@ -107,7 +107,6 @@ else
                     <button type="submit" class="boton-crear" onclick="ejecutar()">Crear Rutina</button>
                 </div>
             }
-            <button onclick="verificacion()">VERIFICACION</button>
         </div>
 
         @if (ViewData["Mensaje"] != null)
@@ -115,28 +114,6 @@ else
             <p>@ViewData["Mensaje"]</p>
         }
     </main>
-    <!--
-    <script>
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-
-        const selectedCheckboxIDs = [];
-
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', () => {
-                if (checkbox.checked) {
-                    selectedCheckboxIDs.push(checkbox.id);
-                } else {
-                    const index = selectedCheckboxIDs.indexOf(checkbox.id);
-                    if (index >= 0) {
-                        selectedCheckboxIDs.splice(index, 1);
-                    }
-                }
-
-                console.log(selectedCheckboxIDs);
-            });
-        });
-    </script>
-        -->
 
     <script>
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -201,11 +178,6 @@ else
         function ejecutar() {
             getSelectedCheckboxIds(selectedCheckboxIDs);
         }
-
-        // Ejemplo de uso de la función getSelectedCheckboxIds()
-        // Puedes llamar a esta función pasando la lista selectedCheckboxIDs como argumento
-        // getSelectedCheckboxIds(selectedCheckboxIDs);
-
     </script>
 
 

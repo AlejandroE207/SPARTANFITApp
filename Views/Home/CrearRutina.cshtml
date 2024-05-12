@@ -42,18 +42,17 @@ else
         <a href="#" class="logo"> SPARTANFIT</a>
         <ul>
             <li>@Html.ActionLink("Ejercicios", "MostrarEjercicios", "Home")</li>
-            <li>@Html.ActionLink("Rutinas", "", "Home")</li>
-            <li>@Html.ActionLink("Plan Nutricion", "", "Home")</li>
+            <li>@Html.ActionLink("Rutinas", "MostrarRutinas", "Home")</li>
+            <li>@Html.ActionLink("Plan Nutricion", "MostrarPlanesAlimenticios", "Home")</li>
             <li>@Html.ActionLink("Alimentos", "MostrarAlimentos", "Home")</li>
             <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
         </ul>
     </header>
-    <div>
-        <h2>Registrarse</h2>
+    <div class="cont_form">
         @using (Html.BeginForm("FormCrearRutina", "Home", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
-
+        <h1>Crear Rutina</h1>
             <div class="form-row">
                 <div>
                     <label for="id_nivel_rutina">Nivel Rutina</label>
@@ -106,11 +105,6 @@ else
                 <div class="form-row">
                     <button type="submit" class="boton-crear" onclick="">Crear Rutina</button>
                 </div>
-                <div class="botoncito">
-                    <div class="container">
-                        <button class="boton-cancelar" onclick="confirmar()">Cancelar</button>
-                    </div>
-                </div>
             </div>
         }
 
@@ -118,6 +112,11 @@ else
         {
             <p>@ViewData["Mensaje"]</p>
         }
+        <div class="botoncito">
+            <div class="container">
+                <button class="boton-cancelar" onclick="confirmar()">Cancelar</button>
+            </div>
+        </div>
     </div>
 
     <script>

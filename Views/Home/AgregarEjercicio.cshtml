@@ -48,13 +48,13 @@ else
         <a href="#" class="logo"> SPARTANFIT</a>
         <ul>
             <li>@Html.ActionLink("Ejercicios", "MostrarEjercicios", "Home")</li>
-            <li>@Html.ActionLink("Rutinas", "", "Home")</li>
-            <li>@Html.ActionLink("Plan Nutricion", "", "Home")</li>
+            <li>@Html.ActionLink("Rutinas", "MostrarRutinas", "Home")</li>
+            <li>@Html.ActionLink("Plan Nutricion", "MostrarPlanesAlimenticios", "Home")</li>
             <li>@Html.ActionLink("Alimentos", "MostrarAlimentos", "Home")</li>
             <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
         </ul>
     </header>
-    <div>
+    <div class="cont_form">
         @using (Html.BeginForm("AgregarEjercicio", "Home", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
@@ -87,17 +87,18 @@ else
                 <div class="form-row">
                     <button class="boton-crear" id="agregarEjercicio" onclick="crearCuenta()">Agregar Ejercicio</button>
                 </div>
-                <div class="botoncito">
-                    <div class="container">
-                        <button class="boton-cancelar" onclick="confirmarCancelar()">Cancelar</button>
-                    </div>
-                </div>
+
             </div>
         }  @if (ViewData["Mensaje"] != null)
-    {
+        {
             <p>@ViewData["Mensaje"]</p>
-    }
-
+        }
+        <div class="botoncito">
+            <div class="container">
+                <button class="boton-cancelar" onclick="confirmarCancelar()">Cancelar</button>
+            </div>
+        </div>
+    </div>
         <script>
  function confirmarCancelar() {
      if (confirm("¿Estás seguro de que quieres cancelar?")) {

@@ -5,9 +5,33 @@
 @{
     var ejerciciosDia = ViewData["ejerciciosDia"] as List<SPARTANFITApp.Dto.EjercicioDto>;
     var rutinaDia = ViewData["rutinaDia"] as SPARTANFITApp.Dto.RutinaDto;
+}
+@{
+    // Recuperar el valor de la variable de sesión
     SPARTANFITApp.Dto.UsuarioDto usuario = Session["UserLogged"] as SPARTANFITApp.Dto.UsuarioDto;
 }
 
+@if (usuario == null)
+{
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Redirección automática en ASP.NET</title>
+        <script type="text/javascript">
+            window.onload = function () {
+                setTimeout(function () {
+                    window.location.href = 'Index';
+                });
+            };
+        </script>
+    </head>
+    <body>
+        <h1>Inicie Sesion primero</h1>
+    </body>
+</html>
+}
+else
+{
 <!DOCTYPE html>
 
 <html>
@@ -25,7 +49,13 @@
 <body>
 
     <header>
-    </header>
+        <a href="#" class="logo"> SPARTANFIT</a>
+        <ul>
+            <li>@Html.ActionLink("Rutina", "PrincipalUsuario", "Home")</li>
+            <li>@Html.ActionLink("Plan Alimenticio", "PlanNutricionalUsuario", "Home")</li>
+            <li>@Html.ActionLink("Perfil", "Perfil", "Home")</li>
+            <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
+        </ul>
     </header>
     <main>
         <div>
@@ -46,7 +76,6 @@
             </div>
             <div class="mostrarT">
 
-
                 <p>
                     Cantidad de series: @ejercicio.num_series
                 </p>
@@ -61,3 +90,4 @@
     </main>
 </body>
 </html>
+}

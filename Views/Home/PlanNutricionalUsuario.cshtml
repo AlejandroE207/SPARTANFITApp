@@ -1,47 +1,92 @@
-﻿@{ 
+﻿@{
     ViewBag.Title = "PlanNutricionalUsuario";
 }
-@{ 
+@{
     var planAlimenticio = ViewData["planAlimenticio"] as SPARTANFITApp.Dto.PlanAlimenticioDto;
     var dietaDia = ViewData["dietaDia"] as List<SPARTANFITApp.Dto.AlimentoDto>;
 }
+@{
+    // Recuperar el valor de la variable de sesión
+    SPARTANFITApp.Dto.UsuarioDto usuario = Session["UserLogged"] as SPARTANFITApp.Dto.UsuarioDto;
+}
+
+@if (usuario == null)
+{
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Redirección automática en ASP.NET</title>
+        <script type="text/javascript">
+            window.onload = function () {
+                setTimeout(function () {
+                    window.location.href = 'Index';
+                });
+            };
+        </script>
+    </head>
+    <body>
+        <h1>Inicie Sesion primero</h1>
+    </body>
+</html>
+}
+else
+{
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <link href="~/Scripts/css/StylePlanNutricional.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Yatra+One&display=swap"
+          rel="stylesheet">
     <title>PlanNutricionalUsuario</title>
 </head>
 <body>
     <header>
-
+        <a href="#" class="logo"> SPARTANFIT</a>
+        <ul>
+            <li>@Html.ActionLink("Rutina", "PrincipalUsuario", "Home")</li>
+            <li>@Html.ActionLink("Plan Alimenticio", "PlanNutricionalUsuario", "Home")</li>
+            <li>@Html.ActionLink("Perfil", "Perfil", "Home")</li>
+            <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
+        </ul>
     </header>
     <main>
+
         <h1>
             Descripcion
         </h1>
-        <p>
-            @planAlimenticio.descripcion
-        </p>
-
+        <div class="derecha">
+            <p>
+                @planAlimenticio.descripcion
+            </p>
+        </div>
         @foreach (var alimento in dietaDia)
         {
-            <h2>
-                @alimento.nombre
-            </h2>
-            <p>
-                Calorias por gramo: @alimento.calorias_x_gramo
-            </p>
-            <p>
-                gramos de proteina por gramo: @alimento.proteina
-            </p>
-            <p>
-                gramos de carbohidrato por gramo: @alimento.carbohidrato
-            </p>
-            <p>
-                gramos de grasa por gramo: @alimento.grasa
-            </p>
+            <div class="mostrarT">
+                <p class="nombreAlimento">
+                    @alimento.nombre
+                </p>
+                <p>
+                    Calorias por gramo: @alimento.calorias_x_gramo
+                </p>
+                <p>
+                    gramos de proteina por gramo: @alimento.proteina
+                </p>
+                <p>
+                    gramos de carbohidrato por gramo: @alimento.carbohidrato
+                </p>
+                <p>
+                    gramos de grasa por gramo: @alimento.grasa
+                </p>
+
+            </div>
         }
     </main>
 </body>
 </html>
+}

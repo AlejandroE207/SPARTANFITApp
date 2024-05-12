@@ -74,7 +74,7 @@ ul {
             transform: scale(1.1);
         }
 
-form {
+.cont_form {
     background: linear-gradient(135deg, #bc0707, #cc0303);
     border-radius: 2rem;
     box-shadow: 0 0 1rem rgba(222, 10, 10, 0.2);
@@ -162,11 +162,24 @@ select {
     margin-top: 1rem;
 }
 
-    .boton-crear:hover {
-        background-color: limegreen;
-        color: black;
-    }
+.boton-crear:hover {
+    background-color: limegreen;
+    color: black;
+}
 
+.container{
+    margin:auto;
+    display:inline-block;
+}
+.botoncito{
+    display:flex;
+    justify-content: center;
+}
+
+.botoncitoE {
+    display: block;
+
+}
 .boton-cancelar {
     width: 12rem;
     background-color: gold;
@@ -179,6 +192,13 @@ select {
     transition: background-color 0.3s ease;
     font-family: "Yatra One", system-ui;
     text-transform: uppercase;
+    margin:auto;
+}
+.cont_botones {
+    display: flex;
+    justify-content:center;
+    flex-direction:column;
+
 }
 
     .boton-cancelar:hover {
@@ -207,8 +227,7 @@ select {
 
 
 .formEli {
-    margin-top: -6rem;
-    background-color: rgb(246, 0, 0);
+    margin-top: 2rem;
     text-align: center;
 }
 .contenedor {

@@ -47,19 +47,19 @@ else
     <header>
         <a href="#" class="logo"> SPARTANFIT</a>
         <ul>
-            <li>@Html.ActionLink("Rutina", "Index", "Home")</li>
-            <li>@Html.ActionLink("Plan Alimenticio", "IniciarSesion", "Home")</li>
+            <li>@Html.ActionLink("Rutina", "PrincipalUsuario", "Home")</li>
+            <li>@Html.ActionLink("Plan Alimenticio", "PlanNutricionalUsuario", "Home")</li>
             <li>@Html.ActionLink("Perfil", "Perfil", "Home")</li>
             <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
 
         </ul>
     </header>
     <main>
-        <div>
+        <div class="cont_form">
             @using (Html.BeginForm("ActualizarDatos", "Home", FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
-
+                <h1>Actualizar Datos</h1>
                 <div class="form-row">
                     <div>
                         <label for="estatura">Estatura (CM):</label>
@@ -76,19 +76,20 @@ else
                     <div class="form-row">
                         <button class="boton-crear" onclick="actualizar()">Actualizar Datos</button>
                     </div>
-                    <div class="botoncito">
-                        <div class="container">
-                            <button class="boton-cancelar" onclick="cancelar()">Cancelar</button>
-                        </div>
-                    </div>
+
 
                 </div>
 
 
             }  @if (ViewData["Mensaje"] != null)
-    {
+            {
                 <p>@ViewData["Mensaje"]</p>
-    }
+            }
+            <div class="botoncito">
+                <div class="container">
+                    <button class="boton-cancelar" onclick="cancelar()">Cancelar</button>
+                </div>
+            </div>
         </div>
 
     </main>

@@ -37,12 +37,6 @@ namespace SPARTANFITApp.Services
             persona.contrasena = sintetizarFormularios.Sintetizar(persona.contrasena);
             PersonaDto personaResp = personaRepository.IniciarSesion(persona.correo, persona.contrasena);
 
-            //PRUEBA DE SOLUCION
-            if (personaResp == null)
-            {
-                personaResp.mensaje = "Inicio de sesión incorrecto";
-            }
-            //FIN PRUEBA
 
             if (personaResp.respuesta == 1)
             {

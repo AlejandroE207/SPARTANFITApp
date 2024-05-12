@@ -1,6 +1,8 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "AgregarPlanAlimenticio";
     //SPARTANFITApp.Dto.RutinaDto rutina = ViewData["Rutina"] as SPARTANFITApp.Dto.RutinaDto;
+
     var alimentos = ViewData["alimentos"] as List<SPARTANFITApp.Dto.AlimentoDto>;
     SPARTANFITApp.Dto.PlanAlimenticioDto planAlimenticio = ViewData["planAlimenticio"] as SPARTANFITApp.Dto.PlanAlimenticioDto;
     // Recuperar el valor de la variable de sesión
@@ -49,8 +51,8 @@ else
         <a href="#" class="logo"> SPARTANFIT</a>
         <ul>
             <li>@Html.ActionLink("Ejercicios", "MostrarEjercicios", "Home")</li>
-            <li>@Html.ActionLink("Rutinas", "", "Home")</li>
-            <li>@Html.ActionLink("Plan Nutricion", "", "Home")</li>
+            <li>@Html.ActionLink("Rutinas", "MostrarRutinas", "Home")</li>
+            <li>@Html.ActionLink("Plan Nutricion", "MostrarPlanesAlimenticios", "Home")</li>
             <li>@Html.ActionLink("Alimentos", "MostrarAlimentos", "Home")</li>
             <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
         </ul>
@@ -73,6 +75,7 @@ else
                             <th>Carbohidrato</th>
                             <th>Proteina</th>
                             <th>Fibra</th>
+                            <th> </th>
                         </tr>
                     </thead>
                     <tbody>

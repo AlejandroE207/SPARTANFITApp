@@ -26,11 +26,11 @@
             <li>@Html.ActionLink("Registrarse", "Formulario_Registro", "Home")</li>
         </ul>
     </header>
-    <div>
-        <h2>Registrarse</h2>
+    <div class="cont_form">
         @using (Html.BeginForm("Formulario_Registro", "Home", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
+            <h1>Registrarse</h1>
             <div class="form-row">
                 <div>
                     <label for="nombres">Nombres:</label>
@@ -109,22 +109,28 @@
                     </select>
                 </div>
             </div>
+            <div class="form-row">
+                <label for="authorization">
+                    <input type="checkbox" id="authorization" name="authorization" required>
+                    Acepto que mis datos sean recopilados y procesados.
+                </label>
+            </div>
             <div class="centrado">
                 <div class="form-row">
                     <button class="boton-crear" onclick="crearCuenta()">Crear cuenta</button>
-                </div>
-                <div class="botoncito">
-                    <div class="container">
-                        <button class="boton-cancelar" onclick="confirmarCancelar()">Cancelar</button>
-                    </div>
                 </div>
             </div>
 
 
         }  @if (ViewData["Mensaje"] != null)
-    {
+        {
             <p>@ViewData["Mensaje"]</p>
-    }
+        }
+        <div class="botoncito">
+            <div class="container">
+                <button class="boton-cancelar" onclick="confirmarCancelar()">Cancelar</button>
+            </div>
+        </div>
     </div>
 
 

@@ -13,8 +13,7 @@ namespace SPARTANFITApp.Repository
         public PersonaDto IniciarSesion(string correo, string contrasena)
         {
             DBContextUtility conexion = new DBContextUtility();
-            PersonaDto persona = null;
-            PersonaDto personaResp = new PersonaDto();
+            PersonaDto persona = new PersonaDto();
             EncriptarContrasenaUtility encr = new EncriptarContrasenaUtility();
 
             try
@@ -33,28 +32,32 @@ namespace SPARTANFITApp.Repository
                             string contrasenaAlmacenada = reader["contrasena"].ToString();
 
                             if (encr.ValidarContrasena(contrasena, contrasenaAlmacenada)){
-                                persona = new PersonaDto
-                                {
-                                    id_usuario = Convert.ToInt32(reader["id_usuario"]),
-                                    id_rol = Convert.ToInt32(reader["id_rol"]),
-                                    nombres = reader["nombres"].ToString(),
-                                    apellidos = reader["apellidos"].ToString(),
-                                    correo = reader["correo"].ToString(),
-                                    contrasena = reader["contrasena"].ToString(),
-                                    fecha_nacimiento = reader["fecha_nacimiento"].ToString(),
-                                    genero = reader["genero"].ToString(),
-                                };
+
+                                persona.id_usuario = Convert.ToInt32(reader["id_usuario"]);
+                                persona.id_rol = Convert.ToInt32(reader["id_rol"]);
+                                persona.nombres = reader["nombres"].ToString();
+                                persona.apellidos = reader["apellidos"].ToString();
+                                persona.correo = reader["correo"].ToString();
+                                persona.contrasena = reader["contrasena"].ToString();
+                                persona.fecha_nacimiento = reader["fecha_nacimiento"].ToString();
+                                persona.genero = reader["genero"].ToString();
+                                
                                 conexion.Disconnect();
                                 persona.respuesta = 1;
                                 persona.mensaje = "Inicio correcto";
                                 return persona;
                             }
+                            else
+                            {
+                                persona.respuesta = 0;
+                                persona.mensaje = "Inicio Incorrecto";
+                            }
                         }
                         else
                         {
-                            personaResp.respuesta = 0;
-                            personaResp.mensaje = "Inicio Incorrecto";
-                            return personaResp;
+                            persona.respuesta = 0;
+                            persona.mensaje = "Inicio Incorrecto";
+                            return persona;
                         }
                     }
                 }

@@ -1,12 +1,10 @@
-﻿
-
-@{
+﻿@{
     ViewBag.Title = "MostrarAlimentos";
 }
 @{
-    var Alimentos = ViewData["Alimentos"] as List<SPARTANFITApp.Dto.AlimentoDto>;
+    List<SPARTANFITApp.Dto.AlimentoDto> Alimentos = ViewData["Alimentos"] as List<SPARTANFITApp.Dto.AlimentoDto>;
 }
-@model List<SPARTANFITApp.Dto.EjercicioDto>
+
 @{
     // Recuperar el valor de la variable de sesión
     SPARTANFITApp.Dto.PersonaDto personaLogeo = Session["entrenadorLogged"] as SPARTANFITApp.Dto.PersonaDto;
@@ -57,107 +55,109 @@ else
         <a href="#" class="logo"> SPARTANFIT</a>
         <ul>
             <li>@Html.ActionLink("Ejercicios", "MostrarEjercicios", "Home")</li>
-            <li>@Html.ActionLink("Rutinas", "", "Home")</li>
-            <li>@Html.ActionLink("Plan Nutricion", "", "Home")</li>
+            <li>@Html.ActionLink("Rutinas", "MostrarRutinas", "Home")</li>
+            <li>@Html.ActionLink("Plan Nutricion", "MostrarPlanesAlimenticios", "Home")</li>
             <li>@Html.ActionLink("Alimentos", "MostrarAlimentos", "Home")</li>
             <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
         </ul>
     </header>
     <div class="centrarT">
-        <table id="tablaAlimentos">
-            <thead>
-                <tr>
-                    <th>Categoria Alimento</th>
-                    <th>Nombre</th>
-                    <th>Calorias X Gramo</th>
-                    <th>Grasa</th>
-                    <th>Carbohidrato</th>
-                    <th>Proteina</th>
-                    <th>Fibra</th>
-                    <th> </th>
-                    <th> </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var alimento in Alimentos)
-                {
+        <div class="contTabla">
+            <table id="tablaAlimentos">
+                <thead>
                     <tr>
-                        <td>@alimento.id_categoria_alimento</td>
-                        <td>@alimento.nombre</td>
-                        <td>@alimento.calorias_x_gramo</td>
-                        <td>@alimento.grasa</td>
-                        <td>@alimento.carbohidrato</td>
-                        <td>@alimento.proteina</td>
-                        <td>@alimento.fibra</td>
-                        <td>
-                            @using (Html.BeginForm("ActualizarAlimento", "Home", FormMethod.Post))
-                            {
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="id_alimento" value=@alimento.id_alimento>
-                                <input type="hidden" name="id_categoria_alimento" value=@alimento.id_categoria_alimento>
-                                <input type="hidden" name="nombre" value=@alimento.nombre>
-                                <input type="hidden" name="calorias_x_gramo" value=@alimento.calorias_x_gramo>
-                                <input type="hidden" name="grasa" value=@alimento.grasa>
-                                <input type="hidden" name="carbohidrato" value=@alimento.carbohidrato>
-                                <input type="hidden" name="proteina" value=@alimento.proteina>
-                                <input type="hidden" name="fibra" value=@alimento.fibra>
-                                <button type="submit" onclick="return " class="boton-icono"><img src="~/Scripts/img/editar.png" class="icono" alt="Editar"></button>
-
-                            }  @if (ViewData["Mensaje"] != null)
-        {
-                                <p>@ViewData["Mensaje"]</p>
-        }
-
-                        </td>
-                        <td>
-                            @using (Html.BeginForm("EliminarAlimento", "Home", FormMethod.Post))
-                            {
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="id_alimento" value=@alimento.id_alimento>
-                                <button type="submit" onclick="return confirmarEliminacion()" class="boton-icono"><img src="~/Scripts/img/eliminar.png" class="icono" alt="Eliminar"></button>
-
-                            }  @if (ViewData["Mensaje"] != null)
-        {
-                                <p>@ViewData["Mensaje"]</p>
-        }
-
-                        </td>
+                        <th>Categoria Alimento</th>
+                        <th>Nombre</th>
+                        <th>Calorias X Gramo</th>
+                        <th>Grasa</th>
+                        <th>Carbohidrato</th>
+                        <th>Proteina</th>
+                        <th>Fibra</th>
+                        <th> </th>
+                        <th> </th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var alimento in Alimentos)
+                    {
+                        <tr>
+                            <td>@alimento.id_categoria_alimento</td>
+                            <td>@alimento.nombre</td>
+                            <td>@alimento.calorias_x_gramo</td>
+                            <td>@alimento.grasa</td>
+                            <td>@alimento.carbohidrato</td>
+                            <td>@alimento.proteina</td>
+                            <td>@alimento.fibra</td>
+                            <td>
+                                @using (Html.BeginForm("ActualizarAlimento", "Home", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id_alimento" value=@alimento.id_alimento>
+                                    <input type="hidden" name="id_categoria_alimento" value=@alimento.id_categoria_alimento>
+                                    <input type="hidden" name="nombre" value=@alimento.nombre>
+                                    <input type="hidden" name="calorias_x_gramo" value=@alimento.calorias_x_gramo>
+                                    <input type="hidden" name="grasa" value=@alimento.grasa>
+                                    <input type="hidden" name="carbohidrato" value=@alimento.carbohidrato>
+                                    <input type="hidden" name="proteina" value=@alimento.proteina>
+                                    <input type="hidden" name="fibra" value=@alimento.fibra>
+                                    <button type="submit" onclick="return " class="boton-icono"><img src="~/Scripts/img/editar.png" class="icono" alt="Editar"></button>
+
+                                }  @if (ViewData["Mensaje"] != null)
+                                {
+                                    <p>@ViewData["Mensaje"]</p>
+                                }
+
+                            </td>
+                            <td>
+                                @using (Html.BeginForm("EliminarAlimento", "Home", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id_alimento" value=@alimento.id_alimento>
+                                    <button type="submit" onclick="return confirmarEliminacion()" class="boton-icono"><img src="~/Scripts/img/eliminar.png" class="icono" alt="Eliminar"></button>
+
+                                }  @if (ViewData["Mensaje"] != null)
+                                {
+                                    <p>@ViewData["Mensaje"]</p>
+                                }
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="container">
-        <button class="boton-crear" onclick="crearAlimento()">Agregar Alimento</button>
-    </div>
-    <script>
+        <div class="container">
+            <button class="boton-crear" onclick="crearAlimento()">Agregar Alimento</button>
+        </div>
+        <script>
     function crearAlimento() {
         window.location.href = '@Url.Action("AgregarAlimento", "Home")';
     }
-    </script>
-    <script>
-        function confirmarEliminacion() {
-            return confirm("¿Estás seguro de que quieres eliminar el Alimento?");
-        }
-    </script>
+        </script>
+        <script>
+            function confirmarEliminacion() {
+                return confirm("¿Estás seguro de que quieres eliminar el Alimento?");
+            }
+        </script>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#tablaAlimentos').DataTable({
-                "pagingType": "full_numbers",
-                "language": {
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Último",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#tablaAlimentos').DataTable({
+                    "pagingType": "full_numbers",
+                    "language": {
+                        "paginate": {
+                            "first": "Primero",
+                            "last": "Último",
+                            "next": "Siguiente",
+                            "previous": "Anterior"
+                        }
                     }
-                }
+                });
             });
-        });
-    </script>
+        </script>
 </body>
 </html>
 }

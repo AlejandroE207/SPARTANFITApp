@@ -183,6 +183,7 @@
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\css\StyleContra.css" />
     <Content Include="Scripts\css\StylePaginacionAgregar.css" />
+    <Content Include="Scripts\css\StylePlanNutricional.css" />
     <Content Include="Scripts\css\StylePrincipalEntrenador.css" />
     <Content Include="Scripts\css\StyleRegistro.css" />
     <Content Include="Scripts\css\stylesPerfil.css" />
@@ -246,6 +247,8 @@
     <Content Include="Views\Home\AgregarPlanAlimenticio.cshtml" />
     <Content Include="Views\Home\CrearPlanAlimenticio.cshtml" />
     <Content Include="Views\Home\PlanNutricionalUsuario.cshtml" />
+    <Content Include="Views\Home\MostrarRutinas.cshtml" />
+    <Content Include="Views\Home\MostrarPlanesAlimenticios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

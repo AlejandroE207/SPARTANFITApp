@@ -71,6 +71,9 @@ namespace SPARTANFITApp.Services
         {
             int filasAfectadas = 0;
             EjercicioRepository ejercicioRepository = new EjercicioRepository();
+            SintetizarFormularios sintetizarFormularios = new SintetizarFormularios();
+            ejercicio.nombre_ejercicio = sintetizarFormularios.Sintetizar(ejercicio.nombre_ejercicio);
+            ejercicio.apoyo_visual = sintetizarFormularios.Sintetizar(ejercicio.apoyo_visual);
 
             try { 
             
@@ -87,7 +90,9 @@ namespace SPARTANFITApp.Services
         {
             EjercicioDto EjercicioResp = new EjercicioDto();
             EjercicioRepository ejercicioRepository = new EjercicioRepository();
-
+            SintetizarFormularios sintetizarFormularios = new SintetizarFormularios();
+            ejercicio.nombre_ejercicio = sintetizarFormularios.Sintetizar(ejercicio.nombre_ejercicio);
+            ejercicio.apoyo_visual = sintetizarFormularios.Sintetizar(ejercicio.apoyo_visual);
 
             if (ejercicioRepository.buscarEjercicio(ejercicio.nombre_ejercicio))
             {
@@ -130,6 +135,8 @@ namespace SPARTANFITApp.Services
         {
             int filasAfectadas = 0;
             AlimentoRepository alimentoRepository = new AlimentoRepository();
+            SintetizarFormularios sintetizarFormularios = new SintetizarFormularios();
+            alimento.nombre = sintetizarFormularios.Sintetizar(alimento.nombre);
 
             try
             {
@@ -147,7 +154,8 @@ namespace SPARTANFITApp.Services
         {
             AlimentoDto AlimentoResp = new AlimentoDto();
             AlimentoRepository alimentoRepository = new AlimentoRepository();
-
+            SintetizarFormularios sintetizarFormularios = new SintetizarFormularios();
+            alimento.nombre = sintetizarFormularios.Sintetizar(alimento.nombre);
 
             if (alimentoRepository.buscarAlimento(alimento.nombre))
             {
@@ -167,6 +175,12 @@ namespace SPARTANFITApp.Services
         {
             RutinaDto rutinaResp = new RutinaDto(); ;
             RutinaRepository rutinaRepository = new RutinaRepository();
+            SintetizarFormularios sintetizarFormularios = new SintetizarFormularios();
+            rutina.nombre_rutina = sintetizarFormularios.Sintetizar(rutina.nombre_rutina);
+            rutina.descripcion = sintetizarFormularios.Sintetizar(rutina.descripcion);
+
+
+
             int id_rutina = rutinaRepository.regitrarRutina(rutina);
 
             int registroEjerciciosRutina = rutinaRepository.registrarEjerciciosRutina(ejerciciosRutina, id_rutina);
@@ -179,6 +193,9 @@ namespace SPARTANFITApp.Services
         {
             PlanAlimenticioDto planResp = new PlanAlimenticioDto();
             PlanAlimenticioRepository planRepository = new PlanAlimenticioRepository();
+            SintetizarFormularios sintetizarFormularios = new SintetizarFormularios();
+            planAlimenticio.nombre = sintetizarFormularios.Sintetizar(planAlimenticio.nombre);
+            planAlimenticio.descripcion = sintetizarFormularios.Sintetizar(planAlimenticio.descripcion);
 
             int id_plan_alimenticio = planRepository.registrarPlan(planAlimenticio);
 
@@ -187,7 +204,45 @@ namespace SPARTANFITApp.Services
             return registroAlimentoPlan;
         }
     
-    
+        public List<RutinaDto> MostrarRutinas() 
+        {
+            List<RutinaDto> rutinas = new List<RutinaDto>();
+            RutinaRepository rutinaRepository = new RutinaRepository();
+
+            rutinas = rutinaRepository.MostrasRutinas();
+
+            return rutinas;
+        }
+
+        public RutinaDto EliminarRutina(int id_rutina)
+        {
+            RutinaDto rutinaResp = new RutinaDto();
+            RutinaRepository rutinaRepository = new RutinaRepository();
+
+            rutinaResp = rutinaRepository.EliminarRutina(id_rutina);
+
+            return rutinaResp;
+        }
+
+        public List<PlanAlimenticioDto> MostrarPlanes()
+        {
+            List<PlanAlimenticioDto> planes = new List<PlanAlimenticioDto>();
+            PlanAlimenticioRepository planAlimenticioRepository = new PlanAlimenticioRepository();
+
+            planes = planAlimenticioRepository.MostrarPlanes();
+
+            return planes;
+        }
+
+        public PlanAlimenticioDto EliminarPlan(int id_plan_alimenticio)
+        {
+            PlanAlimenticioDto rutinaResp = new PlanAlimenticioDto();
+            PlanAlimenticioRepository planAlimenticioRepository = new PlanAlimenticioRepository();
+
+            rutinaResp = planAlimenticioRepository.EliminarPlan(id_plan_alimenticio);
+
+            return rutinaResp;
+        }
     }
     
 }

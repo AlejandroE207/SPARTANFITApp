@@ -1,10 +1,10 @@
 ﻿@{
-    ViewBag.Title = "MostrarEjercicios";
+    ViewBag.Title = "MostrarPlanesAlimenticios";
 }
 @{
-    var Ejercicios = ViewData["Ejercicios"] as List<SPARTANFITApp.Dto.EjercicioDto>;
+    List<SPARTANFITApp.Dto.PlanAlimenticioDto> planes = ViewData["planes"] as List<SPARTANFITApp.Dto.PlanAlimenticioDto>;
 }
-@model List<SPARTANFITApp.Dto.EjercicioDto>
+
 @{
     // Recuperar el valor de la variable de sesión
     SPARTANFITApp.Dto.PersonaDto personaLogeo = Session["entrenadorLogged"] as SPARTANFITApp.Dto.PersonaDto;
@@ -66,48 +66,31 @@ else
             <table id="tablaEjercicios">
                 <thead>
                     <tr>
-                        <th>Nombres</th>
-                        <th>Grupo Muscular</th>
-                        <th>Apoyo Visual</th>
+                        <th>Nombre</th>
+                        <th>Dia</th>
                         <th> </th>
-                        <th> </th>
+
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var ejercicio in Model)
+                    @foreach (var plan in planes)
                     {
                         <tr>
-                            <td>@ejercicio.nombre_ejercicio</td>
-                            <td>@ejercicio.id_grupo_muscular</td>
-                            <td>@ejercicio.apoyo_visual</td>
+                            <td>@plan.nombre</td>
+                            <td>@plan.dia</td>
+
 
                             <td>
-                                @using (Html.BeginForm("ActualizarEjercicio", "Home", FormMethod.Post))
+                                @using (Html.BeginForm("EliminarPlanAlimenticio", "Home", FormMethod.Post))
                                 {
                                     @Html.AntiForgeryToken()
-                                    <input type="hidden" name="id_ejercicio" value=@ejercicio.id_ejercicio>
-                                    <input type="hidden" name="nombre_ejercicio" value=@ejercicio.nombre_ejercicio>
-                                    <input type="hidden" name="id_grupo_muscular" value=@ejercicio.id_grupo_muscular>
-                                    <input type="hidden" name="apoyo_visual" value=@ejercicio.apoyo_visual>
-                                    <button type="submit" onclick="return " class="boton-icono"><img src="~/Scripts/img/editar.png" class="icono" alt="Editar"></button>
-
-                                }  @if (ViewData["Mensaje"] != null)
-        {
-                                    <p>@ViewData["Mensaje"]</p>
-        }
-
-                            </td>
-                            <td>
-                                @using (Html.BeginForm("EliminarEjercicio", "Home", FormMethod.Post))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    <input type="hidden" name="id_ejercicio" value=@ejercicio.id_ejercicio>
+                                    <input type="hidden" name="id_plan_alimenticio" value=@plan.id_plan_alimenticio>
                                     <button type="submit" onclick="return confirmarEliminacion()" class="boton-icono"><img src="~/Scripts/img/eliminar.png" class="icono" alt="Eliminar"></button>
 
                                 }  @if (ViewData["Mensaje"] != null)
-        {
+                                {
                                     <p>@ViewData["Mensaje"]</p>
-        }
+                                }
 
                             </td>
                         </tr>
@@ -118,16 +101,16 @@ else
         </div>
     </main>
     <div class="container">
-        <button class="boton-crear" onclick="crearEjercicio()">Agregar Ejercicio</button>
+        <button class="boton-crear" onclick="crearEjercicio()">Agregar plan</button>
     </div>
     <script>
     function crearEjercicio() {
-        window.location.href = '@Url.Action("AgregarEjercicio", "Home")';
+        window.location.href = '@Url.Action("CrearPlanAlimenticio", "Home")';
     }
     </script>
     <script>
         function confirmarEliminacion() {
-            return confirm("¿Estás seguro de que quieres eliminar el Ejercicio?");
+            return confirm("¿Estás seguro de que quieres eliminar el plan?");
         }
     </script>
 

@@ -26,7 +26,7 @@
             <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
         </ul>
     </header>
-    <div>
+    <div class="cont_form">
         @using (Html.BeginForm("FormActualizarEntrenador", "Home", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
@@ -64,11 +64,7 @@
                 <div class="form-row">
                     <button type="submit" class="boton-crear" onclick="return crearCuenta()">Actualizar</button>
                 </div>
-                <div class="botoncito">
-                    <div class="container">
-                        <button class="boton-cancelar" onclick="confirmarCancelar()">Cancelar</button>
-                    </div>
-                </div>
+
             </div>
         }
 
@@ -76,6 +72,11 @@
         {
             <p>@ViewData["Mensaje"]</p>
         }
+        <div class="botoncito">
+            <div class="container">
+                <button class="boton-cancelar" onclick="confirmarCancelar()">Cancelar</button>
+            </div>
+        </div>
     </div>
 
     <script>

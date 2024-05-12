@@ -117,3 +117,7 @@
 #tablaPersonas_filter {
     color: white;
 }
+
+table.dataTable tbody tr {
+    background-color: black;
+}

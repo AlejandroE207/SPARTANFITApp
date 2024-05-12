@@ -48,7 +48,7 @@ else
             <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
         </ul>
     </header>
-    <div>
+    <div class="cont_form">
         @using (Html.BeginForm("AgregarEntrenador", "Home", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
@@ -92,17 +92,18 @@ else
                 <div class="form-row">
                     <button class="boton-crear" onclick="crearCuenta()">Crear Entrenador</button>
                 </div>
-                <div class="botoncito">
-                    <div class="container">
-                        <button class="boton-cancelar" onclick="confirmarCancelar()">Cancelar</button>
-                    </div>
-                </div>
+
             </div>
         }  @if (ViewData["Mensaje"] != null)
-    {
+        {
             <p>@ViewData["Mensaje"]</p>
-    }
-
+        }
+        <div class="botoncito">
+            <div class="container">
+                <button class="boton-cancelar" onclick="confirmarCancelar()">Cancelar</button>
+            </div>
+        </div>
+    </div>
         <script>
  function confirmarCancelar() {
      if (confirm("¿Estás seguro de que quieres cancelar?")) {

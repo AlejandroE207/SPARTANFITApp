@@ -101,7 +101,7 @@ namespace SPARTANFITApp.Repository
             return planAlimenticio;
         }
 
-        public int registrarAlimentoPlan(List<int> idAlimentos , int id_plan_alimenticio)
+        public int registrarAlimentoPlan(List<int> idAlimentos, int id_plan_alimenticio)
         {
             int comando = 0;
             DBContextUtility conexion = new DBContextUtility();
@@ -152,9 +152,9 @@ namespace SPARTANFITApp.Repository
                 double edad = añoActual - añoNacimiento;
                 if (usuario.persona.genero == "masculino")
                 {
-                    
+
                     TMB = 66 + (13.7 * usuario.peso) + (5 * usuario.estatura) - (6.8 * edad);
-                    switch (usuario.id_objetivo) 
+                    switch (usuario.id_objetivo)
                     {
                         case 1:
                             calorias = TMB + 734;
@@ -194,14 +194,14 @@ namespace SPARTANFITApp.Repository
                 double proteinas = calorias * 0.25;
                 double grasas = calorias * 0.20;
 
-                string descripcion = "Ten encuenta " + usuario.persona.nombres + " que tienes que consumir la cantidad de "+calorias+" diarias, distribuidas en las siguientes cantidades calorias de macronutrientes: \n" +
+                string descripcion = "Ten encuenta " + usuario.persona.nombres + " que tienes que consumir la cantidad de " + calorias + " diarias, distribuidas en las siguientes cantidades calorias de macronutrientes: \n" +
                                     "Carbohidratos: " + carbohidratos + "\nProteinas: " + proteinas + "\nGrasas: " + grasas;
                 List<String> dias = new List<String> { "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado" };
                 conexion.Connect();
-                foreach(string dia in dias)
+                foreach (string dia in dias)
                 {
                     string SQL = "SELECT TOP (1) id_plan_alimenticio FROM PLAN_ALIMENTICIO WHERE dia = @dia";
-                    using(SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+                    using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
                     {
                         command.Parameters.AddWithValue("@dia", dia);
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -210,7 +210,7 @@ namespace SPARTANFITApp.Repository
                             {
 
                                 int id_plan_alimenticio = Convert.ToInt32(reader["id_plan_alimenticio"]);
-                                comando = asignarPlanAlimenticioDia(usuario.persona.id_usuario, id_plan_alimenticio,descripcion);
+                                comando = asignarPlanAlimenticioDia(usuario.persona.id_usuario, id_plan_alimenticio, descripcion);
                             }
                             else
                             {
@@ -229,7 +229,7 @@ namespace SPARTANFITApp.Repository
             return comando;
         }
 
-        public int asignarPlanAlimenticioDia(int id_usuario, int id_plan_alimenticio,string descripcion)
+        public int asignarPlanAlimenticioDia(int id_usuario, int id_plan_alimenticio, string descripcion)
         {
             int comando = 0;
             DBContextUtility conexion = new DBContextUtility();
@@ -255,10 +255,10 @@ namespace SPARTANFITApp.Repository
             return comando;
         }
 
-        public PlanAlimenticioDto buscarPlanIdUsuario (int id_usuario, string dia)
+        public PlanAlimenticioDto buscarPlanIdUsuario(int id_usuario, string dia)
         {
             PlanAlimenticioDto planAlimenticio = new PlanAlimenticioDto();
-            DBContextUtility conexion = new DBContextUtility ();
+            DBContextUtility conexion = new DBContextUtility();
 
             try
             {
@@ -273,7 +273,7 @@ namespace SPARTANFITApp.Repository
                     command.Parameters.AddWithValue("@id_usuario", id_usuario);
                     command.Parameters.AddWithValue("@dia", dia);
 
-                    using(SqlDataReader reader = command.ExecuteReader())
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
                         if (reader.Read())
                         {
@@ -304,7 +304,7 @@ namespace SPARTANFITApp.Repository
             return planAlimenticio;
         }
 
-        public List<AlimentoDto> obtenerAlimentosDia (int id_plan_alimenticio)
+        public List<AlimentoDto> obtenerAlimentosDia(int id_plan_alimenticio)
         {
             List<AlimentoDto> alimentosDia = new List<AlimentoDto>();
             DBContextUtility conexion = new DBContextUtility();
@@ -316,11 +316,11 @@ namespace SPARTANFITApp.Repository
                     "FROM ALIMENTO AS a " +
                     "INNER JOIN PLAN_ALIMENTO AS pa ON pa.id_alimento = a.id_alimento " +
                     "WHERE pa.id_plan_alimenticio = @id_plan_alimenticio";
-                using(SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+                using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
                 {
                     command.Parameters.AddWithValue("@id_plan_alimenticio", id_plan_alimenticio);
 
-                    using(SqlDataReader reader = command.ExecuteReader())
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
@@ -349,6 +349,127 @@ namespace SPARTANFITApp.Repository
                 conexion.Disconnect();
             }
             return alimentosDia;
+        }
+
+        public List<PlanAlimenticioDto> MostrarPlanes()
+        {
+            List<PlanAlimenticioDto> planes = new List<PlanAlimenticioDto>();
+            DBContextUtility conexion = new DBContextUtility();
+
+            try
+            {
+                conexion.Connect();
+                string SQL = "SELECT id_plan_alimenticio, nombre, dia FROM PLAN_ALIMENTICIO";
+                using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            PlanAlimenticioDto plan = new PlanAlimenticioDto()
+                            {
+                                id_plan_alimenticio = Convert.ToInt32(reader["id_plan_alimenticio"]),
+                                nombre = reader["nombre"].ToString(),
+                                dia = reader["dia"].ToString()
+                            };
+                            planes.Add(plan);
+                        }
+                    }
+                    return planes;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally { conexion.Disconnect(); }
+            return planes;
+        }
+
+
+        public PlanAlimenticioDto EliminarPlan(int id_plan_alimenticio)
+        {
+            PlanAlimenticioDto planResp = new PlanAlimenticioDto();
+            DBContextUtility conexion = new DBContextUtility();
+            int comando = 0;
+            try
+            {
+                comando = EliminarUsuarioPlanAlimenticio(id_plan_alimenticio);
+                if (comando != 0)
+                {
+                    comando = EliminarPlanAlimento(id_plan_alimenticio);
+                    if (comando != 0)
+                    {
+                        conexion.Connect();
+                        string SQL = "DELETE FROM PLAN_ALIMENTICIO WHERE id_plan_alimenticio = @id_plan_alimenticio";
+                        using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+                        {
+                            command.Parameters.AddWithValue("@id_plan_alimenticio", id_plan_alimenticio);
+                            comando = command.ExecuteNonQuery();
+                            planResp.respuesta = 1;
+                            planResp.mensaje = "Rutina eliminada con exito";
+                            return planResp;
+                        }
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally { conexion.Disconnect(); }
+            return planResp;
+        }
+
+
+        public int EliminarUsuarioPlanAlimenticio(int id_plan_alimenticio)
+        {
+            int comando = 0;
+
+            DBContextUtility conexion = new DBContextUtility();
+            try
+            {
+                conexion.Connect();
+                string SQL = "DELETE FROM USUARIO_PLAN_ALIMENTICIO WHERE id_plan_alimenticio = @id_plan_alimenticio";
+                using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+                {
+                    command.Parameters.AddWithValue("@id_plan_alimenticio", id_plan_alimenticio);
+                    comando = command.ExecuteNonQuery();
+                    comando = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally { conexion.Disconnect(); }
+            return comando;
+        }
+
+        public int EliminarPlanAlimento(int id_plan_alimenticio)
+        {
+            int comando = 0;
+
+            DBContextUtility conexion = new DBContextUtility();
+            try
+            {
+                conexion.Connect();
+                string SQL = "DELETE FROM PLAN_ALIMENTO WHERE id_plan_alimenticio = @id_plan_alimenticio";
+                using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
+                {
+                    command.Parameters.AddWithValue("@id_plan_alimenticio", id_plan_alimenticio);
+                    comando = command.ExecuteNonQuery();
+                    comando = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally { conexion.Disconnect(); }
+            return comando;
         }
 
     }

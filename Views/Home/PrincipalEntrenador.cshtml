@@ -48,8 +48,8 @@ else
         <a href="#" class="logo"> SPARTANFIT</a>
         <ul>
             <li>@Html.ActionLink("Ejercicios", "MostrarEjercicios", "Home")</li>
-            <li>@Html.ActionLink("Rutinas", "", "Home")</li>
-            <li>@Html.ActionLink("Plan Nutricion", "", "Home")</li>
+            <li>@Html.ActionLink("Rutinas", "MostrarRutinas", "Home")</li>
+            <li>@Html.ActionLink("Plan Nutricion", "MostrarPlanesAlimenticios", "Home")</li>
             <li>@Html.ActionLink("Alimentos", "MostrarAlimentos", "Home")</li>
             <li>@Html.ActionLink("Cerrar Sesion", "CerrarSesion", "Home")</li>
         </ul>
@@ -83,7 +83,7 @@ function Ejercicio() {
     </script>
     <script>
 function PlanA() {
-    window.location.href = '@Url.Action("MostrarPlanNutricion", "Home")';
+    window.location.href = '@Url.Action("MostrarPlanesAlimenticios", "Home")';
 }
     </script>
     <script>
