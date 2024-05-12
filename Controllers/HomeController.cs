@@ -126,7 +126,23 @@ namespace SPARTANFIT_App.Controllers
         }
         public ActionResult BuscarCorreo() { return View("BuscarCorreo"); }
         public ActionResult CambiarContrasena() { return View("CambiarContrasena"); }
-        public ActionResult Perfil() { return View("Perfil"); }
+        public ActionResult Perfil() 
+        { 
+            UsuarioService usuarioService = new UsuarioService();
+            UsuarioDto usuarioResp = new UsuarioDto();
+            usuarioResp = (UsuarioDto)Session["UserLogged"];
+            string rehabilitacionText = "";
+            string nivelEntrenamiento = "";
+            string objetivo = "";
+            (rehabilitacionText,nivelEntrenamiento,objetivo) = usuarioService.ConvertirIdText(usuarioResp);
+
+            ViewData["rehabilitacion"] = rehabilitacionText;
+            ViewData["nivelEntrenamiento"] = nivelEntrenamiento;
+            ViewData["objetivo"] = objetivo;
+
+
+            return View("Perfil"); 
+        }
 
         public ActionResult ActualizarObjetivo() { return View("ActualizarObjetivo"); }
 

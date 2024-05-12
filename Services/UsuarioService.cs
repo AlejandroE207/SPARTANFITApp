@@ -66,7 +66,63 @@ namespace SPARTANFITApp.Services
             return usuarioResp;
         }
 
+        public (string,string,string) ConvertirIdText(UsuarioDto usuario)
+        {
+            string rehabilitacionText = "";
+            string nivelEntrenamiento = "";
+            string objetivo = "";
 
+            switch(usuario.rehabilitacion)
+            {
+                case 0:
+                    rehabilitacionText = "Si";
+                    break;
+                case 1:
+                    rehabilitacionText = "No";
+                    break;
+            }
+
+            switch (usuario.id_nivel_entrenamiento)
+            {
+                case 0:
+                    nivelEntrenamiento = "No aplica";
+                    break;
+                case 1:
+                    nivelEntrenamiento = "Basico";
+                    break;
+                case 2:
+                    nivelEntrenamiento = "Medio";
+                    break;
+                case 3:
+                    nivelEntrenamiento = "Avanzado";
+                    break;
+            }
+
+            switch(usuario.id_objetivo)
+            {
+                case 0:
+                    objetivo = "No aplica";
+                    break;
+                case 1:
+                    objetivo = "Definicion";
+                    break;
+                case 2:
+                    objetivo = "Mantenimiento";
+                    break;
+                case 3:
+                    objetivo = "Hipertrofia";
+                    break;
+                case 4:
+                    objetivo = "Fuerza";
+                    break;
+                case 5:
+                    objetivo = "Rehabilitacion";
+                    break;
+
+            }
+
+            return (rehabilitacionText, nivelEntrenamiento,objetivo);
+        }
         public UsuarioDto logueo(UsuarioDto usuario,string contraNormal)
         {
             UsuarioRepository usuarioRepository = new UsuarioRepository();

@@ -4,6 +4,10 @@
 @{
     // Recuperar el valor de la variable de sesión
     SPARTANFITApp.Dto.UsuarioDto usuario = Session["UserLogged"] as SPARTANFITApp.Dto.UsuarioDto;
+
+    var rehabilitacion = ViewData["rehabilitacion"];
+    var nivelEntrenamiento = ViewData["nivelEntrenamiento"];
+    var objetivo = ViewData["objetivo"];
 }
 
 @if (usuario == null)
@@ -114,7 +118,7 @@ else
                 Rehabilitacion:
             </p>
             <div class="campos-container">
-                @usuario.rehabilitacion
+                @rehabilitacion
             </div>
         </div>
         <div>
@@ -122,7 +126,7 @@ else
                 Nivel de Entrenamiento:
             </p>
             <div class="campos-container">
-                @usuario.id_nivel_entrenamiento
+                @nivelEntrenamiento
             </div>
         </div>
         <div>
@@ -130,7 +134,7 @@ else
                 Objetivo:
             </p>
             <div class="campos-container">
-                @usuario.id_objetivo
+                @objetivo
             </div>
 
         </div>

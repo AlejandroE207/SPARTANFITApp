@@ -150,10 +150,15 @@ namespace SPARTANFITApp.Repository
                 int añoNacimiento = fechaNacimiento.Year;
                 double calorias = 0;
                 double edad = añoActual - añoNacimiento;
+                if (usuario.rehabilitacion == 1)
+                {
+                    usuario.id_objetivo = 2;
+                }
                 if (usuario.persona.genero == "masculino")
                 {
 
                     TMB = 66 + (13.7 * usuario.peso) + (5 * usuario.estatura) - (6.8 * edad);
+
                     switch (usuario.id_objetivo)
                     {
                         case 1:

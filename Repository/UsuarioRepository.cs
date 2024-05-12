@@ -337,11 +337,11 @@ namespace SPARTANFITApp.Repository
             try
             {
                 conexion.Connect();
-                string SQL = "DELETE FROM USUARIO WHERE correo = @correo";
+                string SQL = "UPDATE USUARIO SET correo = ' ' , contrasena = ' ' WHERE id_usuario = @id_usuario  ";
                 using (SqlCommand command = new SqlCommand(SQL, conexion.Conexion()))
 
                 {
-                    command.Parameters.AddWithValue("@correo", usuario.persona.correo);
+                    command.Parameters.AddWithValue("@id_usuario", usuario.persona.id_usuario);
                     command.ExecuteNonQuery();
                 }
                 filasAfectadas = 1;

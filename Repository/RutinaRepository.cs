@@ -149,6 +149,10 @@ namespace SPARTANFITApp.Repository
             DBContextUtility conexion = new DBContextUtility();
             try
             {
+                if(usuario.rehabilitacion ==1)
+                {
+                    usuario.id_nivel_entrenamiento = 1;
+                }
                 conexion.Connect();
                 foreach (String dia in dias)
                 {
